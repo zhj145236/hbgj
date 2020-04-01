@@ -1,0 +1,11 @@
+<!--pages/remindcenter/remindcenter.wxml-->
+<scroll-view scroll-y="{{isScrolly}}" style='height:{{winHeight}}px;'>
+  <view class="remindcenter-view">
+    <view class="remindcenter-view-out">
+      <block wx:for="{{releaseconDatas}}" wx:key="">
+        <text class="remindcenter-view-con">{{item.con}}</text>
+        <text class="remindcenter-view-pany">发布时间：{{item.time}}</text>
+      </block>
+    </view>
+  </view>
+</scroll-view>

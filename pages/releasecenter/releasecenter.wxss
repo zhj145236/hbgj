@@ -1,0 +1,60 @@
+page{
+  font-size: 30rpx;
+  background: #ededed;
+  font-family:'Microsoft YaHei','微软雅黑';
+}
+.sell-car-text{
+  border-top: 1px solid #e2e2e2;
+  padding: 30rpx 0 30rpx 40rpx;
+  border-bottom: 4px solid #e2e2e2;
+  width: 100%;
+  display: block;
+  background-color: #fff;
+}
+.contact ,.call,.sex{
+  display: flex;
+  width: 90%;
+  margin: auto;
+  padding: 30rpx 0;
+  border-bottom: 1px solid #e2e2e2;
+  flex-direction:row;
+  justify-content:space-between;
+}
+.sex-radio{
+  margin-right: 20rpx;
+}
+.describe{
+  width: 90%;
+  margin: auto;
+  padding: 30rpx 0;
+  border-bottom: 1px solid #e2e2e2;
+}
+.contact text ,.call text{
+  height: 60rpx;
+  line-height: 60rpx;
+}
+.contact input ,.call input{
+  height: 60rpx;
+  line-height: 60rpx;
+  text-align: right;
+}
+.describe-textarea{
+  border-radius:10rpx; 
+  display: block;
+  width: 100%;
+  margin:40rpx auto 0 auto;
+  padding: 30rpx 0;
+  background: #f2f2f2;
+}
+.describe-textarea textarea{
+  width:90%;
+  margin: auto;
+}
+.but-submit{
+  font-size: 14px;
+  width: 90%;
+  background: #9AE36A;
+  color: #fff;
+  margin: 20rpx auto 40rpx auto;
+  padding: 10rpx 0;
+}

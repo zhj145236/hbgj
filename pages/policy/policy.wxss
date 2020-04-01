@@ -1,0 +1,55 @@
+/**index.wxss**/
+page{
+  font-size: 30rpx;
+  background: #ededed;
+  font-family:'Microsoft YaHei','微软雅黑';
+}
+/* 下方的四个图标 */
+
+/* 环保政策 */
+/* 政策列表 */
+.policy-list{
+  display: flex;
+  flex-direction:row;
+  justify-content:space-between;
+  align-items:center;
+  width: 90%;
+  margin: auto;
+  border-bottom: 1px solid #f5f5f5;
+  padding: 40rpx 0;
+}
+.policy-datas-cont-title{
+  display: flex;
+  flex-direction:row;
+  justify-content:space-between;
+  align-items:center;
+}
+.policy-datas-cont-title > text{
+  margin-right: 10px;
+}
+.policy-peripheral{
+  background-color: #fff;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

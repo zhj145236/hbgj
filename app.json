@@ -1,0 +1,67 @@
+{
+  "debug": false,
+  "pages": [
+    "pages/index/index",
+    "pages/login/login",
+    "pages/datacenter/datacenter",
+    "pages/releasecenter/releasecenter",
+    "pages/aboutus/aboutus",
+    "pages/releasecon/releasecon",
+    "pages/myrelease/myrelease",
+    "pages/remind/remind",
+    "pages/remindcenter/remindcenter",
+    "pages/introduction/introduction",
+    "pages/contractcenter/contractcenter",
+    "pages/policycenter/policycenter",
+    "pages/policy/policy"
+  ],
+
+  "permission":{
+    "scope.userLocation":{
+      "desc":"使用地图功能前请确保您手机的定位功能正常开启"
+    }
+  },
+
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#9AE36A",
+    "navigationBarTitleText": "环保管家",
+    "navigationBarTextStyle": "white",
+    "enablePullDownRefresh": true
+  },
+  
+
+  "tabBar": {
+    "color": "#8a8a8a",
+    "selectedColor": "#9AE36A",
+    "borderStyle": "black",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "/image/home.png",
+        "selectedIconPath": "/image/homechange.png"
+      },
+      {
+        "pagePath": "pages/datacenter/datacenter",
+        "text": "数据中心",
+        "iconPath": "/image/data.png",
+        "selectedIconPath": "/image/datachange.png"
+      },
+      {
+        "pagePath": "pages/releasecenter/releasecenter",
+        "text": "发布中心",
+        "iconPath": "/image/fb.png",
+        "selectedIconPath": "/image/fbchange.png"
+      },
+      {
+        "pagePath": "pages/aboutus/aboutus",
+        "text": "关于我们",
+        "iconPath": "/image/us.png",
+        "selectedIconPath": "/image/uschange.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}

@@ -1,0 +1,20 @@
+/* pages/remindcenter/remindcenter.wxss */
+page{
+  font-size: 30rpx;
+  background: #ededed;
+  font-family:'Microsoft YaHei','微软雅黑';
+}
+.remindcenter-view{
+  background-color: #fff;
+  padding: 30rpx 0;
+}
+.remindcenter-view-out{
+  width: 90%;
+  margin: auto;
+}
+.remindcenter-view-con,.remindcenter-view-pany{
+  display: block;
+}
+.remindcenter-view-pany{
+  margin-top: 40rpx;
+}

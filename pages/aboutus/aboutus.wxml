@@ -1,0 +1,50 @@
+<scroll-view>
+  <view class="me-img">
+    <image src="{{bjImg}}" />
+    <view class="container">
+      <view class="userinfo">
+        <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 请授权 </button>
+        <block wx:else>
+          <view wx:if="{{userInfoSet}}" class="userinfo-view">
+            <view class="userinfo-img">
+              <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover" />
+            </view>
+            <view class="userinfo-nickname"><text>{{userInfo.nickName}}</text></view>
+          </view>
+        </block>
+      </view>
+    </view>
+  </view>
+</scroll-view>
+
+<view class="about-us-top">
+  <view class="about-us-top-out">
+    <text bindtap="introClick" class="about-us-top-intro">企业简介</text>
+    <text class="about-us-top-vertical">|</text>
+    <view bindtap="mattersClick" class="about-us-top-matters">提醒事项<text class="about-us-top-matters-icon">1</text></view>
+  </view>
+</view>
+
+<!-- 个人中心 -->
+<view class="me-center">
+  <view class="me-center-con">
+    <block wx:for="{{meCenters}}" wx:key="">
+      <view bindtap="nextInfo" data-index="{{index}}" class="me-center-con-data">
+        <block wx:if="{{index == 0}}">
+          <view class="me-center-con-data-view">
+            <image src="{{item.icon}}" />
+            <text>{{item.title}}</text>
+          </view>
+          <view class="me-center-con-next"><image src="{{item.point}}" /></view>
+        </block>
+        <block wx:else>
+          <view class="me-center-con-data-view">
+            <image src="{{item.icon}}" />
+            <text>{{item.title}}</text>
+          </view>
+          <view class="me-center-con-next"><image src="{{item.point}}" /></view>
+        </block>
+      </view>        
+    </block>
+  </view>
+</view>

@@ -1,0 +1,25 @@
+/* pages/introduction/introduction.wxss */
+page{
+  font-size: 30rpx;
+}
+.introduction{
+  padding: 30rpx 0;
+}
+.introduction-name{
+  display: block;
+  text-align: center;
+  width: 100%;
+  font-size: 36rpx;
+  font-weight: 600;
+  height: 100rpx;
+  line-height: 100rpx;
+}
+.introduction-img{
+  width: 90%;
+  display: block;
+  margin:0 auto 100rpx auto;
+}
+.introduction-con{
+  width: 90%;
+  margin: 0 auto 100rpx auto;
+}

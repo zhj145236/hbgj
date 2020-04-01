@@ -1,0 +1,9 @@
+<scroll-view scroll-y="{{isScrolly}}" style='height:{{winHeight}}px;'>
+  <block wx:for="{{introductionDatas}}" wx:key="">
+    <view class="introduction">
+      <text class="introduction-name">{{item.name}}</text>
+      <image mode="widthFix" class="introduction-img" src="{{item.imgUrl}}" />
+      <view class="introduction-con">{{item.con}}</view>
+    </view>
+  </block>
+</scroll-view>
