@@ -1,3 +1,5 @@
 {
-  "navigationBarTitleText": "提醒事项"
+  "navigationBarTitleText": "提醒事项",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark"
 }

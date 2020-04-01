@@ -1,16 +1,14 @@
 <!--pages/nextCon//pages/noticeCenter/noticeCenter.wxml-->
-<scroll-view style='height:{{pageHeight}}px;' scroll-y="true">
-  <view class="notice-center">
-    <block wx:for="{{contentCenters}}" wx:key="">
-      <view class="notice-center-title">
-        <view class="notice-center-title-view">
-          <text class="notice-center-title-name">{{item.name}}</text>
-          <text class="notice-center-title-time">{{item.time}}</text>
-        </view>
-      </view>        
-      <view class="notice-center-title-con">
-        <text>{{item.con}}</text>
+<view class="notice-center">
+  <block wx:for="{{contentCenters}}" wx:key="">
+    <view class="notice-center-title">
+      <view class="notice-center-title-view">
+        <text class="notice-center-title-name">{{item.name}}</text>
+        <text class="notice-center-title-time">{{item.time}}</text>
       </view>
-    </block>
-  </view>
-</scroll-view>
+    </view>        
+    <view class="notice-center-title-con">
+      <text>{{item.con}}</text>
+    </view>
+  </block>
+</view>

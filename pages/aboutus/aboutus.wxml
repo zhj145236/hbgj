@@ -1,21 +1,19 @@
-<scroll-view>
-  <view class="me-img">
-    <image src="{{bjImg}}" />
-    <view class="container">
-      <view class="userinfo">
-        <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 请授权 </button>
-        <block wx:else>
-          <view wx:if="{{userInfoSet}}" class="userinfo-view">
-            <view class="userinfo-img">
-              <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover" />
-            </view>
-            <view class="userinfo-nickname"><text>{{userInfo.nickName}}</text></view>
+<view class="me-img">
+  <image src="{{bjImg}}" />
+  <view class="container">
+    <view class="userinfo">
+      <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 请授权 </button>
+      <block wx:else>
+        <view wx:if="{{userInfoSet}}" class="userinfo-view">
+          <view class="userinfo-img">
+            <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover" />
           </view>
-        </block>
-      </view>
+          <view class="userinfo-nickname"><text>{{userInfo.nickName}}</text></view>
+        </view>
+      </block>
     </view>
   </view>
-</scroll-view>
+</view>
 
 <view class="about-us-top">
   <view class="about-us-top-out">

@@ -1,22 +1,20 @@
-<scroll-view scroll-y style="height:{{windowHeight}}px;">
-  <view class='sell-car'>
-    <!-- 标题 -->
-    <text class='sell-car-text'>我要发布</text>
-    <!-- 信息内容 -->
-    <form bindsubmit="formSubmit">
-      <view style="min-height:{{pageHeight}}px;background-color:#fff;">
-        <view class='contact'><text>姓名：</text><input name="contact" type="text" value="{{user_contact}}" placeholder='请输入联系人姓名' /></view>
-        <view class='sex'>
-          <text>性别：</text>
-          <radio-group bindchange="radiochange">
-            <radio class="sex-radio" value='male' checked>男</radio>
-            <radio class="sex-radio" value='female'>女</radio>
-          </radio-group>
-        </view>
-        <view class='call'><text>联系方式</text><input name="call" type="number" value="{{user_number}}" placeholder='请输入联系人电话' maxlength='11' /></view>
-        <view class='describe'><text>发布内容</text><view class='describe-textarea'><textarea maxlength="200" value="{{user_textarea}}" type="text" name="describe" placeholder='请简要描述发布内容(200字以内)' /></view></view>
+<view class='sell-car'>
+  <!-- 标题 -->
+  <text class='sell-car-text'>我要发布</text>
+  <!-- 信息内容 -->
+  <form bindsubmit="formSubmit">
+    <view style="min-height:{{pageHeight}}px;background-color:#fff;">
+      <view class='contact'><text>姓名：</text><input name="contact" type="text" value="{{user_contact}}" placeholder='请输入联系人姓名' /></view>
+      <view class='sex'>
+        <text>性别：</text>
+        <radio-group bindchange="radiochange">
+          <radio class="sex-radio" value='male' checked>男</radio>
+          <radio class="sex-radio" value='female'>女</radio>
+        </radio-group>
       </view>
-      <button class='but-submit' form-type='submit'>立即发布</button>
-    </form>
-  </view>
-</scroll-view>
+      <view class='call'><text>联系方式</text><input name="call" type="number" value="{{user_number}}" placeholder='请输入联系人电话' maxlength='11' /></view>
+      <view class='describe'><text>发布内容</text><view class='describe-textarea'><textarea maxlength="200" value="{{user_textarea}}" type="text" name="describe" placeholder='请简要描述发布内容(200字以内)' /></view></view>
+    </view>
+    <button class='but-submit' form-type='submit'>立即发布</button>
+  </form>
+</view>

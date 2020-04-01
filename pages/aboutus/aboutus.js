@@ -98,16 +98,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    const that = this;
-    wx.getStorage({
-      key: 'userData',
-      success (res) {
-        console.log(res,'123');
-        that.setData({
-          userInfo:res.data,
-        });
-      }
-    })
+    const that = this; 
+    wx.stopPullDownRefresh(); // 页面刷新完成后停止下拉刷新
   },
 
   /**
@@ -142,7 +134,16 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    // const that = this;
+    // 3秒模拟数据加载
+    setTimeout(function () {
+      // 不加这个方法真机下拉会一直处于刷新状态，无法复位
+      wx.stopPullDownRefresh()
+    }, 2000);
+    // that.setData({
+    //   currentTab: 0 //当前页的一些初始数据，视业务需求而定
+    // })
+    // this.onLoad(); //重新加载onLoad()
   },
 
   /**

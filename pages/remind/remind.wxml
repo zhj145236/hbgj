@@ -1,15 +1,13 @@
-<scroll-view scroll-y="{{isScrolly}}" style='height:{{winHeight}}px;'> 
-    <!-- 环保政策 -->
-    <view class="policy-datas-cont">
-      <block wx:for="{{remindDatas}}" wx:key="">
-        <view bindtap="remindList" class="policy-list-out">
-          <view data-id="{{item.id}}" class="policy-list">
-            <view class="policy-datas-cont-title">
-              <text>{{item.title}}</text>
-            </view>
-            <view class="policy-datas-cont-toview">{{item.toview}}</view>
-          </view>
+<!-- 环保政策 -->
+<view class="policy-datas-cont">
+  <block wx:for="{{remindDatas}}" wx:key="">
+    <view bindtap="remindList" class="policy-list-out">
+      <view data-id="{{item.id}}" class="policy-list">
+        <view class="policy-datas-cont-title">
+          <text>{{item.title}}</text>
         </view>
-      </block>
+        <view class="policy-datas-cont-toview">{{item.toview}}</view>
+      </view>
     </view>
-</scroll-view>
+  </block>
+</view>

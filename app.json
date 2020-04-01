@@ -23,11 +23,9 @@
   },
 
   "window": {
-    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#9AE36A",
     "navigationBarTitleText": "环保管家",
-    "navigationBarTextStyle": "white",
-    "enablePullDownRefresh": true
+    "navigationBarTextStyle": "white"
   },
   
 

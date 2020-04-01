@@ -1,11 +1,9 @@
 <!--pages/remindcenter/remindcenter.wxml-->
-<scroll-view scroll-y="{{isScrolly}}" style='height:{{winHeight}}px;'>
-  <view class="remindcenter-view">
-    <view class="remindcenter-view-out">
-      <block wx:for="{{remindcenterDatas}}" wx:key="">
-        <text class="remindcenter-view-con">{{item.con}}</text>
-        <text class="remindcenter-view-pany">提醒公司：{{item.pany}}</text>
-      </block>
-    </view>
+<view class="remindcenter-view">
+  <view class="remindcenter-view-out">
+    <block wx:for="{{remindcenterDatas}}" wx:key="">
+      <text class="remindcenter-view-con">{{item.con}}</text>
+      <text class="remindcenter-view-pany">提醒公司：{{item.pany}}</text>
+    </block>
   </view>
-</scroll-view>
+</view>

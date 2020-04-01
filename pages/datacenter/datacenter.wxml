@@ -1,34 +1,18 @@
 <!--pages/datacenter/datacenter.wxml-->
-<scroll-view scroll-y="{{isScrolly}}" style='height:{{winHeight}}px;'>  
-  <!-- <view class="policy-peripheral">
-    <view class="policy-datas-cont">
-      <block wx:for="{{policyDatas}}" wx:key="">
-        <view bindtap="policyList" data-id="{{item.id}}" class="policy-list">
-          <view class="policy-datas-cont-title">
-            <text>{{item.title}}</text>
-            <view>{{item.time}}</view>
-          </view>
-          <view class="policy-datas-cont-toview">{{item.toview}}</view>
+<block wx:for="{{dataLists}}" wx:key="">
+  <view bindtap='goodsClick' class="filtrate-car-con-out-data" data-goodsid="{{item.id}}">
+    <view class="filtrate-car-con-out-data-center">
+      <!-- 单条数据左边图片区 -->
+      <view class="filtrate-car-con-out-data-left">
+        <view class="filtrate-car-con-out-data-left-img">
+          <image src="{{item.post_image}}" />
         </view>
-      </block>
-    </view>
-  </view> -->
-
-  <block wx:for="{{dataLists}}" wx:key="">
-    <view bindtap='goodsClick' class="filtrate-car-con-out-data" data-goodsid="{{item.id}}">
-      <view class="filtrate-car-con-out-data-center">
-        <!-- 单条数据左边图片区 -->
-        <view class="filtrate-car-con-out-data-left">
-          <view class="filtrate-car-con-out-data-left-img">
-            <image src="{{item.post_image}}" />
-          </view>
-          <text class="filtrate-car-con-out-data-right-maxTitle">{{item.name}}</text>
-        </view>
-        <!-- 单条数据右边内容区 -->
-        <view class="filtrate-car-con-out-data-right-price">
-          <image src="{{item.pointicon}}" />
-        </view>
+        <text class="filtrate-car-con-out-data-right-maxTitle">{{item.name}}</text>
+      </view>
+      <!-- 单条数据右边内容区 -->
+      <view class="filtrate-car-con-out-data-right-price">
+        <image src="{{item.pointicon}}" />
       </view>
     </view>
-  </block>
-</scroll-view>
+  </view>
+</block>
