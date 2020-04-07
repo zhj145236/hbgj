@@ -1,0 +1,38 @@
+/* pages/datacenter/datacenter.wxss */
+page{
+  font-size: 30rpx;
+  background: #ededed;
+  font-family:'Microsoft YaHei','微软雅黑';
+}
+/* 手风琴数据列表 */
+.con-list-view{
+  background-color: #fff;  
+  border-bottom: 1px solid #e8e8e8;
+  margin-bottom: 40rpx;
+}
+.con-list{
+  margin:auto;
+  width: 100%;
+  padding: 40rpx 0;
+  display: flex;
+  flex-direction:row;
+  align-items: center;
+}
+.con-list-view-text{
+  width: 200rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  border: 1px solid #4F9422;
+  text-align: center;
+}
+.con-list-view-sur{
+  display: flex;
+  flex-direction:row;
+  justify-content:space-around;
+  align-items: center;
+  width: 86%;
+  margin:auto;
+}
+.con-list-con{
+  margin-left: 40rpx;
+}

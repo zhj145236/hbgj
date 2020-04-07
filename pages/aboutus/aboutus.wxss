@@ -149,3 +149,14 @@ page{
   width: 40rpx;
   height: 40rpx;
 }
+.exit{
+  width: 90%;
+  margin: 80rpx auto 0 auto;
+  font-size: 30rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  outline:none;
+  border: none;
+  background-color: #4F9422;
+  color: #fff;
+}

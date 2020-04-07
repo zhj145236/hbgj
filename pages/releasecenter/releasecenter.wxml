@@ -7,9 +7,9 @@
       <view class='contact'><text>姓名：</text><input name="contact" type="text" value="{{user_contact}}" placeholder='请输入联系人姓名' /></view>
       <view class='sex'>
         <text>性别：</text>
-        <radio-group bindchange="radiochange">
-          <radio class="sex-radio" value='male' checked>男</radio>
-          <radio class="sex-radio" value='female'>女</radio>
+        <radio-group name="sex" bindchange="radiochange">
+          <radio class="sex-radio" value='男' checked>男</radio>
+          <radio class="sex-radio" value='女'>女</radio>
         </radio-group>
       </view>
       <view class='call'><text>联系方式</text><input name="call" type="number" value="{{user_number}}" placeholder='请输入联系人电话' maxlength='11' /></view>

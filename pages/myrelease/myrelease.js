@@ -1,5 +1,5 @@
 // pages/index/index.js
-const app = getApp(),o = app.requirejs('core');
+const app = getApp(),o = app.requirejs('core'),u = o.urlCon();
 const datas = require('../../utils/data.js');
 Page({
 
@@ -21,7 +21,19 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    wx.request({
+      url: u + 'publishs/wxlist',
+      data: {
+        openid:"grOOLt4K9gD42oPCPbxjLbbcxJI9"
+      },
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      method: "GET",
+      success(res) {
+        console.log(res,'返回数据');
+      }
+    });
   },
 
   /**

@@ -1,7 +1,7 @@
 <!--pages/login/login.wxml-->
 <view class="bj-img" style="height:{{mobileHeight}}">
   <image class="back-img" style="height:{{mobileHeight}}" src="../../image/bj1.jpg" />
-  <form>
+  <form bindsubmit="formSubmit">
     <view class="log-cont">
       <title>环保管家</title>
       <view class="user-info">
@@ -13,7 +13,7 @@
         <input class="user-info-inp" name="pswd" placeholder="请输入密码：" />
       </view>
       <view class="log-btn">
-        <button bindtap="members" class="log-btn-members">会员</button>
+        <button form-type='submit' class="log-btn-members">会员</button>
         <button bindtap="tourists" class="log-btn-tourists">游客</button>
       </view>
     </view>

@@ -25,10 +25,60 @@ const policyData = [
 ];
 
 const dataList = [
-  {id:'1',post_image:'../../image/icon.jpg',name:'企业检修资料',pointicon:'../../image/arrowright.png'},
-  {id:'2',post_image:'../../image/icon.jpg',name:'企业台账表',pointicon:'../../image/arrowright.png'},
-  {id:'3',post_image:'../../image/icon.jpg',name:'企业危废、废水等合同资料',pointicon:'../../image/arrowright.png'},
-  {id:'4',post_image:'../../image/icon.jpg',name:'企业环保文件',pointicon:'../../image/arrowright.png'},
+  {
+    id:'1',
+    post_image:'../../image/icon.jpg',
+    name:'企业检修资料',
+    pointicon:'查看数据',
+    conList:[
+      {time:'2020-1-20',con:'资料检修1'},
+      {time:'2020-1-21',con:'资料检修2'},
+      {time:'2020-1-22',con:'资料检修3'},
+      {time:'2020-1-23',con:'资料检修4'},
+      {time:'2020-1-24',con:'资料检修5'},
+      {time:'2020-1-25',con:'资料检修6'},
+    ]
+  },
+  {
+    id:'2',
+    post_image:'../../image/icon.jpg',
+    name:'企业台账表',
+    pointicon:'查看数据',
+    conList:[
+      {time:'2020-1-20',con:'资料检修1'},
+      {time:'2020-1-21',con:'资料检修2'},
+      {time:'2020-1-22',con:'资料检修3'},
+      {time:'2020-1-23',con:'资料检修4'},
+      {time:'2020-1-24',con:'资料检修5'},
+      {time:'2020-1-25',con:'资料检修6'},
+    ]
+  },
+  {id:'3',
+  post_image:'../../image/icon.jpg',
+  name:'企业危废、废水等合同资料',
+  pointicon:'查看数据',
+  conList:[
+    {time:'2020-1-20',con:'资料检修1'},
+    {time:'2020-1-21',con:'资料检修2'},
+    {time:'2020-1-22',con:'资料检修3'},
+    {time:'2020-1-23',con:'资料检修4'},
+    {time:'2020-1-24',con:'资料检修5'},
+    {time:'2020-1-25',con:'资料检修6'},
+  ]
+},
+  {id:'4',
+  post_image:'../../image/icon.jpg',
+  name:'企业环保文件',
+  pointicon:'查看数据',
+  conList:[
+    {time:'2020-1-20',con:'资料检修1'},
+    {time:'2020-1-21',con:'资料检修2'},
+    {time:'2020-1-22',con:'资料检修3'},
+    {time:'2020-1-23',con:'资料检修4'},
+    {time:'2020-1-24',con:'资料检修5'},
+    {time:'2020-1-25',con:'资料检修6'},
+  ]
+},
 ];
 
 const meCenter = [
@@ -64,6 +114,21 @@ const releaseconData = [
   {con:'3月28日，一封从中国人民解放军海军司令部寄来的信函，让重庆市九龙坡区杨石路小学四年级3班学生邓慧妍兴奋不已。在这个特殊的寒假里，10岁的邓慧妍写信给海军司令员沈金龙，希望能有一艘大驱逐舰能被命名为“重庆舰”。没想到，沈金龙爷爷给她回信了。',time:'2020-03-28'},
 ];
 
+const conList = [
+  {time:'2020-1-20',con:'资料检修1'},
+  {time:'2020-1-21',con:'资料检修2'},
+  {time:'2020-1-22',con:'资料检修3'},
+  {time:'2020-1-23',con:'资料检修4'},
+  {time:'2020-1-24',con:'资料检修5'},
+  {time:'2020-1-25',con:'资料检修6'},
+  {time:'2020-1-20',con:'资料检修1'},
+  {time:'2020-1-21',con:'资料检修2'},
+  {time:'2020-1-22',con:'资料检修3'},
+  {time:'2020-1-23',con:'资料检修4'},
+  {time:'2020-1-24',con:'资料检修5'},
+  {time:'2020-1-25',con:'资料检修6'},
+];
+
 module.exports = {
   iconData: iconData,
   policyData:policyData,
@@ -74,5 +139,6 @@ module.exports = {
   remindData:remindData,
   remindcenterData:remindcenterData,
   myreleaseData:myreleaseData,
-  releaseconData:releaseconData
+  releaseconData:releaseconData,
+  conList:conList
 };

@@ -49,12 +49,14 @@ page{
   margin: 0 20rpx 0 0;
 }
 
-.filtrate-car-con-out-data{
+.filtrate-car-con-out-data-view{
   margin-bottom: 30rpx;
-  border-bottom: 1px solid #e2e2e2;
   padding: 30rpx 0;
   background-color: #fff;
 }
+/* .filtrate-car-con-out-data{
+  border-bottom: 1px solid #c3c3c3;
+} */
 .filtrate-car-con-out-data-center{
   display: flex;
   flex-direction:row;
@@ -86,12 +88,68 @@ page{
   margin-left: 20rpx;
 }
 .filtrate-car-con-out-data-right-price{
-  width: 36rpx;
-  height: 36rpx;
+  width: 20%;
+  height: 60rpx;
+  line-height: 60rpx;
+  border:1px solid #4F9422;
+  text-align: center;
+  color: #666;
+  font-size: 24rpx;
 }
-.filtrate-car-con-out-data-right-price > image{
+/* 手风琴数据列表 */
+.scroll-view-style{
+  border:1px solid #d5d5d5;
+  width:90%;
+  margin:40rpx auto 0 auto;
+}
+.con-list-view{
+  background-color: #fff;
+  transition:height 1s;
+  -webkit-transition:height 1s;
+}
+.showNode{
   display: block;
-  width: 100%;
-  height: 100%;
+  height: 520rpx;
+  transition:height 1s;
+  -webkit-transition:height 1s;
 }
-/* 产品列表 end */
+.hideNode{
+  display: none;
+  height: 0;
+  transition:height 1s;
+  -webkit-transition:height 1s;
+}
+.con-list{
+  margin:auto;
+  width: 80%;
+  border-bottom: 1px solid #e8e8e8;
+  padding: 40rpx 0;
+  display: flex;
+  flex-direction:row;
+  justify-content:space-around;
+  align-items: center;
+}
+.down-data-btn{
+  display: flex;
+  flex-direction:row;
+  justify-content:space-around;
+  align-items: center;
+  margin: 40rpx auto 0 auto;
+  width: 90%;
+}
+.look-move{
+  text-align: center;
+  background-color: #4F9422;
+  height:80rpx;
+  line-height: 80rpx;
+  color: #fff;
+  width: 40%;
+}
+.pack-up-data{
+  text-align: center;
+  border:1px solid #4F9422;
+  height:80rpx;
+  line-height: 80rpx;
+  color: #666;
+  width: 40%;
+}

@@ -1,6 +1,7 @@
 // pages/login/login.js
-const app = getApp(), o = app.requirejs('core');
+const app = getApp(), o = app.requirejs('core'),u = o.urlCon();
 const datas = require('../../utils/data.js');
+
 Page({
 
   /**
@@ -16,6 +17,58 @@ Page({
       url: '../index/index'
     });
   },
+
+  // 点击会员登录
+  formSubmit:(e) => {
+    const that = this;
+    if(e.detail.value.user == ""){
+      wx.showToast({
+        title: "请输入用户名",
+        icon: 'none',
+        duration: 1500
+      });
+      return;
+    };
+    if(e.detail.value.pswd == ""){
+      wx.showToast({
+        title: "请输入密码",
+        icon: 'none',
+        duration: 2000
+      });
+      return;
+    };
+    wx.request({
+      url: u + 'sys/login/restful',
+      data: {
+        "username":e.detail.value.user,
+        "password":e.detail.value.pswd
+      },
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      method: "POST",
+      success(res) {
+        if(res.statusCode == 200){
+          const datas = res.data.data;
+          console.log(datas,'123');
+          wx.setStorage({
+            key:"datas",
+            data:datas
+          });
+          wx.switchTab({
+            url: '../index/index'
+          })
+        }else{
+          wx.showToast({
+            title: res.data.message,
+            icon: 'none',
+            duration: 2000
+          });          
+        }
+      }
+    });
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */

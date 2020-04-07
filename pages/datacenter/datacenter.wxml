@@ -1,17 +1,33 @@
 <!--pages/datacenter/datacenter.wxml-->
 <block wx:for="{{dataLists}}" wx:key="">
-  <view bindtap='goodsClick' class="filtrate-car-con-out-data" data-goodsid="{{item.id}}">
-    <view class="filtrate-car-con-out-data-center">
-      <!-- 单条数据左边图片区 -->
-      <view class="filtrate-car-con-out-data-left">
-        <view class="filtrate-car-con-out-data-left-img">
-          <image src="{{item.post_image}}" />
+  <view class="filtrate-car-con-out-data-view">
+    <view bindtap='goodsClick' class='filtrate-car-con-out-data' data-index="{{index}}" data-goodsid="{{item.id}}">
+      <view class="filtrate-car-con-out-data-center">
+        <!-- 单条数据左边图片区 -->
+        <view class="filtrate-car-con-out-data-left">
+          <view class="filtrate-car-con-out-data-left-img">
+            <image src="{{item.post_image}}" />
+          </view>
+          <text class="filtrate-car-con-out-data-right-maxTitle">{{item.name}}</text>
         </view>
-        <text class="filtrate-car-con-out-data-right-maxTitle">{{item.name}}</text>
+        <!-- 单条数据右边内容区 -->
+        <view class="filtrate-car-con-out-data-right-price">{{item.pointicon}}</view>
       </view>
-      <!-- 单条数据右边内容区 -->
-      <view class="filtrate-car-con-out-data-right-price">
-        <image src="{{item.pointicon}}" />
+    </view>
+
+    <!-- 手风琴数据 -->
+    <view class="con-list-view" hidden="{{index == num?'':'hidNode'}}" data-index="{{index}}">
+      <scroll-view scroll-y="{{isScrolly}}" class="scroll-view-style" style="max-height:{{winHeight}}rpx;">
+        <block wx:for="{{item.conList}}" wx:for-item="itemName" wx:key="">
+          <view class="con-list" bindtap="nextData">
+            <text class="con-list-time">{{itemName.time}}</text>
+            <text class="con-list-con">{{itemName.con}}</text>
+          </view>
+        </block>
+      </scroll-view>
+      <view class="down-data-btn">
+        <view bindtap="lodingMore" class="look-move">查看更多</view>
+        <view bindtap="packUp" class="pack-up-data">收起</view>
       </view>
     </view>
   </view>

@@ -7,7 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    imgSrc:'../../image/ht.jpg',
+    // imgSrc:'../../fail/',
+    url:'http://www.gov.cn/zhengce/pdfFile/2020_PDF.pdf'
   },
   clickImg:function(){
     const that = this,imgUrl = that.data.imgSrc;

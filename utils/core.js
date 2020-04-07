@@ -156,5 +156,9 @@ module.exports = {
                 o[n[0]] = n[1];
             }
         }), o;
+    },
+    urlCon:function(){
+        return "http://192.168.31.174:8080/";
     }
+
 };

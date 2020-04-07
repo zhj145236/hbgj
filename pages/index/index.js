@@ -25,6 +25,7 @@ Page({
     // 环保政策数据
     policyDatas:datas.policyData,
     kf:'../../image/kf.png',
+    hasOnShow:false,
   },
 
   // 点击客服按钮快速联系平台
@@ -79,7 +80,18 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    if (this.data.hasOnShow) {
+      return
+    }
+    this.setData({
+      hasOnShow: true
+    });
+    wx.getStorage({
+      key: 'datas',
+      success (res) {
+        console.log(res.data,'123');
+      }
+    })
   },
 
   /**
@@ -94,6 +106,7 @@ Page({
    */
   onShow: function () {
     let that = this;
+    
     wx.getSystemInfo({
       success: function (res) {
         that.setData({

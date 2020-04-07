@@ -1,4 +1,4 @@
-// pages/index/index.js
+// pages/datacenter/datacenter.js
 const app = getApp(),o = app.requirejs('core');
 const datas = require('../../utils/data.js');
 Page({
@@ -7,13 +7,15 @@ Page({
    * 页面的初始数据
    */
   data: {
-    // 环保政策数据
-    remindDatas:datas.remindData,
+    conLists:datas.conList,
+    isScrolly:1,
   },
+  // 点击列表函数
 
-  remindList:function(e){
+  // 点击查看更多
+  lookData:function(e){
     wx.navigateTo({
-      url: '../remindcenter/remindcenter',
+      url: '../contractcenter/contractcenter',
     })
   },
 
@@ -21,19 +23,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    wx.request({
-      url: u + 'notices/wx_notice',
-      data: {
-        openid:"grOOLt4K9gD42oPCPbxjLbbcxJI9"
-      },
-      header: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      method: "GET",
-      success(res) {
-        console.log(res,'提醒事项返回数据');
-      }
-    });
   },
 
   /**
@@ -47,15 +36,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    let that = this;
-    wx.getSystemInfo({
-      success: function (res) {
-        that.setData({
-          winHeight: res.windowHeight,
-          winWidth: res.windowWidth,
-        });
-      },
-    });
   },
 
   /**

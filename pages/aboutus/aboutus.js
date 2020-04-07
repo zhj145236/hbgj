@@ -1,5 +1,5 @@
 // pages/aboutus/aboutus.js
-const app = getApp(), o = app.requirejs('core');
+const app = getApp(), o = app.requirejs('core'),u = o.urlCon();
 const datas = require('../../utils/data.js');
 Page({
 
@@ -28,6 +28,10 @@ Page({
   getUserInfo: function (e) {
     let that = this, userInfoSucces = e.detail.errMsg;
     if (userInfoSucces == 'getUserInfo:ok'){
+      wx.setStorage({
+        key:'userData',
+        data:e.detail.userInfo
+      });
       that.setData({
         userInfoSet:1,
       });
@@ -45,17 +49,21 @@ Page({
     };
   },
 
+  exitClick:function(e){
+    console.log('退出登录');
+  },
+
   // 列表点击事件
   nextInfo:function(e){
     const that = this;
     switch(e.currentTarget.dataset.index){
       case 0:
         if(that.data.errMsg != "getUserInfo:ok"){
-          wx.showModal({
-            title: '提示',
-            content: '请授权登录',
-            success (res) {}
-          });        
+          wx.showToast({
+            title: "请点击图像授权登录",
+            icon: 'none',
+            duration: 800
+          });
         }else{
           wx.navigateTo({
             url: '../myrelease/myrelease',
@@ -113,7 +121,19 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    wx.request({
+      url: u + 'notices/wx_count_unread',
+      data: {
+        openid:"grOOLt4K9gD42oPCPbxjLbbcxJI9"
+      },
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      method: "GET",
+      success(res) {
+        console.log(res,'未读消息数量返回数据');
+      }
+    });
   },
 
   /**

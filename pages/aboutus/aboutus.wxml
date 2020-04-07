@@ -42,7 +42,8 @@
           </view>
           <view class="me-center-con-next"><image src="{{item.point}}" /></view>
         </block>
-      </view>        
+      </view>
     </block>
   </view>
 </view>
+<button bindtap="exitClick" class="exit">退出登录</button>

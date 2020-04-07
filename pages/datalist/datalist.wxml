@@ -1,0 +1,12 @@
+
+<block wx:for="{{conLists}}" wx:for-item="itemName" wx:key="">
+  <view class="con-list-view" data-index="{{index}}">
+    <view class="con-list-view-sur">
+      <view class="con-list" bindtap="nextData">
+        <text class="con-list-time">{{itemName.time}}</text>
+        <text class="con-list-con">{{itemName.con}}</text>
+      </view>
+      <text bindtap="lookData" class="con-list-view-text">查看数据</text>
+    </view>
+  </view>
+</block>

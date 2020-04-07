@@ -1,4 +1,5 @@
 <!--pages/contractcenter/contractcenter.wxml-->
 <view class="contract">
-  <image mode = "widthFix" class="contract-img" src="{{imgSrc}}" bindtap="clickImg"  />
+  <!-- <image mode = "widthFix" class="contract-img" src="{{imgSrc}}" bindtap="clickImg"  /> -->
+  <web-view src="{{url}}"></web-view>
 </view>
