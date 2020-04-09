@@ -26,59 +26,25 @@ const policyData = [
 
 const dataList = [
   {
-    id:'1',
     post_image:'../../image/icon.jpg',
     name:'企业检修资料',
-    pointicon:'查看数据',
-    conList:[
-      {time:'2020-1-20',con:'资料检修1'},
-      {time:'2020-1-21',con:'资料检修2'},
-      {time:'2020-1-22',con:'资料检修3'},
-      {time:'2020-1-23',con:'资料检修4'},
-      {time:'2020-1-24',con:'资料检修5'},
-      {time:'2020-1-25',con:'资料检修6'},
-    ]
+    pointicon:'查看数据'
   },
   {
-    id:'2',
     post_image:'../../image/icon.jpg',
     name:'企业台账表',
-    pointicon:'查看数据',
-    conList:[
-      {time:'2020-1-20',con:'资料检修1'},
-      {time:'2020-1-21',con:'资料检修2'},
-      {time:'2020-1-22',con:'资料检修3'},
-      {time:'2020-1-23',con:'资料检修4'},
-      {time:'2020-1-24',con:'资料检修5'},
-      {time:'2020-1-25',con:'资料检修6'},
-    ]
+    pointicon:'查看数据'
   },
-  {id:'3',
-  post_image:'../../image/icon.jpg',
-  name:'企业危废、废水等合同资料',
-  pointicon:'查看数据',
-  conList:[
-    {time:'2020-1-20',con:'资料检修1'},
-    {time:'2020-1-21',con:'资料检修2'},
-    {time:'2020-1-22',con:'资料检修3'},
-    {time:'2020-1-23',con:'资料检修4'},
-    {time:'2020-1-24',con:'资料检修5'},
-    {time:'2020-1-25',con:'资料检修6'},
-  ]
-},
-  {id:'4',
-  post_image:'../../image/icon.jpg',
-  name:'企业环保文件',
-  pointicon:'查看数据',
-  conList:[
-    {time:'2020-1-20',con:'资料检修1'},
-    {time:'2020-1-21',con:'资料检修2'},
-    {time:'2020-1-22',con:'资料检修3'},
-    {time:'2020-1-23',con:'资料检修4'},
-    {time:'2020-1-24',con:'资料检修5'},
-    {time:'2020-1-25',con:'资料检修6'},
-  ]
-},
+  {
+    post_image:'../../image/icon.jpg',
+    name:'企业危废、废水等合同资料',
+    pointicon:'查看数据'
+  },
+  {
+    post_image:'../../image/icon.jpg',
+    name:'企业环保文件',
+    pointicon:'查看数据'
+  },
 ];
 
 const meCenter = [

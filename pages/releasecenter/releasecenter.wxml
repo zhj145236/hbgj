@@ -1,6 +1,8 @@
 <view class='sell-car'>
   <!-- 标题 -->
-  <text class='sell-car-text'>我要发布</text>
+  <view class="sell-car-text-view">
+    <text class='sell-car-text'>我要发布</text>
+  </view>
   <!-- 信息内容 -->
   <form bindsubmit="formSubmit">
     <view style="min-height:{{pageHeight}}px;background-color:#fff;">

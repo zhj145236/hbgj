@@ -3,13 +3,16 @@ page{
   background: #ededed;
   font-family:'Microsoft YaHei','微软雅黑';
 }
-.sell-car-text{
-  border-top: 1px solid #e2e2e2;
-  padding: 30rpx 0 30rpx 40rpx;
-  border-bottom: 4px solid #e2e2e2;
-  width: 100%;
-  display: block;
+.sell-car-text-view{
   background-color: #fff;
+  border-bottom: 4px solid #e2e2e2;
+}
+.sell-car-text{
+  width: 90%;
+  display: block;
+  height:80rpx;
+  line-height: 80rpx;
+  margin: auto;
 }
 .contact ,.call,.sex{
   display: flex;

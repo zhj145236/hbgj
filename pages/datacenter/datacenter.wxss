@@ -153,3 +153,24 @@ page{
   color: #666;
   width: 40%;
 }
+.no-data-img{
+  width: 60rpx;
+  height: 60rpx;
+}
+.no-data{
+  display: flex;
+  flex-direction:row;
+  justify-content:space-around;
+  align-items: center;
+  margin-top: 60rpx;
+}
+.no-data-img > image{
+  display: block;
+  width: 100%;
+}
+.no-data-prompt{
+  width: 80%;
+  font-size: 32rpx;
+  font-family: SimSun;
+  color: #666;
+}

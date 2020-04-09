@@ -158,7 +158,21 @@ module.exports = {
         }), o;
     },
     urlCon:function(){
-        return "http://192.168.31.174:8080/";
-    }
+        // 测试ip
+        // return "http://192.168.31.76:8080/";
+        return "http://192.168.31.174:8080/"
+    },
 
+    // 下载接口配置
+    down:(u,n)=>{
+        return u + "files" + n;
+    },
+    // 原图查看
+    imgLook:(u,n)=>{
+        return u + "files/prev" + n + '?isBigPic=1';
+    },
+    // 压缩图片预览，查看pdf
+    comImg:(u,n)=>{
+        return u + 'files/prev' + n;
+    }
 };

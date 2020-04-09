@@ -25,6 +25,7 @@ Page({
     })
   },
 
+  // 获取用户信息
   getUserInfo: function (e) {
     let that = this, userInfoSucces = e.detail.errMsg;
     if (userInfoSucces == 'getUserInfo:ok'){
@@ -50,7 +51,22 @@ Page({
   },
 
   exitClick:function(e){
-    console.log('退出登录');
+    const that = this;
+    wx.clearStorage({
+      success:(res)=>{
+        wx.showToast({
+          title: "已退出登录",
+          icon: 'success',
+          mask:true,
+          duration: 1500
+        });
+        setTimeout(function(){
+          wx.reLaunch({
+            url: '../login/login'
+          })
+        },1500);
+      },
+    });
   },
 
   // 列表点击事件
@@ -108,6 +124,44 @@ Page({
   onLoad: function (options) {
     const that = this; 
     wx.stopPullDownRefresh(); // 页面刷新完成后停止下拉刷新
+    wx.getStorage({
+      key: 'userData',
+      success (res) {
+        that.setData({
+          userInfoSet:1,
+        });
+        if (that.data.userInfoSet){
+          that.setData({
+            userInfo: res.data,
+            hasUserInfo: true,
+            errMsg:res.errMsg
+          });
+        }
+        console.log(res,'游客数据');
+      },
+    });
+
+    wx.getStorage({
+      key: 'datas',
+      success (res) {
+        // console.log(res.data.user,'会员数据');
+        // console.log(res.errMsg,'errMsg');
+        let userInfos = {};
+        userInfos.avatarUrl = o.comImg(u,res.data.user.headImgUrl);
+        userInfos.nickName = res.data.user.nickname;
+        // console.log(userInfos,'创建数组');
+        that.setData({
+          userInfoSet:1,
+        });
+        if (that.data.userInfoSet){
+          that.setData({
+            userInfo: userInfos,
+            hasUserInfo: true,
+            errMsg:res.errMsg
+          });
+        }
+      },
+    });
   },
 
   /**

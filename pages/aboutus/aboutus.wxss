@@ -3,6 +3,7 @@ page{
   font-size: 30rpx;
   background: #ededed;
   font-family:'Microsoft YaHei','微软雅黑';
+  overflow: hidden;
 }
 .me-img{
   width: 100%;

@@ -8,7 +8,6 @@ Page({
    */
   data: {
     // imgSrc:'../../fail/',
-    url:'http://www.gov.cn/zhengce/pdfFile/2020_PDF.pdf'
   },
   clickImg:function(){
     const that = this,imgUrl = that.data.imgSrc;
@@ -21,7 +20,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    const that = this;
+    console.log(options.url,'url数据');
+    that.setData({
+      url:options.url
+    });
   },
 
   /**

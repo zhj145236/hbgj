@@ -12,10 +12,28 @@ Page({
   },
 
   // 点击游客进行跳转
-  tourists:function(e){
-    wx.switchTab({
-      url: '../index/index'
-    });
+  // tourists:function(e){
+  //   // wx.switchTab({
+  //   //   url: '../index/index'
+  //   // });
+  // },
+
+  getUserInfo: function (e) {
+    let that = this, userInfoSucces = e.detail.errMsg;
+    if (userInfoSucces == 'getUserInfo:ok'){
+      console.log(e,'123');
+      wx.setStorage({
+        key:'userData',
+        data:e.detail.userInfo
+      });
+      wx.switchTab({
+        url: '../index/index'
+      });
+    }else{
+      wx.switchTab({
+        url: '../index/index'
+      });
+    };
   },
 
   // 点击会员登录
@@ -51,6 +69,7 @@ Page({
         if(res.statusCode == 200){
           const datas = res.data.data;
           console.log(datas,'123');
+          // 会员数据存储到缓存中
           wx.setStorage({
             key:"datas",
             data:datas
