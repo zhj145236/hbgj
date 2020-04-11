@@ -28,11 +28,37 @@ Page({
   // 获取用户信息
   getUserInfo: function (e) {
     let that = this, userInfoSucces = e.detail.errMsg;
+    // 获取用户的code调用接口发送code获取用户的唯一识别id（openid）以及回话秘钥（session_key）
+    // wx.login({
+    //   success(res){
+    //     console.log(res.code,'用户code数据');
+    //   }
+    // })
     if (userInfoSucces == 'getUserInfo:ok'){
-      wx.setStorage({
-        key:'userData',
-        data:e.detail.userInfo
+
+      wx.request({
+        url: u + 'users/wxAutoLogin',
+        data: {
+          "openid":"grOOLt4K9gD42oPCPbxjLbbcxJI9"
+        },
+        header: {
+          "Content-Type": "application/json"
+        },
+        method: "POST",
+        success(res) {
+          console.log(res.data.role,'游客页面数据');
+          // 将用户角色（游客）保存在缓存中方便其他页面调用
+          wx.setStorage({
+            key:'userRole',
+            data:res.data.role[0].id
+          });
+        }
       });
+
+      // wx.setStorage({
+      //   key:'userData',
+      //   data:e.detail.userInfo
+      // });
       that.setData({
         userInfoSet:1,
       });
@@ -50,8 +76,10 @@ Page({
     };
   },
 
+  // 退出登录
   exitClick:function(e){
     const that = this;
+    app.userInfo = null;
     wx.clearStorage({
       success:(res)=>{
         wx.showToast({
@@ -127,24 +155,32 @@ Page({
     wx.getStorage({
       key: 'userData',
       success (res) {
+        // console.log(res.data.wxUserInfo,'用户数据');
         that.setData({
           userInfoSet:1,
         });
         if (that.data.userInfoSet){
           that.setData({
-            userInfo: res.data,
+            userInfo: res.data.wxUserInfo,
             hasUserInfo: true,
             errMsg:res.errMsg
           });
         }
-        console.log(res,'游客数据');
+        console.log(res.data.xtBackData.role,'游客数据');
+
+        // 将用户角色（游客）保存在缓存中方便其他页面调用
+        wx.setStorage({
+          key:'userRole',
+          data:res.data.xtBackData.role[0].id
+        });
       },
     });
 
+    // 获取会员登录的数据缓存
     wx.getStorage({
       key: 'datas',
       success (res) {
-        // console.log(res.data.user,'会员数据');
+        console.log(res.data.role,'会员数据');
         // console.log(res.errMsg,'errMsg');
         let userInfos = {};
         userInfos.avatarUrl = o.comImg(u,res.data.user.headImgUrl);
@@ -160,6 +196,12 @@ Page({
             errMsg:res.errMsg
           });
         }
+
+        // 将用户角色（会员）保存在缓存中方便其他页面调用
+        wx.setStorage({
+          key:'userRole',
+          data:res.data.role[0].id
+        });
       },
     });
   },

@@ -90,6 +90,18 @@ page{
 }
 .policy-datas-cont-title > text{
   margin-right: 10px;
+  width: 200rpx;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  overflow: hidden;
+}
+.policy-datas-cont-title > view{
+  font-size: 24rpx;
+  color: #666;
+}
+
+.policy-datas-cont-toview{
+  font-size: 24rpx;
 }
 
 /* 客服电话 */

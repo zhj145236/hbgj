@@ -19,17 +19,41 @@ Page({
   // },
 
   getUserInfo: function (e) {
-    let that = this, userInfoSucces = e.detail.errMsg;
+    let that = this, userInfoSucces = e.detail.errMsg,userObj = {};
     if (userInfoSucces == 'getUserInfo:ok'){
-      console.log(e,'123');
-      wx.setStorage({
-        key:'userData',
-        data:e.detail.userInfo
-      });
-      wx.switchTab({
-        url: '../index/index'
+      // 获取用户的code调用接口发送code获取用户的唯一识别id（openid）以及回话秘钥（session_key）
+      // wx.login({
+      //   success(res){
+      //     console.log(res.code,'用户code数据');
+      //   }
+      // })
+      
+      wx.request({
+        url: u + 'users/wxAutoLogin',
+        data: {
+          "openid":"grOOLt4K9gD42oPCPbxjLbbcxJI9"
+        },
+        header: {
+          "Content-Type": "application/json"
+        },
+        method: "POST",
+        success(res) {
+          userObj.wxUserInfo = e.detail.userInfo; // 微信返回的的用户数据
+          userObj.xtBackData = res.data; //系统返回的用户数据
+          wx.setStorage({
+            key:'userData',
+            data:userObj
+          });
+
+          // 接口获取成功的时候跳转到index页面
+          wx.switchTab({
+            url: '../index/index'
+          });
+        }
       });
     }else{
+      // 如果用户不授权登录也是能够跳转到index页面，但是里面的很多功能不能使用
+      console.log('用户没有授权');
       wx.switchTab({
         url: '../index/index'
       });

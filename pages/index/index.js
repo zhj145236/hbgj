@@ -1,5 +1,5 @@
 // pages/index/index.js
-const app = getApp(),o = app.requirejs('core');
+const app = getApp(),o = app.requirejs('core'),u = o.urlCon();
 const datas = require('../../utils/data.js');
 Page({
 
@@ -23,7 +23,7 @@ Page({
     // 下方图标信息4个
     iconDatas:datas.iconData,
     // 环保政策数据
-    policyDatas:datas.policyData,
+    // policyDatas:datas.policyData,
     kf:'../../image/kf.png',
     hasOnShow:false,
   },
@@ -71,8 +71,11 @@ Page({
   },
 
   policyList:function(e){
+    const that = this,policyDatas = that.data.policyDatas;
+    console.log(e,'新闻数据');
+
     wx.navigateTo({
-      url: '../policycenter/policycenter',
+      url: '../policycenter/policycenter?id=' + e.currentTarget.dataset.newsid,
     })
   },
 
@@ -80,18 +83,36 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if (this.data.hasOnShow) {
-      return
-    }
-    this.setData({
-      hasOnShow: true
-    });
-    wx.getStorage({
-      key: 'datas',
-      success (res) {
-        console.log(res.data,'123');
+    const that = this;
+    // wx.getStorage({
+    //   key: 'datas',
+    //   success (res) {
+    //   }
+    // });
+
+    wx.request({
+      url: u + 'newss',
+      data: {
+        start:0,
+        length:5
+      },
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      method: "GET",
+      success(res) {
+        that.setData({
+          policyDatas:res.data.data,
+        });
       }
-    })
+    });
+    
+    // wx.getStorage({
+    //   key: 'datas',
+    //   success (res) {
+    //     console.log(res.data,'123');
+    //   }
+    // })
   },
 
   /**

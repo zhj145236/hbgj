@@ -1,5 +1,5 @@
 
-const app = getApp(),o = app.requirejs('core');
+const app = getApp(),o = app.requirejs('core'),u = o.urlCon();
 const datas = require('../../utils/data.js');
 Page({
 
@@ -8,15 +8,43 @@ Page({
    */
   data: {
     contentCenters: datas.contentCenter,
+
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let that = this;
-    that.setData({
-      content: options.content
+    let that = this,newsid = options.id,newsArr = [];
+    console.log(typeof newsid,'数据类型');
+
+    wx.request({
+      url: u + 'newss',
+      data: {
+        start:0,
+        length:5
+      },
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      method: "GET",
+      success(res) {
+        const newsData = res.data.data;
+        console.log(newsData);
+        for(let i in newsData){
+          if(newsid == newsData[i].id){
+            console.log(newsData[i].content);
+            newsArr.push(newsData[i]);
+            that.setData({
+              nodes:newsData[i].content
+            });
+          }
+        }
+        // console.log(newsArr,'数据');
+        that.setData({
+          newsArr:newsArr
+        });
+      }
     });
   },
 

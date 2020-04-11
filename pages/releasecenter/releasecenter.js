@@ -101,19 +101,37 @@ Page({
    */
   onShow: function () {
     const that = this;
+    // 获取微信用户登录的数据
+    // wx.getStorage({
+    //   key: 'userData',
+    //   success (res) {
+    //     that.setData({
+    //       userData:res.data,
+    //     });
+    //   },
+    //   fail:function(res){
+    //     wx.showToast({
+    //       title: "发布前请前先授权登录",
+    //       icon: 'none',
+    //       duration: 2000
+    //     });  
+    //   }
+    // })
+
     wx.getStorage({
-      key: 'userData',
+      key: 'datas',
       success (res) {
-        that.setData({
-          userData:res.data,
-        });
+        // console.log(res,'企业用户的数据');
+        // that.setData({
+        //   userData:res.data,
+        // });
       },
       fail:function(res){
-        wx.showToast({
-          title: "发布前请前先授权登录",
-          icon: 'none',
-          duration: 2000
-        });  
+        // wx.showToast({
+        //   title: "发布前请前先授权登录",
+        //   icon: 'none',
+        //   duration: 2000
+        // });  
       }
     })
   },

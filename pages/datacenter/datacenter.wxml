@@ -1,5 +1,5 @@
 <!--pages/datacenter/datacenter.wxml-->
-<block wx:for="{{dataLists}}" wx:key="">
+<block wx:if="{{showPage}}" wx:for="{{dataLists}}" wx:key="">
   <view class="filtrate-car-con-out-data-view">
     <view bindtap='goodsClick' class='filtrate-car-con-out-data' data-index="{{index}}" data-goodName="{{item.name}}">
       <view class="filtrate-car-con-out-data-center">

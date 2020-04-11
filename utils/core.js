@@ -159,8 +159,8 @@ module.exports = {
     },
     urlCon:function(){
         // 测试ip
-        // return "http://192.168.31.76:8080/";
-        return "http://192.168.31.174:8080/"
+        return "http://192.168.31.76:8080/";
+        // return "http://192.168.31.174:8080/"
     },
 
     // 下载接口配置

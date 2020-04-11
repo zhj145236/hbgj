@@ -15,10 +15,6 @@ Page({
     setInter:'',
   },
 
-  inArray:(array1,array2)=>{
-      return array2.filter(function(value){return (array1.join('-').indexOf(value))!=-1});
-  },
-
 
   // 点击列表函数
   goodsClick:function(e){
@@ -136,44 +132,19 @@ Page({
    */
   onLoad: function (options) {
     const that = this;
+
     wx.getStorage({
-      key: 'datas',
+      key: 'userRole',
       success (res) {
-        const resourceIds = res.data.user.id;
-        // console.log(res,'用户数据');
-        // console.log(resourceIds,'用户ID');
-        // console.log(res.data.Cookie,'用户Cookie');
-        // console.log(res.data.token,'用户token');
-       // alert("1111");
-        console.info( "aaaaa->",res.data);
-
-        wx.request({
-          url: u + 'files/wxlistFiles',
-          data: {
-            resourceId:resourceIds
-          },
-          header: {
-            "Cookie":res.data.Cookie,
-            "login-token":res.data.token,
-            "Content-Type": "application/x-www-form-urlencoded"
-          },
-          method: "GET",
-          success(res) {
-            const enterpriseData = res.data.data,nameArr = [];
-            for(let i in enterpriseData){
-              nameArr.push(enterpriseData[i].tag);
-            }
-            that.setData({
-              enterpriseData:res.data.data,
-              nameArrs:nameArr
-            });
-
-            // console.log(res.data.data,'返回数据');
-          }
-        });
+        console.log(res,'获取数据');
+      },
+      fail(res){
+        console.log(res,'jiashuju');
       }
     });
   },
+
+  
 
   /**
    * 生命周期函数--监听页面初次渲染完成
