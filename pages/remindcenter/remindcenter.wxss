@@ -17,4 +17,6 @@ page{
 }
 .remindcenter-view-pany{
   margin-top: 40rpx;
+  font-size: 24rpx;
+  color: #666;
 }

@@ -1,58 +1,72 @@
-<scroll-view scroll-y="{{isScrolly}}" style='height:{{winHeight}}px;'>  
+ 
   <!-- banner图 -->
-    <swiper indicator-dots="{{indicatorDots}}"
-      autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" style='width:100%;height:260rpx;'>
-      <block wx:for="{{imgUrls}}" wx:key="unique">
-        <swiper-item>
-          <image src="{{item}}" class="slide-image" />
-        </swiper-item>
-      </block>
-    </swiper>
-    <!-- banner下面的四个图标 -->
-    <view class="nav-icon">
-      <block wx:for="{{iconDatas}}" wx:key="">
-        <view bindtap="iconClick" data-index="{{index}}" class="nav-icon-view">
-          <view class="nav-icon-img-view">
-            <image class="nav-icon-img" src="{{item.imgUrl}}" />
-          </view>
-          <view class="nav-icon-text">{{item.text}}</view>
+<view wx:if="{{isShowPage}}">
+  <swiper indicator-dots="{{indicatorDots}}"
+    autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" style='width:100%;height:298rpx;'>
+    <block wx:for="{{bannerArr}}" wx:key="unique">
+      <swiper-item>
+        <image bindtap="caseInfo" data-id="{{item.id}}"  mode="heightFix" src="{{item.mainImg}}" class="slide-image" />
+      </swiper-item>
+    </block>
+  </swiper>
+  <!-- banner下面的四个图标 -->
+  <view class="nav-icon">
+    <block wx:for="{{iconDatas}}" wx:key="">
+      <view bindtap="iconClick" data-index="{{index}}" class="nav-icon-view">
+        <view class="nav-icon-img-view">
+          <image mode="widthFix" class="nav-icon-img" src="{{item.imgUrl}}" />
         </view>
-      </block>
-    </view>
+        <view class="nav-icon-text">{{item.text}}</view>
+      </view>
+    </block>
+  </view>
 
-    <!-- 环保政策 -->
-    <view class="policy-peripheral">
-      <view bindtap="morePolicy" class="policy-peripheral-title">
-        <view class="policy-peripheral-title-txt">
-          <text>环保政策</text>
-          <view class="policy-peripheral-title-txt-view">
-            <text>更多</text>
-            <image src="../../image/arrowright.png" />
-          </view>
+  <!-- 占位图 -->
+  <view class="placeholder-img">
+    <view class="placeholder-img-box">
+      <image mode="widthFix" src="../../image/zwImg.png" />
+    </view>
+  </view>
+
+  <!-- 环保政策 -->
+  <view class="policy-peripheral">
+    <view bindtap="morePolicy" class="policy-peripheral-title">
+      <view class="policy-peripheral-title-txt">
+        <text>环保政策</text>
+        <view class="policy-peripheral-title-txt-view">
+          <text>更多</text>
+          <image mode="widthFix" src="../../image/arrowright.png" />
         </view>
       </view>
+    </view>
 
-      <view class="policy-datas-cont">
-        <block wx:for="{{policyDatas}}" wx:key="">
-          <view bindtap="policyList" data-newsid="{{item.id}}" class="policy-list">
-            <view class="policy-datas-cont-title">
-              <text>{{item.title}}</text>
-              <view>{{item.updateTime}}</view>
+    <view class="policy-datas-cont">
+      <block wx:for="{{policyArr}}" wx:key="">
+        <view data-index="{{index}}" class='policy-list-out {{index == num ? "active" : ""}}' bindtap="policyList" data-newsid="{{item.newsid}}">
+          <view class="policy-datas-cont-img">
+            <image mode="heightFix" src="{{item.bannerImg}}" />
+          </view>
+          <view class="policy-list">
+            <text class="policy-datas-cont-title-text">{{item.title}}</text>
+            <view class="policy-author-info">
+              <!-- <text class="policy-author">作者：{{item.author}}</text> -->
+              <view class="policy-datas-cont-title">发布时间：{{item.createTime}}
             </view>
-            <view class="policy-datas-cont-toview">查看</view>
+            </view>
           </view>
-        </block>
-      </view>
+        </view>
+      </block>
     </view>
+  </view>
 
-    <view class="kf-tel">
-      <view bindtap="kfClick" class="kf-tel-img">
-        <image mode="widthFix" src="{{kf}}" />
-      </view>
+  <view class="kf-tel">
+    <view bindtap="kfClick" class="kf-tel-img">
+      <image mode="widthFix" src="{{kf}}" />
     </view>
+  </view>
 
-    <!-- 技术支持 -->
-    <view class="technology-support">
-      <text>技术支持：昱升科技有限公司</text>
-    </view>
-</scroll-view>
+  <!-- 技术支持 -->
+  <view class="technology-support">
+    <text>技术支持：昱升科技有限公司</text>
+  </view>
+</view>

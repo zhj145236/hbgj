@@ -2,7 +2,9 @@
   "debug": false,
   "pages": [
     "pages/login/login",
+    "pages/bannerDetails/bannerDetails",
     "pages/index/index",
+    "pages/introduction/introduction",
     "pages/aboutus/aboutus",
     "pages/releasecenter/releasecenter",
     "pages/contractcenter/contractcenter",
@@ -12,7 +14,6 @@
     "pages/myrelease/myrelease",
     "pages/remind/remind",
     "pages/remindcenter/remindcenter",
-    "pages/introduction/introduction",
     "pages/policycenter/policycenter",
     "pages/policy/policy"
   ],
@@ -24,7 +25,7 @@
   },
 
   "window": {
-    "navigationBarBackgroundColor": "#9AE36A",
+    "navigationBarBackgroundColor": "#1aad19",
     "navigationBarTitleText": "环保管家",
     "navigationBarTextStyle": "white"
   },
@@ -32,7 +33,7 @@
 
   "tabBar": {
     "color": "#8a8a8a",
-    "selectedColor": "#9AE36A",
+    "selectedColor": "#1aad19",
     "borderStyle": "black",
     "backgroundColor": "#fff",
     "list": [

@@ -1,9 +1,9 @@
 <!--pages/remindcenter/remindcenter.wxml-->
 <view class="remindcenter-view">
   <view class="remindcenter-view-out">
-    <block wx:for="{{remindcenterDatas}}" wx:key="">
-      <text class="remindcenter-view-con">{{item.con}}</text>
-      <text class="remindcenter-view-pany">提醒公司：{{item.pany}}</text>
-    </block>
+      <view class="remindcenter-view-con">
+        <rich-text nodes="{{nodes}}" />
+      </view>
+      <text class="remindcenter-view-pany">提醒公司：东莞市环联管家生态环境科技有限公司</text>
   </view>
 </view>

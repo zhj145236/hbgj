@@ -4,31 +4,100 @@ page{
   background: #ededed;
   font-family:'Microsoft YaHei','微软雅黑';
 }
-/* 下方的四个图标 */
-
 /* 环保政策 */
-/* 政策列表 */
-.policy-list{
+.policy-peripheral{
+  /* background-color: #fff; */
+  width: 100%;
+  padding: 10px 0;
+}
+.policy-peripheral-title{
+  /* border-bottom: 1px solid #c3c3c3; */
+  padding: 10px 0;
+  background-color: #fff;
+}
+.policy-peripheral-title-txt{
   display: flex;
   flex-direction:row;
   justify-content:space-between;
   align-items:center;
   width: 90%;
   margin: auto;
-  border-bottom: 1px solid #f5f5f5;
-  padding: 40rpx 0;
 }
-.policy-datas-cont-title{
+.policy-peripheral-title-txt > text{
+  font-weight: 600;
+}
+.policy-peripheral-title-txt-view{
   display: flex;
   flex-direction:row;
   justify-content:space-between;
   align-items:center;
 }
-.policy-datas-cont-title > text{
-  margin-right: 10px;
+.policy-peripheral-title-txt-view > image{
+  display: block;
+  width: 12px;
+  height: 12px;
 }
-.policy-peripheral{
+.policy-peripheral-title-txt-view > text{
+  margin-right: 10px;
+  font-size: 24rpx;
+  color: #666;
+}
+/* 政策列表 */
+.policy-list{
+  width: 90%;
+  margin: auto;
+  border-bottom: 1px solid #f5f5f5;
+  padding: 40rpx 0;
+}
+.policy-datas-cont-title{
+  width: 100%;
+  text-align: left;
+  font-size: 24rpx;
+  color: #666;
+  margin-top: 20rpx;
+}
+.policy-datas-cont-title-text{
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  font-weight: 600;
+}
+.policy-datas-cont-toview{
+  margin-left: 40rpx;
+}
+.policy-author-info{
+  display: flex;
+  flex-direction:row;
+  justify-content:space-between;
+  align-items:center;
+}
+.policy-author{
+  display: block;
+  width: 100%;
+  font-size: 26rpx;
+  color: #666;
+  text-align: right;
+  height: 80rpx;
+  line-height: 80rpx;
+}
+.policy-datas-cont{
+  width: 90%;
+  margin:auto;
+}
+.policy-datas-cont-img{
+  width: 100%;
+  height: 272rpx;
+}
+.policy-datas-cont-img > image{
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.policy-list-out{
+  border-radius: 10rpx;
   background-color: #fff;
+  margin: 40rpx 0;
+  overflow: hidden;
 }
 
 

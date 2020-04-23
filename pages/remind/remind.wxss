@@ -31,6 +31,9 @@ page{
 .policy-datas-cont-title > text{
   margin-right: 10px;
 }
+.policy-datas-cont-toview{
+  font-size: 26rpx;
+}
 
 
 

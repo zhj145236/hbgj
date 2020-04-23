@@ -12,7 +12,7 @@ Page({
     isBol: 0,
     imgUrls: [
       '../../image/banerone.jpg',
-      '../../image/banertwo.jpg',
+      '../../image/banertwom.png',
     ],
     indicatorDots: true,
     autoplay: true,
@@ -26,6 +26,9 @@ Page({
     // policyDatas:datas.policyData,
     kf:'../../image/kf.png',
     hasOnShow:false,
+    isShowBanner:false,
+    isShowNews:false,
+    isShowPage:false,
   },
 
   // 点击客服按钮快速联系平台
@@ -38,6 +41,7 @@ Page({
 
   // 点击四个图标
   iconClick:function(e){
+    const that = this;
     console.log(e.currentTarget.dataset.index,'123');
     switch(e.currentTarget.dataset.index){
       case 0:
@@ -61,6 +65,7 @@ Page({
         });
         break;
     }
+    
   },
 
   // 点击环保政策更多
@@ -72,7 +77,11 @@ Page({
 
   policyList:function(e){
     const that = this,policyDatas = that.data.policyDatas;
-    console.log(e,'新闻数据');
+    console.log(e.currentTarget.dataset.newsid,'新闻数据');
+
+    that.setData({
+      num:e.currentTarget.dataset.index
+    });
 
     wx.navigateTo({
       url: '../policycenter/policycenter?id=' + e.currentTarget.dataset.newsid,
@@ -80,16 +89,15 @@ Page({
   },
 
   /**
-   * 生命周期函数--监听页面加载
+   * @param(*)
+   * 获取政策新闻前五个列表
+   * newss
+   * f 修改this指向 data
+   * isComplete 判断用户是否出触发了下拉动作
+   * 是：设置值为true 停止下拉动作弹回页面，否：持续下拉行为
    */
-  onLoad: function (options) {
-    const that = this;
-    // wx.getStorage({
-    //   key: 'datas',
-    //   success (res) {
-    //   }
-    // });
 
+  newDataFun:(f)=>{
     wx.request({
       url: u + 'newss',
       data: {
@@ -101,25 +109,96 @@ Page({
       },
       method: "GET",
       success(res) {
-        that.setData({
-          policyDatas:res.data.data,
+        console.log(res,'123');
+        const policyArr = [],policyDatas = res.data.data;
+        // policyObj.title = 
+        for(let i in policyDatas){
+          const policyObj = {};
+          policyObj.title = policyDatas[i].title,
+          policyObj.createTime = policyDatas[i].createTime.split(" ")[0],
+          policyObj.newsid = policyDatas[i].id,
+          policyObj.author = policyDatas[i].author;
+          policyObj.bannerImg = u + policyDatas[i].bannerImg;
+          policyArr.push(policyObj);
+        }
+        console.log(policyArr);
+        f.setData({
+          policyArr:policyArr,
+          isComplete:true,
+          isShowNews:true
+        });
+        if(f.data.isShowNews){
+          wx.hideLoading({
+            success(res){
+              f.setData({
+                isShowPage:true
+              });              
+            }
+          });
+        }
+      }
+    });
+    if(f.data.isComplete){
+      wx.stopPullDownRefresh();
+    }
+  },
+
+  /**
+   * 案例详情
+   */
+  caseInfo:(e)=>{
+    console.log(e,'案例');
+    wx.navigateTo({
+      url: '../bannerDetails/bannerDetails?id=' + e.currentTarget.dataset.id,
+    })
+  },
+
+  /**
+   * 
+   * @param {*} options
+   * banner图加载
+   *  banners/wxlist
+   * 
+   */
+  bannerFun:function (f){
+    console.log(f,'1010');
+    wx.request({
+      url: u + 'banners/wxlist',
+      data: {},
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      method: "GET",
+      success(res) {
+        const bannerArr = [],backArr = res.data.data;
+        for(let i in backArr){
+          const bannerObj = {};
+          bannerObj.id = backArr[i].id;
+          bannerObj.mainImg = u + backArr[i].mainImg;
+          bannerArr.push(bannerObj);
+        }
+        console.log(res,'返回数据');
+        f.setData({
+          bannerArr:bannerArr,
+          isShowBanner:true
         });
       }
     });
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    const that = this;
     
-    // wx.getStorage({
-    //   key: 'datas',
-    //   success (res) {
-    //     console.log(res.data,'123');
-    //   }
-    // })
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    
   },
 
   /**
@@ -127,7 +206,15 @@ Page({
    */
   onShow: function () {
     let that = this;
-    
+    that.setData({num:null});
+    wx.showLoading({
+      title: '加载中',
+      mask:true,
+      success(res){
+        that.newDataFun(that);
+        that.bannerFun(that);
+      }
+    });
     wx.getSystemInfo({
       success: function (res) {
         that.setData({
@@ -156,16 +243,15 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    // const that = this;
-    // 3秒模拟数据加载
-    setTimeout(function () {
-      // 不加这个方法真机下拉会一直处于刷新状态，无法复位
-      wx.stopPullDownRefresh()
-    }, 2000);
-    // that.setData({
-    //   currentTab: 0 //当前页的一些初始数据，视业务需求而定
-    // })
-    // this.onLoad(); //重新加载onLoad()
+    const that = this;
+    wx.showLoading({
+      title: '加载中',
+      mask:true,
+      success(res){
+        that.newDataFun(that);
+        that.bannerFun(that);
+      }
+    });
   },
 
   /**

@@ -8,3 +8,12 @@
   display: block;
   width: 100%;
 }
+.contract-url{
+  background-color: #1aad19;
+  color: #fff;
+  position: fixed;
+  bottom: 0;
+  margin-bottom: -40rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+}

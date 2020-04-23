@@ -73,8 +73,8 @@ page{
   align-items: center;
 }
 .filtrate-car-con-out-data-left-img{
-  width: 120rpx;
-  height: 120rpx;
+  width: 80rpx;
+  height: 80rpx;
   overflow: hidden;
 }
 .filtrate-car-con-out-data-left-img > image{
@@ -88,13 +88,20 @@ page{
   margin-left: 20rpx;
 }
 .filtrate-car-con-out-data-right-price{
-  width: 20%;
-  height: 60rpx;
-  line-height: 60rpx;
-  border:1px solid #4F9422;
-  text-align: center;
-  color: #666;
-  font-size: 24rpx;
+  /* width: 20%; */
+  width: 30rpx;
+  height: 35rpx;
+  vertical-align: middle;
+  /* line-height: 60rpx; */
+  /* border:1px solid #4F9422; */
+  /* text-align: center; */
+  /* color: #666; */
+  /* font-size: 24rpx; */
+}
+.filtrate-car-con-out-data-right-price > image{
+  display: inline-block;
+  width: 100%;
+  height: 100%;
 }
 /* 手风琴数据列表 */
 .scroll-view-style{
@@ -121,13 +128,29 @@ page{
 }
 .con-list{
   margin:auto;
-  width: 80%;
+  width: 100%;
   border-bottom: 1px solid #e8e8e8;
   padding: 40rpx 0;
   display: flex;
   flex-direction:row;
   justify-content:space-around;
   align-items: center;
+}
+.con-list-pdf-out{
+  display: flex;
+  flex-direction:row;
+  justify-content:space-around;
+  align-items: center;
+}
+.con-list-pdf{
+  margin-right: 20rpx;
+  width: 40rpx;
+  height: 40rpx;
+}
+.con-list-pdf > image{
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 .down-data-btn{
   display: flex;
@@ -139,11 +162,31 @@ page{
 }
 .look-move{
   text-align: center;
-  background-color: #4F9422;
+  background-color: #1aad19;
   height:80rpx;
   line-height: 80rpx;
   color: #fff;
-  width: 40%;
+  width: 100%;
+  
+}
+.look-move-out{
+  display: flex;
+  flex-direction:row;
+  justify-content:space-around;
+  align-items: center;
+  width: 120rpx;
+  /* border: 1px solid red; */
+  margin: auto;
+}
+.look-move-image{
+  width: 40rpx;
+  height: 40rpx;
+  /* border: 1px solid red; */
+}
+.look-move-image > image{
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 .pack-up-data{
   text-align: center;
@@ -173,4 +216,31 @@ page{
   font-size: 32rpx;
   font-family: SimSun;
   color: #666;
+}
+.show-title{
+  width: 90%;
+  margin: 20% auto 0 auto;
+}
+.show-title-out{
+  width: 60rpx;
+  height: 60rpx;
+  margin: 0 auto 40rpx auto;
+}
+.show-title-out > image{
+  display: block;
+  width: 100%;
+}
+.show-title text{
+  font-size: 26rpx;
+  color: #666;
+  text-align: center;
+  display: block;
+}
+.con-list-time{
+  font-size: 26rpx;
+  color: #666;
+}
+.con-list-con{
+  font-size: 28rpx;
+  font-weight: 600;
 }

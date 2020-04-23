@@ -1,7 +1,25 @@
 <block wx:for="{{introductionDatas}}" wx:key="">
   <view class="introduction">
+    <!-- 简介标题 -->
     <text class="introduction-name">{{item.name}}</text>
+    <!-- 图片 -->
     <image mode="widthFix" class="introduction-img" src="{{item.imgUrl}}" />
-    <view class="introduction-con">{{item.con}}</view>
+    <!-- 内容简介 -->
+    <text class="con-title unified-set">{{item.title1}}</text>
+    <view class="con-info">{{item.con}}</view>
+    <!-- 企业理念 -->
+    <text class="unified-set">{{item.title2}}</text>
+    <view class="con-info">{{item.zz}}</view>
+    <!-- 营业执照 -->
+    <text class="unified-set">{{item.title3}}</text>
+    <view class="sample-shou">
+      <image mode="widthFix" src="{{item.yz}}" />
+    </view>
+
+    <!-- 谢谢观看 -->
+    <text class="unified-set sample-look">{{item.title6}}</text>
+    <view class="sample-shou">
+      <image mode="widthFix" src="{{item.imgGk}}" />
+    </view>
   </view>
 </block>

@@ -1,19 +1,19 @@
 
 let iconData= [
   {
-    imgUrl: '../../image/icon.jpg',
+    imgUrl: '../../image/qyzc.png',
     text: '环保政策',
   },
   {
-    imgUrl: '../../image/icon.jpg',
+    imgUrl: '../../image/qysj.png',
     text: '企业数据',
   },
   {
-    imgUrl: '../../image/icon.jpg',
+    imgUrl: '../../image/fbzx.png',
     text: '我要发布',
   },
   {
-    imgUrl: '../../image/icon.jpg',
+    imgUrl: '../../image/hbzc.png',
     text: '企业简介',
   },
 ];
@@ -26,31 +26,31 @@ const policyData = [
 
 const dataList = [
   {
-    post_image:'../../image/icon.jpg',
+    post_image:'../../image/qyzl.png',
     name:'企业检修资料',
-    pointicon:'查看数据'
+    pointicon:'../../image/jiantou.png'
   },
   {
-    post_image:'../../image/icon.jpg',
+    post_image:'../../image/tz.png',
     name:'企业台账表',
-    pointicon:'查看数据'
+    pointicon:'../../image/jiantou.png'
   },
   {
-    post_image:'../../image/icon.jpg',
+    post_image:'../../image/ht.png',
     name:'企业危废、废水等合同资料',
-    pointicon:'查看数据'
+    pointicon:'../../image/jiantou.png'
   },
   {
-    post_image:'../../image/icon.jpg',
+    post_image:'../../image/hbwj.png',
     name:'企业环保文件',
-    pointicon:'查看数据'
+    pointicon:'../../image/jiantou.png'
   },
 ];
 
 const meCenter = [
   {icon:'../../image/mesheng.png',title:'我的发布',point:'../../image/arrowright.png',id:'1'},
-  {icon:'../../image/mesheng.png',title:'我的地址',point:'../../image/arrowright.png',id:'2'},
-  {icon:'../../image/mesheng.png',title:'联系客服',point:'../../image/arrowright.png',id:'3'},
+  {icon:'../../image/address.png',title:'我的地址',point:'../../image/arrowright.png',id:'2'},
+  {icon:'../../image/contact.png',title:'联系客服',point:'../../image/arrowright.png',id:'3'},
 ];
 
 const contentCenter = [
@@ -58,7 +58,18 @@ const contentCenter = [
 ];
 
 const introductionData = [
-  {name:'东莞市环联管家生态环境科技有限公司',imgUrl:'../../image/banertwo.jpg',con:'青岛路博环保创建于2003年，占地面积4万平方米，是一家集环保科研、设计、生产、维护、销售和系统运营为一体的综合型高新技术企业。路博环保主要从事工业废气治理领域的咨询、设计、制造、施工及核心设备的研发、制造和销售等综合性服务，在国内同行业中具有明显的优势，并始终走在环保行业的前沿。公司自创立以来，以独特的技术，先进的工艺，严谨的态度和不断创新的理念，坚持深入客户现场，了解客户不断变化的工况和需求，认真听取客户反馈的情况，在化工、铁路机车、汽车、工程机械、煤矿机械、机加工、电器、电子、造船、军工、造纸、印刷、陶瓷、塑胶、烟草、技工培训、食品、茶厂、石油、矿山、玻璃制造、钢铁、冶金、电厂等几百个领域的各类环境污染治理方面积累了大量的工程考察、设计以及施工经验，并拥有中石化、中石油、中海油、中国南车、中国北车、海尔、江铃汽车、福田、潍柴等一系列品牌合作用户及成功案例。'}
+  {
+    name:'东莞市环联管家生态环境科技有限公司',
+    imgUrl:'../../image/banertwom.png',
+    title1:'内容简介',
+    con:'东莞市环联管家生态环境科技有限公司于2020年03月正式成立，是一家专业的东莞环境保护咨询企业。主要从事雨污分流，污水管网改造、设计、施工、维护的专业化公司，提供建设项目环境影响评价、排水许可证、环境验收保护、环保工程设计与施工、排污许可证、企业应急方案、土壤监测、危废转移、污染调查等环保全产业链服务。本公司秉承着“效率、专业、诚信”的服务理念，以“保障绿色发展，营造碧水蓝天”为使命，集合技术开发、人才培养与生产实践三位于一体。做事从一而终，为政府、园区和企业集团提供一站式环境保护解决方案。坚持把满足客户的需求作为工作核心，以精准的数据化设计、严格的制造、专业的施工与维护服务于客户',
+    title2:'企业理念',
+    zz:'公司服务宗旨：秉承着“效率、专业、诚信”的服务理念，做事从一而终',
+    title3:'营业执照',
+    yz:'../../image/yz.jpg',
+    title6:'谢谢观看',
+    imgGk:'../../image/xxgk.jpg',
+  }
 ];
 const remindData = [
   {id:'1',title:'XXX合同到期提醒1',toview:'查看'},

@@ -1,13 +1,25 @@
 <!-- 环保政策 -->
 <view class="policy-datas-cont">
-  <block wx:for="{{myreleaseDatas}}" wx:key="">
-    <view bindtap="myreleaseClick" class="policy-list-out">
-      <view data-id="{{item.id}}" class="policy-list">
+  <block wx:for="{{myreleaseDatas}}" wx:key="">    
+    <view data-id="{{item.id}}" data-siveid="{{siveId}}" data-roleid="{{roleId}}" bindtap="myreleaseClick" class="policy-list-out">
+      <view class="policy-list">
         <view class="policy-datas-cont-title">
-          <text>{{item.title}}</text>
+          <text>{{item.publishContent}}</text>
         </view>
-        <view class="policy-datas-cont-toview">{{item.time}}</view>
+        <view class="already-reply">
+          <text wx:if="{{item.reply !== null && item.replyTime!== null && item.userReadTime == null}}">已回复</text>
+          <!-- <text wx:if="{{item.reply !== null && item.replyTime!== null && item.userReadTime !== null}}">已读</text> -->
+          <view class="policy-datas-cont-toview">{{item.createTime}}</view>
+        </view>
       </view>
     </view>
   </block>
 </view>
+<block wx:if="{{isShow}}">
+  <view class="show-title">
+    <view class="show-title-out">
+      <image mode="widthFix" src="../../image/kunian.png" />
+    </view>
+    <text>您暂无发布任何消息，请前往发布中心进行发布。</text>
+  </view>
+</block>

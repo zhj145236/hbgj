@@ -1,5 +1,5 @@
 // pages/index/index.js
-const app = getApp(),o = app.requirejs('core');
+const app = getApp(),o = app.requirejs('core'),u = o.urlCon();
 const datas = require('../../utils/data.js');
 Page({
 
@@ -8,12 +8,12 @@ Page({
    */
   data: {
     // 环保政策数据
-    policyDatas:datas.policyData,
   },
 
   policyList:function(e){
+    console.log(e,'111');
     wx.navigateTo({
-      url: '../policycenter/policycenter',
+      url: '../policycenter/policycenter?id=' + e.currentTarget.dataset.newsid,
     })
   },
 
@@ -21,7 +21,24 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    const that = this;
+    wx.request({
+      url: u + 'newss',
+      data: {
+        start:0
+      },
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      method: "GET",
+      success(res) {
+        console.log(res,'123');
+        that.setData({
+          u:u,
+          policyDatas:res.data.data,
+        });
+      }
+    });
   },
 
   /**

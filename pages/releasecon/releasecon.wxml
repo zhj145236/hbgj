@@ -1,9 +1,24 @@
 <!--pages/remindcenter/remindcenter.wxml-->
+<!-- 留言内容 -->
 <view class="remindcenter-view">
   <view class="remindcenter-view-out">
     <block wx:for="{{releaseconDatas}}" wx:key="">
-      <text class="remindcenter-view-con">{{item.con}}</text>
-      <text class="remindcenter-view-pany">发布时间：{{item.time}}</text>
+      <text class="remindcenter-view-con">{{item.publishContent}}</text>
+      <text class="remindcenter-view-pany">发布时间：{{item.createTime}}</text>
     </block>
   </view>
 </view>
+<!-- 回复 -->
+<block wx:if="{{isReply}}">
+  <view class="reply-info">
+    <view class="reply-info-title">
+      <text>平台回复：</text>
+    </view>
+    <block wx:for="{{releaseconDatas}}" wx:key="">
+      <view class="reply-con">
+        <text class="reply-con-info">{{item.reply}}</text>
+        <text class="reply-con-time">回复时间：{{item.replyTime}}</text>
+      </view>
+    </block>
+  </view>
+</block>

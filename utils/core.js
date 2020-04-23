@@ -158,8 +158,13 @@ module.exports = {
         }), o;
     },
     urlCon:function(){
+        // 线上ip
+        // return 'http://47.115.57.64:8080/';
+        
         // 测试ip
         return "http://192.168.31.76:8080/";
+
+        //开发人员IP
         // return "http://192.168.31.174:8080/"
     },
 
@@ -174,5 +179,11 @@ module.exports = {
     // 压缩图片预览，查看pdf
     comImg:(u,n)=>{
         return u + 'files/prev' + n;
-    }
+    },
+
+    // 获取openid函数封装
+    l:(j,f)=>{
+        
+        console.log(n,'111');
+    },
 };

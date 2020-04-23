@@ -1,3 +1,5 @@
 {
-  "navigationBarTitleText": "发布中心"
+  "navigationBarTitleText": "发布中心",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark"
 }

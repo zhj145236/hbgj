@@ -1,44 +1,78 @@
 <!--pages/datacenter/datacenter.wxml-->
-<block wx:if="{{showPage}}" wx:for="{{dataLists}}" wx:key="">
-  <view class="filtrate-car-con-out-data-view">
-    <view bindtap='goodsClick' class='filtrate-car-con-out-data' data-index="{{index}}" data-goodName="{{item.name}}">
-      <view class="filtrate-car-con-out-data-center">
-        <!-- 单条数据左边图片区 -->
-        <view class="filtrate-car-con-out-data-left">
-          <view class="filtrate-car-con-out-data-left-img">
-            <image src="{{item.post_image}}" />
+<view wx:if="{{isShowPage}}">
+  <block wx:if="{{showPage}}" wx:for="{{dataLists}}" wx:key="">
+    <view class="filtrate-car-con-out-data-view">
+      <view bindtap='goodsClick' class='filtrate-car-con-out-data' data-index="{{index}}" data-goodName="{{item.name}}">
+        <view class="filtrate-car-con-out-data-center">
+          <!-- 单条数据左边图片区 -->
+          <view class="filtrate-car-con-out-data-left">
+            <view class="filtrate-car-con-out-data-left-img">
+              <image src="{{item.post_image}}" />
+            </view>
+            <text class="filtrate-car-con-out-data-right-maxTitle">{{item.name}}</text>
           </view>
-          <text class="filtrate-car-con-out-data-right-maxTitle">{{item.name}}</text>
+          <!-- 单条数据右边内容区 -->
+          <view class="filtrate-car-con-out-data-right-price">
+            <image mode="widthFix" src="{{item.pointicon}}" />
+          </view>
         </view>
-        <!-- 单条数据右边内容区 -->
-        <view class="filtrate-car-con-out-data-right-price">{{item.pointicon}}</view>
+      </view>
+
+      <!-- 手风琴数据 -->
+      <view class="con-list-view" hidden="{{index == num?'':'hidNode'}}" data-index="{{index}}">
+        <block wx:if="{{showData}}">
+          <scroll-view scroll-y="{{isScrolly}}" class="scroll-view-style" style="max-height:{{winHeight}}rpx;">
+            <block wx:for="{{conLists}}" wx:for-item="itemName" wx:key="">
+              <view class="con-list" data-nane="{{itemName.con}}" data-url="{{itemName.conurl}}" bindtap="nextData">
+                <view class="con-list-pdf-out">
+                  <view class="con-list-pdf">
+                    <image mode="widthFix" src="../../image/pdf.png" />
+                  </view>
+                  <text class="con-list-con">{{itemName.con}}</text>
+                </view>
+                <text class="con-list-time">{{itemName.time}}</text>
+              </view>
+            </block>
+          </scroll-view>
+          <view class="down-data-btn">
+            <!-- <view bindtap="lodingMore" data-goodname="{{goodname}}" class="look-move">查看更多</view> -->
+            <view bindtap="packUp" class="look-move">
+            <view class="look-move-out">
+                <text>收起</text>
+                <view class="look-move-image">
+                  <image mode="widthFix" src="../../image/sl.png" />
+                </view>
+              </view>
+            </view>
+          </view>
+        </block>
+        <block wx:else>
+          <view class="no-data">
+            <view class="no-data-img">
+              <image mode="widthFix" src="{{showIcon}}" />
+            </view>
+            <text class="no-data-prompt">暂无数据上传，请联系东莞市环联管家生态环境科技有限公司。</text>
+          </view>
+        </block>
       </view>
     </view>
+  </block>
 
-    <!-- 手风琴数据 -->
-    <view class="con-list-view" hidden="{{index == num?'':'hidNode'}}" data-index="{{index}}">
-      <block wx:if="{{showData}}">
-        <scroll-view scroll-y="{{isScrolly}}" class="scroll-view-style" style="max-height:{{winHeight}}rpx;">
-          <block wx:for="{{conLists}}" wx:for-item="itemName" wx:key="">
-            <view class="con-list" data-nane="{{itemName.con}}" data-url="{{itemName.conurl}}" bindtap="nextData">
-              <text class="con-list-time">{{itemName.time}}</text>
-              <text class="con-list-con">{{itemName.con}}</text>
-            </view>
-          </block>
-        </scroll-view>
-        <view class="down-data-btn">
-          <view bindtap="lodingMore" class="look-move">查看更多</view>
-          <view bindtap="packUp" class="pack-up-data">收起</view>
-        </view>
-      </block>
-      <block wx:else>
-        <view class="no-data">
-          <view class="no-data-img">
-            <image mode="widthFix" src="{{showIcon}}" />
-          </view>
-          <text class="no-data-prompt">暂无数据上传，请联系东莞市环联管家生态环境科技有限公司。</text>
-        </view>
-      </block>
+  <block wx:if="{{showTitle}}">
+    <view class="show-title">
+      <view class="show-title-out">
+        <image mode="widthFix" src="../../image/kunian.png" />
+      </view>
+      <text>游客模式无查看企业数据权限</text>
     </view>
-  </view>
-</block>
+  </block>
+
+  <block wx:if="{{isAuthorization}}">
+    <view class="show-title">
+      <view class="show-title-out">
+        <image mode="widthFix" src="../../image/kunian.png" />
+      </view>
+      <text>您尚未授权登录，请前往个人中心进行授权登录</text>
+    </view>
+  </block>
+</view>

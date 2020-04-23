@@ -22,7 +22,7 @@ page{
   background-color: rgba(255, 255, 255, 0.7);
   width:80%;
   margin-left: -40%;
-  margin-top: -46%;
+  margin-top: -58%;
   border-radius: 5px;
 }
 title{
@@ -51,37 +51,52 @@ title{
   line-height: 40px;
   /* text-indent:15px;
   outline:none; */
+  border-radius: 10rpx;
   padding-left: 10px;
   margin-bottom: 14px;
 }
 .log-btn{
   margin: 10px auto 20px auto;
-  display: flex;
+  /* display: flex;
   flex-direction:row;
   justify-content:space-between;
-  align-items:center;
+  align-items:center; */
   width: 90%;
 }
 .log-btn > button{
   display: block;
-  width: 46%;
+  width: 100%;
   height: 40px;
   line-height: 40px;
-  margin: 0;
   padding: 0;
   outline: none;
-  border-radius: 0;
+  border-radius: 10rpx;
   font-size: 1em;
+  font-size: 28rpx;
 }
 .log-btn-members{
-  background-color: #9AE36A;
+  background-color: #0175ae;
   color: #fff;
 }
 .log-btn-tourists{
-  background-color: #494949;
+  background-color: #1aad19;
   color: #e4e4e4;
+  margin-top: 30rpx;
 }
 button:after {
   border: none;
+}
+/* logo */
+.logo-img{
+  width: 140rpx;
+  height: 140rpx;
+  margin:40rpx auto 0 auto;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.logo-img > image{
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 

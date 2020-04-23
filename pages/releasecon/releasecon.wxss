@@ -17,4 +17,40 @@ page{
 }
 .remindcenter-view-pany{
   margin-top: 40rpx;
+  font-size: 24rpx;
+  color: #666;
+}
+
+.reply-info{
+  width: 100%;
+  margin: 40rpx auto;
+  padding-top: 10rpx;
+  background-color: #fff;
+}
+.reply-info-title{
+  background-color: #dddddd;
+  width: 100%;
+}
+.reply-info-title > text{
+  display: block;
+  width: 90%;
+  font-size: 26rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  margin: auto;
+}
+.reply-con{
+  width: 90%;
+  margin:40rpx auto 0 auto;
+}
+.reply-con-info{
+  font-size: 26rpx;
+}
+.reply-con-time{
+  display: block;
+  font-size: 24rpx;
+  color: #666;
+  text-align: right;
+  height: 80rpx;
+  line-height: 80rpx;
 }

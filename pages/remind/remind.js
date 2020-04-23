@@ -1,5 +1,5 @@
 // pages/index/index.js
-const app = getApp(),o = app.requirejs('core');
+const app = getApp(), o = app.requirejs('core'),u = o.urlCon();
 const datas = require('../../utils/data.js');
 Page({
 
@@ -8,32 +8,63 @@ Page({
    */
   data: {
     // 环保政策数据
-    remindDatas:datas.remindData,
   },
 
   remindList:function(e){
+    console.log(e);
     wx.navigateTo({
-      url: '../remindcenter/remindcenter',
+      url: '../remindcenter/remindcenter?roleid=' + e.currentTarget.dataset.roleid + '&siveid=' + e.currentTarget.dataset.siveid + '&id=' + e.currentTarget.dataset.dataid,
     })
+  },
+
+  /**
+   * 
+   * @param 
+   * 请求提醒事项列表接口
+   * roleid 值为 4 则表示用户为游客
+   * roleid 值不为 4 则表示用户为非游客
+   * siveid用户id
+   * 如果为游客siveid为openid
+   * 如果为企业或其它角色则siveid则为userid 
+   */
+  mattersFun:(roleid,siveid,f)=>{
+    const listObj = {};
+    roleid = parseInt(roleid);
+    if(roleid != undefined || siveid != undefined){
+      if(4 === roleid){
+        listObj.openid = siveid
+        console.log('走了游客');
+      }else{
+        listObj.userId = siveid;
+        console.log('走了用户');
+      }
+    }
+    wx.request({
+      url: u + 'notices/wx_notice',
+      data: listObj,
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      method: "GET",
+      success:(res)=> {
+        console.log(res,'提醒事项返回数据');
+        f.setData({
+          remindDatas:res.data.data,
+          roleid:roleid,
+          siveid:siveid
+        });
+      }
+    });
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    wx.request({
-      url: u + 'notices/wx_notice',
-      data: {
-        openid:"grOOLt4K9gD42oPCPbxjLbbcxJI9"
-      },
-      header: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      method: "GET",
-      success(res) {
-        console.log(res,'提醒事项返回数据');
-      }
-    });
+    const that = this,roleid = options.roleid,siveid = options.siveid;
+    console.log(options.roleid,'角色id');
+    console.log(options.siveid,'用户id值');
+    that.mattersFun(roleid,siveid,that);
   },
 
   /**

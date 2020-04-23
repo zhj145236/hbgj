@@ -10,5 +10,6 @@
     <view class="notice-center-title-con">
       <rich-text nodes="{{nodes}}" />
     </view>
+    <text class="author-style">作者：{{item.author}}</text>
   </block>
 </view>

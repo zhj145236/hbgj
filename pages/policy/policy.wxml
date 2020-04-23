@@ -1,14 +1,19 @@
 <!-- 环保政策 -->
-<view class="policy-peripheral">
-  <view class="policy-datas-cont">
-    <block wx:for="{{policyDatas}}" wx:key="">
-      <view bindtap="policyList" data-id="{{item.id}}" class="policy-list">
-        <view class="policy-datas-cont-title">
-          <text>{{item.title}}</text>
-          <view>{{item.time}}</view>
-        </view>
-        <view class="policy-datas-cont-toview">{{item.toview}}</view>
+
+<view class="policy-datas-cont">
+  <block wx:for="{{policyDatas}}" wx:key="">
+    <view data-index="{{index}}" class='policy-list-out' bindtap="policyList" data-newsid="{{item.id}}">
+      <view class="policy-datas-cont-img">
+        <image mode="heightFix" src="{{u + item.bannerImg}}" />
       </view>
-    </block>
-  </view>
+      <view class="policy-list">
+        <text class="policy-datas-cont-title-text">{{item.title}}</text>
+        <view class="policy-author-info">
+          <!-- <text class="policy-author">作者：{{item.author}}</text> -->
+          <view class="policy-datas-cont-title">发布时间：{{item.createTime}}
+        </view>
+        </view>
+      </view>
+    </view>
+  </block>
 </view>

@@ -3,7 +3,7 @@ page{
   font-size: 30rpx;
   background: #ededed;
   font-family:'Microsoft YaHei','微软雅黑';
-  overflow: hidden;
+  overflow-x: hidden;
 }
 .me-img{
   width: 100%;
@@ -18,20 +18,45 @@ page{
   display: flex;
   flex-direction: row;
 }
-.userinfo > button{
+.login-img > button{
   display: block;
   border-radius: 100%;
-  width: 160rpx;
-  height: 160rpx;
-  background: #fff;
+  width: 140rpx;
+  height: 140rpx;
+  background-color: rgba(0,0,0,0);
   font-size: 12px;
-  line-height: 160rpx;
+  line-height: 140rpx;
   position: absolute;
   top:50%;
-  margin-top: -80rpx;
+  margin-top: -100rpx;
   left: 50%;
-  margin-left: -80rpx;
+  margin-left: -70rpx;
+  align-items: center;
+  padding: 0;
+  border: none;
 }
+button::after{
+  border: none;
+}
+.login-img{
+  width: 140rpx;
+  height: 140rpx;
+  background: #fff;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  margin: auto;
+}
+.login-img image{
+  width: 120rpx;
+  height: 120rpx;
+  margin: 0 auto;
+  /* margin-top:10rpx; */
+}
+.userinfo-nickname{
+  background-color: rgba(0, 0, 0, 0);
+}
+
 .userinfo-view{
   position: absolute;
   width: 300rpx;
@@ -42,7 +67,7 @@ page{
   /* display: flex;
   flex-direction: row; */
 }
-.userinfo-img{
+.userinfo-img,.login-img{
   width: 140rpx;
   height: 140rpx;
   background: #fff;
@@ -62,14 +87,20 @@ page{
   display:block;
 }
 .userinfo-nickname text{
-  font-size: 34rpx;
-  color: #4a4a4a;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #fff;
   display: block;
   height: 80rpx;
   line-height: 80rpx;
   /* margin-left: 20rpx; */
   font-weight: 400;
   text-align: center;
+  width: 100%;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  overflow: hidden;
+  font-weight: 600;
 }
 
 /* 个人中心 */
@@ -158,6 +189,18 @@ page{
   line-height: 80rpx;
   outline:none;
   border: none;
-  background-color: #4F9422;
+  background-color: #1aad19;
   color: #fff;
+}
+.release-info{
+  font-size: 24rpx;
+  color: #FF8000;
+  margin-right: 40rpx;
+}
+.release-info-out{
+  display: flex;
+  flex-direction:row;
+  justify-content:flex-start;
+  align-items:center;
+  align-content:center;
 }

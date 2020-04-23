@@ -1,5 +1,5 @@
 // pages/datacenter/datacenter.js
-const app = getApp(),o = app.requirejs('core');
+const app = getApp(),o = app.requirejs('core'),u = o.urlCon();
 const datas = require('../../utils/data.js');
 Page({
 

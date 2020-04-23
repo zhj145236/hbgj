@@ -13,6 +13,7 @@ page{
   height:80rpx;
   line-height: 80rpx;
   margin: auto;
+  font-weight: 600;
 }
 .contact ,.call,.sex{
   display: flex;
@@ -56,7 +57,7 @@ page{
 .but-submit{
   font-size: 14px;
   width: 90%;
-  background: #9AE36A;
+  background: #1aad19;
   color: #fff;
   margin: 20rpx auto 40rpx auto;
   padding: 10rpx 0;

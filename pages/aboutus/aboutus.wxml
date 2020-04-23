@@ -2,7 +2,18 @@
   <image src="{{bjImg}}" />
   <view class="container">
     <view class="userinfo">
-      <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 请授权 </button>
+      <!-- <button class="login-img" wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">    <image src="../../image/me.png" />
+      </button> -->
+
+      <view wx:if="{{!hasUserInfo && canIUse}}" class="userinfo-view">
+        <view class="login-img">
+          <button open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+              <image src="../../image/me.png" />
+          </button>
+        </view>
+        <button open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="userinfo-nickname"><text>点击登录</text></button>
+      </view>
+
       <block wx:else>
         <view wx:if="{{userInfoSet}}" class="userinfo-view">
           <view class="userinfo-img">
@@ -19,7 +30,7 @@
   <view class="about-us-top-out">
     <text bindtap="introClick" class="about-us-top-intro">企业简介</text>
     <text class="about-us-top-vertical">|</text>
-    <view bindtap="mattersClick" class="about-us-top-matters">提醒事项<text class="about-us-top-matters-icon">1</text></view>
+    <view bindtap="mattersClick" data-siveid="{{siveId}}" data-roleid="{{roleId}}" class="about-us-top-matters">提醒事项<text wx:if="{{isShow}}" class="about-us-top-matters-icon">{{remindNum}}</text></view>
   </view>
 </view>
 
@@ -33,7 +44,13 @@
             <image src="{{item.icon}}" />
             <text>{{item.title}}</text>
           </view>
-          <view class="me-center-con-next"><image src="{{item.point}}" /></view>
+
+          <view class="release-info-out">
+            <view wx:if="{{isListShow}}" class="release-info">
+              <text>{{textInfo}}</text>
+            </view>
+            <view class="me-center-con-next"><image src="{{item.point}}" /></view>
+          </view>
         </block>
         <block wx:else>
           <view class="me-center-con-data-view">

@@ -1,0 +1,7 @@
+<!--pages/bannerDetails/bannerDetails.wxml-->
+<view wx:if="{{isShowPage}}">
+  <view class="case-center">
+    <!-- <text>案例中心</text> -->
+    <rich-text nodes="{{nodes}}" />
+  </view>
+</view>

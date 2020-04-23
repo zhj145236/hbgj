@@ -8,32 +8,82 @@ Page({
    */
   data: {
     // 环保政策数据
-    myreleaseDatas:datas.myreleaseData,
+    // myreleaseDatas:datas.myreleaseData,
   },
 
   myreleaseClick:function(e){
+    console.log(e,'用户携带数据');
     wx.navigateTo({
-      url: '../releasecon/releasecon',
+      url: '../releasecon/releasecon?dataId=' + e.currentTarget.dataset.id + '&roleid=' + e.currentTarget.dataset.roleid + '&siveid=' + e.currentTarget.dataset.siveid,
     })
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
+  /***
+   * 获取用户的发布列表信息
+   * 
+   *    @param 
+  * siveId  用户id的值
+  * roleId角色id的值 说明如下： 
+  * 1、最高权限（昱升）id
+  * 2、环联管家id
+  * 3、企业id
+  * 4、游客id
+  */
+  showPublishList:function(siveId,roleId){
+    const that = this;
+    if(siveId===null  || roleId === null){
+      console.error("必备的参数：siveId,roleId",siveId,roleId);
+        return;
+    }
+    roleId = parseInt(roleId);
+    const parmObj={};
+    // console.log(siveId,roleId,'测试数据');
+    if(4===roleId ){
+      parmObj.openid=siveId;
+    }else{
+      parmObj.userId=siveId;
+    } 
+    console.log(parmObj);
     wx.request({
       url: u + 'publishs/wxlist',
-      data: {
-        openid:"grOOLt4K9gD42oPCPbxjLbbcxJI9"
-      },
+      data: parmObj,
       header: {
         "Content-Type": "application/x-www-form-urlencoded"
       },
       method: "GET",
       success(res) {
-        console.log(res,'返回数据');
+        that.setData({
+          myreleaseDatas:res.data.data
+        });
+        console.log(typeof res.data.data.length,'返回长度');
+
+        if(res.data.data.length == 0){
+          // console.log('111');
+          that.setData({
+            isShow:true
+          });
+        }else{
+          // console.log('222');
+          that.setData({
+            isShow:false
+          });
+        }
       }
     });
+  },
+ 
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+ 
+    const that = this,siveId = options.siveId,roleId = options.roleId;
+    that.setData({
+      siveId:siveId,
+      roleId:roleId
+    });
+    // console.log(siveId,roleId,'123');
+
   },
 
   /**
@@ -47,7 +97,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    let that = this;
+    let that = this,siveId = that.data.siveId,roleId = that.data.roleId;
+    that.showPublishList(siveId,roleId);
     wx.getSystemInfo({
       success: function (res) {
         that.setData({

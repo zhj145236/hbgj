@@ -1,13 +1,18 @@
 /* pages/introduction/introduction.wxss */
 page{
   font-size: 30rpx;
+  font-family:'Microsoft YaHei','微软雅黑';
+}
+text{
+  display: block;
 }
 .introduction{
   padding: 30rpx 0;
+  width:90%;
+  margin: auto;
 }
 .introduction-name{
   display: block;
-  text-align: center;
   width: 100%;
   font-size: 36rpx;
   font-weight: 600;
@@ -15,11 +20,28 @@ page{
   line-height: 100rpx;
 }
 .introduction-img{
-  width: 90%;
+  width: 100%;
   display: block;
-  margin:0 auto 100rpx auto;
+  margin:auto;
 }
-.introduction-con{
-  width: 90%;
-  margin: 0 auto 100rpx auto;
+/* .introduction-con{
+  margin: 0 auto 60rpx auto;
+} */
+/* 统一样式 */
+.unified-set{
+  font-weight: 600;
+  color: #393939;
+  height:100rpx;
+  line-height:100rpx;
+}
+.sample-shou{
+  width: 100%;
+}
+.sample-shou > image{
+  display: block;
+  width: 100%;
+}
+.sample-look{
+  color: #FF8000;
+  font-size: 34rpx;
 }

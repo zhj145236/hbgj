@@ -13,6 +13,8 @@ Page({
     isScrolly:1,
     winHeight:400,
     setInter:'',
+    isShowBanner:false,
+    isShowPage:false,
   },
 
 
@@ -64,6 +66,7 @@ Page({
     that.setData({
       conLists:conList,
       num:e.currentTarget.dataset.index,
+      goodname:goodname,
     });    
   },
 
@@ -122,26 +125,139 @@ Page({
 
   // 查看数据详情
   lodingMore:function(e){
-    wx.navigateTo({
-      url: '../datalist/datalist',
-    })
+    console.log(e,'企业数据携带参数');
+    wx.showToast({
+      title: "该功能模块正在开发中",
+      icon: 'none',
+      duration: 2000
+    });
+    // wx.navigateTo({
+    //   url: '../datalist/datalist',
+    // })
+  },
+
+  /**
+   * 
+   * @param {*} options
+   * 获取企业数据接口files/wxlistFiles
+   * 参数说明：
+   * isAuthorization 是否显示 "您尚未授权登录，请前往个人中心进行授权登录"
+   * showTitle 是否显示 "游客模式无查看企业数据权限"
+   * showPage 是否要将当前页面卸载，与showTitle配合使用
+   * f 改变当前函数this指向 data
+   * isComplete 判断用户是否出触发了下拉动作
+   * 是：设置值为true 停止下拉动作弹回页面，否：持续下拉行为
+   */
+  dataFun:(f)=>{
+    console.log('A');
+    /**
+     * 获取用户角色 4 为游客 3 为企业 showPage显示或隐藏数据中心页面
+     */
+    wx.getStorage({
+      key: 'userRole',
+      success (res) {
+        let roleId = res.data;
+        console.log(roleId,'shuju');
+        console.log('B');
+
+        // id为4表示为游客 注意：企业数据中心页面游客登录成功也不会有任何信息展示
+        if(roleId == "4"){
+          wx.hideLoading({
+            success(res){
+              console.log('游客登录');
+              f.setData({showPage:false,showTitle:true,isAuthorization:false,isShowPage:true});
+            }
+          });
+        }else{
+          f.setData({showPage:true,showTitle:false,isAuthorization:false});
+          console.log('走了这里');
+          wx.getStorage({
+            key: 'userData',
+            success (res) {
+              const resourceIds = res.data.user.id;
+              console.log(res,'用户数据');
+              // console.log(resourceIds,'用户ID');
+              // console.log(res.data.Cookie,'用户Cookie');
+              // console.log(res.data.token,'用户token');
+              /** 企业进入展示企业对应数据  */
+              wx.request({
+                url: u + 'files/wxlistFiles',
+                data: {
+                  resourceId:resourceIds
+                },
+                header: {
+                  "Cookie":res.data.Cookie,
+                  "login-token":res.data.token,
+                  "Content-Type": "application/x-www-form-urlencoded"
+                },
+                method: "GET",
+                success(res) {
+                  console.log(res,'企业返回数据');
+                  const enterpriseData = res.data.data,nameArr = [];
+                  for(let i in enterpriseData){
+                    nameArr.push(enterpriseData[i].tag);
+                  }
+                  f.setData({
+                    enterpriseData:res.data.data,
+                    nameArrs:nameArr,
+                    isComplete:true,
+                    isShowBanner:true
+                  });
+                  console.log(res.data.data,'返回数据');
+                  if(f.data.isShowBanner){
+                    wx.hideLoading({
+                      success(res){
+                        f.setData({
+                          isShowPage:true
+                        });
+                      }
+                    });
+                  }
+                }
+              });
+            },
+            fail(res){
+              wx.hideLoading({
+                success(res){
+                  console.log(res,'获取用户信息失败');
+                }
+              });
+              
+            }
+          });
+          if(f.data.isComplete){
+            wx.stopPullDownRefresh();
+          }
+        }
+      },
+      fail(res){
+        wx.hideLoading({
+          success(res){
+            f.setData({isAuthorization:true,showPage:false,showTitle:false,isShowPage:true});
+            console.log('C');
+            wx.showModal({
+              title: '提示',
+              content: '尚未授权登录，请前往个人中心页面进行授权',
+              success (res) {
+                if (res.confirm) {
+                  wx.switchTab({
+                    url: '../aboutus/aboutus'
+                  })
+                } else if (res.cancel) {}
+              }
+            })
+          }
+        });        
+      },
+    });
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    const that = this;
 
-    wx.getStorage({
-      key: 'userRole',
-      success (res) {
-        console.log(res,'获取数据');
-      },
-      fail(res){
-        console.log(res,'jiashuju');
-      }
-    });
+    
   },
 
   
@@ -157,7 +273,14 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+    const that = this;
+    wx.showLoading({
+      title: '加载中',
+      mask:true,
+      success(res){
+        that.dataFun(that);
+      }
+    });    
   },
 
   /**
@@ -178,16 +301,14 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    // const that = this;
-    // 3秒模拟数据加载
-    setTimeout(function () {
-      // 不加这个方法真机下拉会一直处于刷新状态，无法复位
-      wx.stopPullDownRefresh()
-    }, 2000);
-    // that.setData({
-    //   currentTab: 0 //当前页的一些初始数据，视业务需求而定
-    // })
-    // this.onLoad(); //重新加载onLoad()
+    const that = this;
+    wx.showLoading({
+      title: '加载中',
+      mask:true,
+      success(res){
+        that.dataFun(that);
+      }
+    });
   },
 
   /**

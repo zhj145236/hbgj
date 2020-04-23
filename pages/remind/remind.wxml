@@ -1,12 +1,12 @@
 <!-- 环保政策 -->
 <view class="policy-datas-cont">
   <block wx:for="{{remindDatas}}" wx:key="">
-    <view bindtap="remindList" class="policy-list-out">
+    <view bindtap="remindList" data-siveid="{{siveid}}" data-roleid="{{roleid}}" data-dataid="{{item.id}}" class="policy-list-out">
       <view data-id="{{item.id}}" class="policy-list">
         <view class="policy-datas-cont-title">
           <text>{{item.title}}</text>
         </view>
-        <view class="policy-datas-cont-toview">{{item.toview}}</view>
+        <view class="policy-datas-cont-toview">查看</view>
       </view>
     </view>
   </block>

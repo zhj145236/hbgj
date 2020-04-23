@@ -1,8 +1,11 @@
 <!--pages/login/login.wxml-->
 <view class="bj-img" style="height:{{mobileHeight}}">
-  <image class="back-img" style="height:{{mobileHeight}}" src="../../image/bj1.jpg" />
+  <image class="back-img" mode="heightFix" style="height:{{mobileHeight}}" src="../../image/login.png" />
   <form bindsubmit="formSubmit">
     <view class="log-cont">
+      <view class="logo-img">
+        <image mode="widthFix" src="../../image/logo.jpg" />
+      </view>
       <title>环联管家</title>
       <view class="user-info">
         <view class="user-info-view">用户名：</view>
@@ -13,8 +16,8 @@
         <input class="user-info-inp" name="pswd" value="zhj123456" placeholder="请输入密码：" />
       </view>
       <view class="log-btn">
-        <button form-type='submit' class="log-btn-members">会员</button>
-        <button bindtap="tourists" open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="log-btn-tourists">游客</button>
+        <button form-type='submit' disabled="{{isDisabledMembers}}" class="log-btn-members">账号登录</button>
+        <button bindtap="tourists" disabled="{{isDisabledGetUser}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="log-btn-tourists">微信登录</button>
       </view>
     </view>
   </form>

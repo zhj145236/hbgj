@@ -1,0 +1,5 @@
+/* pages/bannerDetails/bannerDetails.wxss */
+.case-center{
+  width: 90%;
+  margin:40rpx auto;
+}

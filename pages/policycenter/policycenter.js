@@ -16,7 +16,7 @@ Page({
    */
   onLoad: function (options) {
     let that = this,newsid = options.id,newsArr = [];
-    console.log(typeof newsid,'数据类型');
+    console.log(newsid,'数据类型');
 
     wx.request({
       url: u + 'newss',
