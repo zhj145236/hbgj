@@ -148,108 +148,81 @@ Page({
    * isComplete 判断用户是否出触发了下拉动作
    * 是：设置值为true 停止下拉动作弹回页面，否：持续下拉行为
    */
-  dataFun:(f)=>{
-    console.log('A');
-    /**
-     * 获取用户角色 4 为游客 3 为企业 showPage显示或隐藏数据中心页面
-     */
-    wx.getStorage({
-      key: 'userRole',
-      success (res) {
-        let roleId = res.data;
-        console.log(roleId,'shuju');
-        console.log('B');
-
-        // id为4表示为游客 注意：企业数据中心页面游客登录成功也不会有任何信息展示
-        if(roleId == "4"){
-          wx.hideLoading({
-            success(res){
-              console.log('游客登录');
-              f.setData({showPage:false,showTitle:true,isAuthorization:false,isShowPage:true});
-            }
-          });
-        }else{
-          f.setData({showPage:true,showTitle:false,isAuthorization:false});
-          console.log('走了这里');
-          wx.getStorage({
-            key: 'userData',
+  dataFun:(f,d)=>{
+    if(d == undefined){
+      wx.hideLoading({
+        success(res){
+          wx.stopPullDownRefresh();
+          f.setData({isAuthorization:true,showPage:false,showTitle:false,isShowPage:true});
+          console.log('C');
+          wx.showModal({
+            title: '提示',
+            content: '尚未授权登录，请前往个人中心页面进行授权',
             success (res) {
-              const resourceIds = res.data.user.id;
-              console.log(res,'用户数据');
-              // console.log(resourceIds,'用户ID');
-              // console.log(res.data.Cookie,'用户Cookie');
-              // console.log(res.data.token,'用户token');
-              /** 企业进入展示企业对应数据  */
-              wx.request({
-                url: u + 'files/wxlistFiles',
-                data: {
-                  resourceId:resourceIds
-                },
-                header: {
-                  "Cookie":res.data.Cookie,
-                  "login-token":res.data.token,
-                  "Content-Type": "application/x-www-form-urlencoded"
-                },
-                method: "GET",
-                success(res) {
-                  console.log(res,'企业返回数据');
-                  const enterpriseData = res.data.data,nameArr = [];
-                  for(let i in enterpriseData){
-                    nameArr.push(enterpriseData[i].tag);
-                  }
-                  f.setData({
-                    enterpriseData:res.data.data,
-                    nameArrs:nameArr,
-                    isComplete:true,
-                    isShowBanner:true
-                  });
-                  console.log(res.data.data,'返回数据');
-                  if(f.data.isShowBanner){
-                    wx.hideLoading({
-                      success(res){
-                        f.setData({
-                          isShowPage:true
-                        });
-                      }
-                    });
-                  }
-                }
-              });
-            },
-            fail(res){
+              if (res.confirm) {
+                wx.switchTab({
+                  url: '../aboutus/aboutus'
+                })
+              } else if (res.cancel) {}
+            }
+          })
+        }
+      });
+    }else{
+      const roleId = parseInt(d.roleId);
+      if(4 === roleId){
+        wx.hideLoading({
+          success: (res) => {
+            f.setData({showPage:false,showTitle:true,isAuthorization:false,isShowPage:true});
+            wx.stopPullDownRefresh();
+          },
+        });
+      }else{
+        const resourceIds = d.userId;
+        f.setData({showPage:true,showTitle:false,isAuthorization:false});
+        // console.log(resourceIds,'用户ID');
+        // console.log(res.data.Cookie,'用户Cookie');
+        // console.log(res.data.token,'用户token');
+        /** 企业进入展示企业对应数据  */
+        wx.request({
+          url: u + 'files/wxlistFiles',
+          data: {
+            resourceId:resourceIds
+          },
+          header: {
+            "login-token":d.token,
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          method: "GET",
+          success(res) {
+            console.log(res,'企业返回数据');
+            const enterpriseData = res.data.data,nameArr = [];
+            for(let i in enterpriseData){
+              nameArr.push(enterpriseData[i].tag);
+            }
+            f.setData({
+              enterpriseData:res.data.data,
+              nameArrs:nameArr,
+              isComplete:true,
+              isShowBanner:true
+            });
+            console.log(res.data.data,'返回数据');
+            if(f.data.isShowBanner){
               wx.hideLoading({
                 success(res){
-                  console.log(res,'获取用户信息失败');
+                  f.setData({
+                    isShowPage:true
+                  });
                 }
               });
-              
             }
-          });
-          if(f.data.isComplete){
-            wx.stopPullDownRefresh();
           }
+        });
+        if(f.data.isComplete){
+          wx.stopPullDownRefresh();
         }
-      },
-      fail(res){
-        wx.hideLoading({
-          success(res){
-            f.setData({isAuthorization:true,showPage:false,showTitle:false,isShowPage:true});
-            console.log('C');
-            wx.showModal({
-              title: '提示',
-              content: '尚未授权登录，请前往个人中心页面进行授权',
-              success (res) {
-                if (res.confirm) {
-                  wx.switchTab({
-                    url: '../aboutus/aboutus'
-                  })
-                } else if (res.cancel) {}
-              }
-            })
-          }
-        });        
-      },
-    });
+      }
+    }
   },
 
   /**
@@ -273,12 +246,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    const that = this;
+    const that = this,userData = app.globalData.userData;
     wx.showLoading({
       title: '加载中',
       mask:true,
       success(res){
-        that.dataFun(that);
+        that.dataFun(that,userData);
       }
     });    
   },
@@ -301,12 +274,12 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    const that = this;
+    const that = this,userData = app.globalData.userData;
     wx.showLoading({
       title: '加载中',
       mask:true,
       success(res){
-        that.dataFun(that);
+        that.dataFun(that,userData);
       }
     });
   },

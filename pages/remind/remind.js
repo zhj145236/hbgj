@@ -48,11 +48,16 @@ Page({
       method: "GET",
       success:(res)=> {
         console.log(res,'提醒事项返回数据');
-        f.setData({
-          remindDatas:res.data.data,
-          roleid:roleid,
-          siveid:siveid
-        });
+        const remindD = res.data.data;
+        console.log(remindD.length,'88');
+        if(remindD.length !== 0){
+          f.setData({
+            isShow:true,
+            remindDatas:res.data.data,
+            roleid:roleid,
+            siveid:siveid
+          });
+        }
       }
     });
   },

@@ -8,7 +8,7 @@ Page({
    */
   data: {
     contentCenters: datas.contentCenter,
-
+    isShow:true
   },
 
   /**
@@ -31,14 +31,18 @@ Page({
       success(res) {
         const newsData = res.data.data;
         console.log(newsData);
-        for(let i in newsData){
-          if(newsid == newsData[i].id){
-            console.log(newsData[i].content);
-            newsArr.push(newsData[i]);
-            that.setData({
-              nodes:newsData[i].content
-            });
+        if(that.data.isShow){
+          for(let i in newsData){
+            if(newsid == newsData[i].id){
+              console.log(newsData[i].content);
+              newsArr.push(newsData[i]);
+              that.setData({
+                nodes:newsData[i].content,
+                isShow:false
+              });
+            }
           }
+          console.log(that.data.isShow);
         }
         // console.log(newsArr,'数据');
         that.setData({

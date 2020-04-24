@@ -52,38 +52,38 @@ Page({
             },
             method: "GET",
             success:(res)=> {
-                // that.setData({dataN:res.data.openid});
-                wx.request({
-                  url: u + 'users/wxAutoLogin',
-                  data: {
-                    "openid":res.data.openid
-                  },
-                  header: {
-                    "Content-Type": "application/json"
-                  },
-                  method: "POST",
-                  success(res) {
-                    // console.log(res.data,'游客数据');
-                    if(res.data.token !== undefined || res.data.token !== null || res.data.token !== ''){
-                      userObj.wxUserInfo = i.detail.userInfo; // 微信返回的的用户数据
-                      userObj.xtBackData = res.data; //系统返回的用户数据
-                      wx.setStorage({
-                        key:'userData',
-                        data:userObj
-                      });
-                      // 将用户角色（游客）保存在缓存中方便其他页面调用
-                      console.log(res,'数据');
-                      wx.setStorage({
-                        key:'userRole',
-                        data:res.data.role[0].id
-                      });
-                      f.setData({
-                        siveId:res.data.user.openid, // 需要传的用户id openid （必然是游客）
-                        roleId:res.data.role[0].id //用户的角色id
-                      });
-                    }
+              // that.setData({dataN:res.data.openid});
+              wx.request({
+                url: u + 'users/wxAutoLogin',
+                data: {
+                  "openid":res.data.openid
+                },
+                header: {
+                  "Content-Type": "application/json"
+                },
+                method: "POST",
+                success(res) {
+                  console.log(res.data,'游客数据');
+                  if(res.data.token !== undefined || res.data.token !== null || res.data.token !== ''){
+                    console.log(i,'微信数据');
+                    // 游客用户数据
+                    userObj.userId = res.data.user.openid,
+                    userObj.roleId = res.data.role[0].id,
+                    userObj.headImgUrl = i.detail.userInfo.avatarUrl,
+                    userObj.nickname =  i.detail.userInfo.nickName,
+                    userObj.errMsg =  i.detail.errMsg;
+                    app.globalData.userData = userObj;
+                    f.setData({
+                      siveId:res.data.user.openid, // 需要传的用户id openid （必然是游客）
+                      roleId:res.data.role[0].id //用户的角色id
+                    });
+                    // 回复留言条数
+                    f.mesgFun('publishs/getReplyButUnreadCount','msg',f,userObj);
+                    // 提醒事项条数
+                    f.mesgFun('notices/wx_count_unread','info',f,userObj);
                   }
-                });
+                }
+              });
             }
         });
         // console.log(that.data.dataN);  
@@ -123,8 +123,8 @@ Page({
 
   // 退出登录
   exitClick:function(e){
-    const that = this;
-    // app.userInfo = null;
+    app.globalData.userData =  null;
+    app.globalData.userData = null;
     wx.clearStorage({
       success:(res)=>{
         wx.showToast({
@@ -147,8 +147,7 @@ Page({
     const that = this;
     switch(e.currentTarget.dataset.index){
       case 0:
-        // console.log(that.data.errMsg,'用户数据');
-        if(that.data.errMsg == "getStorage:ok" || that.data.errMsg == "getUserInfo:ok"){
+        if(that.data.errMsg !== undefined){
           wx.navigateTo({
             url: '../myrelease/myrelease?siveId=' + that.data.siveId + '&roleId=' + that.data.roleId,
           });
@@ -179,7 +178,7 @@ Page({
         break;
       case 2:
         wx.makePhoneCall({
-          phoneNumber: '13310829325'
+          phoneNumber: '18566130190'
         });
         break;
     }
@@ -189,18 +188,10 @@ Page({
   mattersClick:function(e){
     const that = this,isShow = that.data.isShow;
     /**if  isShow 为真的时候 点击提醒事项按钮 进入到提醒事项列表页，否则不进行任何跳转*/
-    if(that.data.errMsg == "getStorage:ok" || that.data.errMsg == "getUserInfo:ok"){
-      if(isShow){
-        wx.navigateTo({
-          url: '../remind/remind?siveid=' + e.currentTarget.dataset.siveid + '&roleid=' + e.currentTarget.dataset.roleid,
-        });
-      }else{
-        wx.showToast({
-          title: "暂无提醒事项",
-          icon: 'none',
-          duration: 800
-        });
-      }
+    if(that.data.errMsg !== undefined){
+      wx.navigateTo({
+        url: '../remind/remind?siveid=' + e.currentTarget.dataset.siveid + '&roleid=' + e.currentTarget.dataset.roleid,
+      });
     }else{
       wx.showToast({
         title: "请点击图像授权登录",
@@ -236,188 +227,167 @@ Page({
    * info 消息提示接口类型
    * msg 留言接口类型
    */
-  mesgFun:(setU,ins,f)=>{
-    const siveObj = {};
-    wx.getStorage({
-      key: 'userRole',
-      success (res) {
-        const roleid = parseInt(res.data);
-        console.log(roleid,'角色id');
-        // return;
-        if(4 == roleid){
-          wx.getStorage({
-            key:'userData',
-            success:(res)=>{
-              console.log(res,'userData');
-              const openid = res.data.xtBackData.user.openid;
-              siveObj.openid = openid;
-              wx.request({
-                url: u + setU,
-                data: siveObj,
-                header: {
-                  "Content-Type": "application/x-www-form-urlencoded"
-                },
-                method: "GET",
-                success:(res)=>{
-                  const replyNum = res.data;
-                  // console.log(replyNum,'返回现在回复的个数');
-                  // 判断是哪个接口进来的 info为提醒事项
-                  if(ins === 'info'){
-                    console.log(replyNum,'提醒事项数量');
-                    if(replyNum > 0){
-                      f.setData({
-                        remindNum:replyNum,
-                        isShow:true,
-                      });
-                    }else{
-                      f.setData({
-                        isShow:false
-                      });
-                    }
-                  }else{
-                    // 这里是msg留言的数据
-                    console.log(replyNum,'留言条数');
-                    if(replyNum > 0){
-                      const textInfo = '您有' + replyNum + '条回复';
-                      f.setData({
-                        textInfo:textInfo,
-                        isListShow:true
-                      });
-                    }else{
-                      f.setData({
-                        isListShow:false
-                      });
-                    }
-                  }
-                  f.setData({successOnLoadInfo:true});
-                  wx.hideLoading();
-                }
-              });
-
-              f.setData({
-                userInfoSet:1,
-              });
-              if (f.data.userInfoSet){
-                console.log(res.data);
-                f.setData({
-                  userInfo: res.data.wxUserInfo,
-                  hasUserInfo: true,
-                  errMsg:res.errMsg,
-                  siveId:res.data.xtBackData.user.openid,
-                  roleId:res.data.xtBackData.role[0].id
-                });
-              }
-            }
-          });
-        }else{
-          wx.getStorage({
-            key:'userData',
-            success:(res)=>{
-              console.log(res,'非游客数据');
-              const userid = res.data.user.id;
-              siveObj.userId = userid;
-              // console.log(siveObj,' 啊啊');
-              wx.getStorage({
-                key:'userData',
-                success:(res)=>{
-                  const token = res.data.token;
-                  // console.log(res,'用户角色');
-                  wx.request({
-                    url: u + setU,
-                    data: siveObj,
-                    header: {
-                      "login-tokin":token,
-                      "Content-Type": "application/x-www-form-urlencoded"
-                    },
-                    method: "GET",
-                    success:(res)=>{
-                      const replyNum = res.data;
-                      
-                      // 判断是哪个接口进来的 info为提醒事项
-                      if(ins === 'info'){
-                        console.log(replyNum,'厂商提醒事项');
-                        if(replyNum > 0){
-                          f.setData({
-                            remindNum:replyNum,
-                            isShow:true,
-                          });
-                        }else{
-                          f.setData({
-                            isShow:false
-                          });
-                        }
-                      }else{
-                        // msg为留言条数
-                        console.log(replyNum,'留言条数');
-                        if(replyNum > 0){
-                          const textInfo = '您有' + replyNum + '条回复';
-                          f.setData({
-                            textInfo:textInfo,
-                            isListShow:true
-                          });
-                        }else{
-                          f.setData({
-                            isListShow:false
-                          });
-                        }
-                      }
-                      f.setData({successOnLoadMsg:true});
-                      wx.hideLoading();
-                    }
-                  });
-
-                  let userInfos = {};
-                  userInfos.avatarUrl = o.comImg(u,res.data.user.headImgUrl);
-                  userInfos.nickName = res.data.user.nickname;
-                  f.setData({
-                    userInfoSet:1,
-                  });
-                  if (f.data.userInfoSet){
-                    console.log(res.data.role[0].id);
+  mesgFun:(setU,ins,f,d)=>{
+    wx.showLoading({
+      title: '加载中',
+      mask:true,
+      success(res){
+        if(d !== undefined){
+          const siveObj = {},roleId = parseInt(d.roleId);
+          if(4 === roleId){
+            siveObj.openid = d.userId;
+            wx.request({
+              url: u + setU,
+              data: siveObj,
+              header: {
+                "Content-Type": "application/x-www-form-urlencoded"
+              },
+              method: "GET",
+              success:(res)=>{
+                const replyNum = res.data;
+                // console.log(replyNum,'返回现在回复的个数');
+                // 判断是哪个接口进来的 info为提醒事项
+                if(ins === 'info'){
+                  console.log(replyNum,'提醒事项数量');
+                  if(replyNum > 0){
                     f.setData({
-                      userInfo: userInfos,
-                      hasUserInfo: true,
-                      errMsg:res.errMsg,
-                      siveId:res.data.user.id,
-                      roleId:res.data.role[0].id
+                      remindNum:replyNum,
+                      isShow:true,
+                    });
+                  }else{
+                    f.setData({
+                      isShow:false
+                    });
+                  }
+                }else{
+                  // 这里是msg留言的数据
+                  console.log(replyNum,'留言条数');
+                  if(replyNum > 0){
+                    const textInfo = '您有' + replyNum + '条回复';
+                    f.setData({
+                      textInfo:textInfo,
+                      isListShow:true
+                    });
+                  }else{
+                    f.setData({
+                      isListShow:false
                     });
                   }
                 }
+                f.setData({successOnLoadInfo:true});
+                wx.hideLoading();
+              }
+            });
+      
+            f.setData({
+              userInfoSet:1,
+            });
+            if (f.data.userInfoSet){
+              const userInfos = {};
+              userInfos.avatarUrl = d.headImgUrl,
+              userInfos.nickName = d.nickname;
+              f.setData({
+                userInfo: userInfos,
+                hasUserInfo: true,
+                errMsg:d.errMsg,
+                siveId:d.userId,
+                roleId:d.roleId
               });
             }
-          });
-        }
-        console.log(f.data.successOnLoadInfo,f.data.successOnLoadMsg,'判断');
-        if(f.data.successOnLoadInfo !== undefined || f.data.successOnLoadMsg !== undefined){
-          if(f.data.successOnLoadInfo || f.data.successOnLoadMsg){
-            wx.stopPullDownRefresh();
-          }
-        }
-      },
-      fail(res){
-        setTimeout(function(){
-          wx.getStorage({
-            key:'userData',
-            success:(res)=>{
-              console.log(res,'重新获取');
-            },
-            fail(res){
-              console.log(res,'获取失败');
+          }else{
+            siveObj.userId = d.userId;
+            // console.log(res,'用户角色');
+            wx.request({
+              url: u + setU,
+              data: siveObj,
+              header: {
+                "login-tokin":d.token,
+                "Content-Type": "application/x-www-form-urlencoded"
+              },
+              method: "GET",
+              success:(res)=>{
+                console.log(res,'返回数据');
+                const replyNum = res.data;
+                // 判断是哪个接口进来的 info为提醒事项
+                if(ins === 'info'){
+                  console.log(replyNum,'厂商提醒事项');
+                  if(replyNum > 0){
+                    f.setData({
+                      remindNum:replyNum,
+                      isShow:true,
+                    });
+                  }else{
+                    f.setData({
+                      isShow:false
+                    });
+                  }
+                }else{
+                  // msg为留言条数
+                  console.log(replyNum,'留言条数');
+                  if(replyNum > 0){
+                    const textInfo = '您有' + replyNum + '条回复';
+                    f.setData({
+                      textInfo:textInfo,
+                      isListShow:true
+                    });
+                  }else{
+                    f.setData({
+                      isListShow:false
+                    });
+                  }
+                }
+                f.setData({successOnLoadMsg:true});
+                wx.hideLoading();
+              }
+            });
+      
+            let userInfos = {};
+            if(d.headImgUrl !== null){
+              userInfos.avatarUrl = o.comImg(u,d.headImgUrl);
+            }else{
+              userInfos.avatarUrl = '../../image/imgfail.png'
             }
+            userInfos.nickName = d.nickname;
+            console.log(d.headImgUrl,'用户图像');
+            f.setData({
+              userInfoSet:1,
+            });
+            if (f.data.userInfoSet){
+              // console.log(res.data.role[0].id);
+              f.setData({
+                userInfo: userInfos,
+                hasUserInfo: true,
+                errMsg:d.errMsg,
+                siveId:d.userId,
+                roleId:d.roleId
+              });
+            }
+          }
+          console.log(f.data.successOnLoadInfo,f.data.successOnLoadMsg,'判断');
+          if(f.data.successOnLoadInfo !== undefined || f.data.successOnLoadMsg !== undefined){
+            if(f.data.successOnLoadInfo || f.data.successOnLoadMsg){
+              wx.stopPullDownRefresh();
+              wx.hideLoading();
+            }
+          }else{
+            wx.stopPullDownRefresh();
+            wx.hideLoading();
+          }
+        }else{
+          wx.stopPullDownRefresh();
+          wx.hideLoading();
+          wx.showToast({
+            title: "请点击图像授权登录",
+            icon: 'none',
+            duration: 2000
           });
-        },5000);
-        wx.stopPullDownRefresh();
-        wx.showToast({
-          title: "请点击图像授权登录",
-          icon: 'none',
-          duration: 2000
-        });
-        console.log('B');
-        f.setData({
-          hasUserInfo:0,
-        });
+          f.setData({
+            hasUserInfo:0,
+          });
+        }
       }
     });
+    wx.hideLoading();
   },
 
   /**
@@ -426,12 +396,12 @@ Page({
    * info 消息提醒条数
    */
   onShow: function () {
-    const that = this;
-    console.log('是否执行');
+    const that = this,userData = app.globalData.userData;
+    console.log(userData,"onShow");
     // 回复留言条数
-    that.mesgFun('publishs/getReplyButUnreadCount','msg',that);
+    that.mesgFun('publishs/getReplyButUnreadCount','msg',that,userData);
     // 提醒事项条数
-    that.mesgFun('notices/wx_count_unread','info',that);
+    that.mesgFun('notices/wx_count_unread','info',that,userData);
   },
 
   /**
@@ -452,15 +422,15 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    const that = this;
+    const that = this,userData = app.globalData.userData;
     wx.showLoading({
       title: '加载中',
       mask:true,
       success(res){
         // 回复留言条数
-        that.mesgFun('publishs/getReplyButUnreadCount','msg',that);
+        that.mesgFun('publishs/getReplyButUnreadCount','msg',that,userData);
         // 提醒事项条数
-        that.mesgFun('notices/wx_count_unread','info',that);
+        that.mesgFun('notices/wx_count_unread','info',that,userData);
       }
     });    
   },

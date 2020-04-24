@@ -98,121 +98,108 @@ Page({
     const that = this,pattern = /^[\u4e00-\u9fa5]{2,4}$/,myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/,zjyz = /^(0[0-9]{2,3}\-)([2-9][0-9]{6,7})+(\-[0-9]{1,4})?$/,validationHz = /^[\u4e00-\u9fa5]{0,}$/;
     const name = e.detail.value.contact,
     call = e.detail.value.call,
-    describe = e.detail.value.describe;
+    describe = e.detail.value.describe,
+    d = app.globalData.userData;
+    console.log(d);
     // 获取用户角色
-    wx.getStorage({
-      key: 'userRole',
-      success :(res)=> {
-        // 验证姓名是否为空
-        if(name == ""){
-          wx.showToast({
-            title: "请输入姓名",
-            icon: 'none',
-            duration: 1500
-          }); 
-          return;
-        }else if(!pattern.test(name)){
-          wx.showToast({
-            title: "请输入正确的姓名",
-            icon: 'none',
-            duration: 1500
-          }); 
-          return;
-        }
-
-        // 验证电话是否为空
-        if(call == ""){
-          wx.showToast({
-            title: "请输入电话",
-            icon: 'none',
-            duration: 1500
-          }); 
-          return;
-        }else if(!myreg.test(call)){
-          wx.showToast({
-            title: "请输入正确的电话号码",
-            icon: 'none',
-            duration: 1500
-          }); 
-          return;
-        }
-
-        // 验证发布内容是否为空
-        if(describe == ""){
-          wx.showToast({
-            title: "请输入发布内容",
-            icon: 'none',
-            duration: 1500
-          });
-          return;
-        }else if(describe.length < 10){
-          wx.showToast({
-            title: "发布内容不得小于10个汉字",
-            icon: 'none',
-            duration: 1500
-          });
-        }else{
-          for (let i = 0; i <= 10; i++) {
-            if(!validationHz.test(describe[i])){
-              wx.showToast({
-                title: "前10个字符必须为汉字",
-                icon: 'none',
-                duration: 1500
-              });
-            }
-          }
-        }
-        
-        /**
-         * 当用户角色id为4则为游客授权登录，需要传入openid
-         */
-        if(res.data == 4){
-          /**游客授权登录 */
-          wx.getStorage({
-            key: 'userData',
-            success:(res)=> {
-              const dataObj = {};
-              dataObj.headPic = res.data.wxUserInfo.avatarUrl,
-              dataObj.nickName = res.data.wxUserInfo.nickName,
-              dataObj.openid = res.data.xtBackData.user.openid,
-              dataObj.realName = e.detail.value.contact,
-              dataObj.publishContent = e.detail.value.describe,
-              dataObj.sex = e.detail.value.sex,
-              dataObj.tel = e.detail.value.call;
-              // that.formFun(dataObj,that);
-            }
-          });
-        }else{
-          /**企业授权登录 */
-          wx.getStorage({
-            key: 'userData',
-            success (res) {
-              const dataObj = {};
-              console.log(res.data.user.id,'企业数据');
-              dataObj.userId = res.data.user.id,
-              dataObj.realName = e.detail.value.contact,
-              dataObj.publishContent = e.detail.value.describe,
-              dataObj.sex = e.detail.value.sex,
-              dataObj.tel = e.detail.value.call;
-              // that.formFun(dataObj,that);
-            }
-          });
-        }
-      },
-      fail(res){
-        wx.showModal({
-          title: '提示',
-          content: '尚未授权登录，请前往个人中心页面进行授权',
-          success (res) {
-            if (res.confirm) {
-              wx.switchTab({
-                url: '../aboutus/aboutus'
-              });
-            }
-          }
-        })
+    if(d !== undefined){
+      // 验证姓名是否为空
+      if(name == ""){
+        wx.showToast({
+          title: "请输入姓名",
+          icon: 'none',
+          duration: 1500
+        }); 
+        return;
+      }else if(!pattern.test(name)){
+        wx.showToast({
+          title: "请输入正确的姓名",
+          icon: 'none',
+          duration: 1500
+        }); 
+        return;
       }
-    });
+
+      // 验证电话是否为空
+      if(call == ""){
+        wx.showToast({
+          title: "请输入电话",
+          icon: 'none',
+          duration: 1500
+        }); 
+        return;
+      }else if(!myreg.test(call)){
+        wx.showToast({
+          title: "请输入正确的电话号码",
+          icon: 'none',
+          duration: 1500
+        }); 
+        return;
+      }
+
+      // 验证发布内容是否为空
+      if(describe == ""){
+        wx.showToast({
+          title: "请输入发布内容",
+          icon: 'none',
+          duration: 1500
+        });
+        return;
+      }else if(describe.length < 10){
+        wx.showToast({
+          title: "发布内容不得小于10个汉字",
+          icon: 'none',
+          duration: 1500
+        });
+      }else{
+        for (let i = 0; i <= 10; i++) {
+          if(!validationHz.test(describe[i])){
+            wx.showToast({
+              title: "前10个字符必须为汉字",
+              icon: 'none',
+              duration: 1500
+            });
+          }
+        }
+      }
+      
+      /**
+       * 当用户角色id为4则为游客授权登录，需要传入openid
+       */
+      if(d.roleId == 4){
+        /**游客授权登录 */
+        const dataObj = {};
+        dataObj.headPic = d.headImgUrl,
+        dataObj.nickName = d.nickname,
+        dataObj.openid = d.userId,
+        dataObj.realName = e.detail.value.contact,
+        dataObj.publishContent = e.detail.value.describe,
+        dataObj.sex = e.detail.value.sex,
+        dataObj.tel = e.detail.value.call;
+        that.formFun(dataObj,that);
+      }else{
+        /**企业授权登录 */
+        const dataObj = {};
+        dataObj.userId = d.userId,
+        dataObj.realName = e.detail.value.contact,
+        dataObj.publishContent = e.detail.value.describe,
+        dataObj.sex = e.detail.value.sex,
+        dataObj.tel = e.detail.value.call;
+        that.formFun(dataObj,that);
+      }
+    }else{
+      wx.showModal({
+        title: '提示',
+        content: '尚未授权登录，请前往个人中心页面进行授权',
+        success (res) {
+          if (res.confirm) {
+            wx.switchTab({
+              url: '../aboutus/aboutus'
+            });
+          }
+        }
+      })
+    }
   },
 
   /**
@@ -233,33 +220,31 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    const that = this;
+    const that = this,d = app.globalData.userData;
+    console.log(d);
     /**
      * 这种情景模式为：游客在login页的时候没有授权登录
      * 游客来到发布页面的时候判断用户是否登录
      * 尚未登录做出登录提示
      */
-    wx.getStorage({
-      key: 'userRole',
-      success(res){
-        that.setData({
-          roleId:res.data
-        });
-      },
-      fail(res){
-        wx.showModal({
-          title: '提示',
-          content: '尚未授权登录，请前往个人中心页面进行授权',
-          success (res) {
-            if (res.confirm) {
-              wx.switchTab({
-                url: '../aboutus/aboutus'
-              });
-            }
+    if(d == undefined){
+      wx.showModal({
+        title: '提示',
+        content: '尚未授权登录，请前往个人中心页面进行授权',
+        success (res) {
+          if (res.confirm) {
+            wx.switchTab({
+              url: '../aboutus/aboutus'
+            });
           }
-        })
-      },
-    });
+        }
+      });
+    }else{
+      that.setData({
+        roleId:d.roleId,
+        userD:d
+      });
+    }
     that.setData({
       isDisabled:false
     });
@@ -350,14 +335,28 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    const that = this,roleid = that.data.roleId,roleidNum = parseInt(roleid);
-    console.log(roleidNum);
-    wx.showLoading({
-      title: '加载中',
-      mask:true,
-      success(res){
-        if(!roleidNum){
+    const that = this,roleid = that.data.roleId;
+    if(roleid !== undefined){
+      const roleidNum = parseInt(roleid),d = that.data.userD;
+      console.log(d,'777');
+      if(4 === roleidNum){
+        console.log(d.userId,'游客数据');
+        const siveId = d.userId;
+        that.msgFun(roleidNum,siveId,that,"publishs/getReplyButUnreadCount");
+        wx.stopPullDownRefresh();
+      }else{
+        console.log(d.userId,'游客数据');
+        const siveId = d.userId;
+        that.msgFun(roleidNum,siveId,that,"publishs/getReplyButUnreadCount");
+        wx.stopPullDownRefresh();
+      }
+    }else{
+      wx.showLoading({
+        title: '加载中',
+        mask:true,
+        success(res){
           wx.stopPullDownRefresh();
+          wx.hideLoading();
           wx.showModal({
             title: '友情提示',
             content: '您尚未授权登录，请前往个人中心页面进行授权',
@@ -369,29 +368,9 @@ Page({
               }
             }
           })
-        }else{
-          if(4 === roleidNum){
-            wx.getStorage({
-              key: 'userData',
-              success(res){
-                console.log(res.data.xtBackData.user.openid,'游客数据');
-                const siveId = res.data.xtBackData.user.openid;
-                that.msgFun(roleidNum,siveId,that,"publishs/getReplyButUnreadCount");
-              }
-            });
-          }else{
-            wx.getStorage({
-              key: 'userData',
-              success(res){
-                console.log(res.data.user.id,'游客数据');
-                const siveId = res.data.user.id;
-                that.msgFun(roleidNum,siveId,that,"publishs/getReplyButUnreadCount");
-              }
-            });
-          }
         }
-      }
-    });
+      });
+    }
   },
 
   /**

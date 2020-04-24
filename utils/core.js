@@ -180,10 +180,4 @@ module.exports = {
     comImg:(u,n)=>{
         return u + 'files/prev' + n;
     },
-
-    // 获取openid函数封装
-    l:(j,f)=>{
-        
-        console.log(n,'111');
-    },
 };

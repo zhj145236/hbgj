@@ -34,7 +34,7 @@ Page({
   // 点击客服按钮快速联系平台
   kfClick:function(){
     wx.makePhoneCall({
-      phoneNumber: '13310829325'
+      phoneNumber: '18566130190'
     });
   },
   

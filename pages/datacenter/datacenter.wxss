@@ -133,7 +133,7 @@ page{
   padding: 40rpx 0;
   display: flex;
   flex-direction:row;
-  justify-content:space-around;
+  justify-content:space-between;
   align-items: center;
 }
 .con-list-pdf-out{
@@ -141,6 +141,7 @@ page{
   flex-direction:row;
   justify-content:space-around;
   align-items: center;
+  margin-left: 30rpx;
 }
 .con-list-pdf{
   margin-right: 20rpx;
@@ -239,6 +240,7 @@ page{
 .con-list-time{
   font-size: 26rpx;
   color: #666;
+  margin-right: 30rpx;
 }
 .con-list-con{
   font-size: 28rpx;

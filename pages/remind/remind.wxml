@@ -1,13 +1,20 @@
 <!-- 环保政策 -->
-<view class="policy-datas-cont">
-  <block wx:for="{{remindDatas}}" wx:key="">
-    <view bindtap="remindList" data-siveid="{{siveid}}" data-roleid="{{roleid}}" data-dataid="{{item.id}}" class="policy-list-out">
-      <view data-id="{{item.id}}" class="policy-list">
-        <view class="policy-datas-cont-title">
-          <text>{{item.title}}</text>
+<block wx:if="{{isShow}}">
+  <view class="policy-datas-cont">
+    <block wx:for="{{remindDatas}}" wx:key="">
+      <view bindtap="remindList" data-siveid="{{siveid}}" data-roleid="{{roleid}}" data-dataid="{{item.id}}" class="policy-list-out">
+        <view data-id="{{item.id}}" class="policy-list">
+          <view class="policy-datas-cont-title">
+            <text>{{item.title}}</text>
+          </view>
+          <view class="policy-datas-cont-toview">查看</view>
         </view>
-        <view class="policy-datas-cont-toview">查看</view>
       </view>
-    </view>
-  </block>
-</view>
+    </block>
+  </view>
+</block>
+<block wx:else>
+  <view class="my-sxtx">
+    <text>暂无提醒事项</text>
+  </view>
+</block>

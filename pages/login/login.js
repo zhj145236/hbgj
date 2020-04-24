@@ -9,7 +9,8 @@ Page({
    */
   data: {
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    isDisabled:false
+    isDisabled:false,
+    nums:0
   },
 
   // 点击游客进行跳转
@@ -34,7 +35,7 @@ Page({
         logObj.secret = '5bf6ca316b48eb9a8887115c03be3409',
         logObj.grant_type = 'authorization_code';
         logObj.js_code = res.code;
-
+        console.log(i,'888');
         // that.setData({dataN:res.data.openid});  
         wx.request({
             url: 'https://api.weixin.qq.com/sns/jscode2session',
@@ -44,48 +45,47 @@ Page({
             },
             method: "GET",
             success:(res)=> {
-                // that.setData({dataN:res.data.openid});
-                wx.request({
-                  url: u + 'users/wxAutoLogin',
-                  data: {
-                    "openid":res.data.openid
-                  },
-                  header: {
-                    "Content-Type": "application/json"
-                  },
-                  method: "POST",
-                  success(res) {
-                    // console.log(res.data,'游客数据');
-                    if(res.data.token !== undefined || res.data.token !== null || res.data.token !== ''){
-                      userObj.wxUserInfo = i.detail.userInfo; // 微信返回的的用户数据
-                      userObj.xtBackData = res.data; //系统返回的用户数据
-                      wx.setStorage({
-                        key:'userData',
-                        data:userObj
-                      });
-                      // 将用户角色（游客）保存在缓存中方便其他页面调用
-                      console.log(res,'数据');
-                      wx.setStorage({
-                        key:'userRole',
-                        data:res.data.role[0].id
-                      });
-                      wx.showToast({
-                        title: "登录成功",
-                        icon: 'success',
-                        duration: 800
-                      });
-                      // 接口获取成功的时候跳转到index页面
-                      setTimeout(function () {
-                        wx.switchTab({
-                          url: '../index/index'
-                        })
-                      },800); 
-                    }
+              const openid = res.data.openid
+              console.log(openid,'777');
+              // that.setData({dataN:res.data.openid});
+              wx.request({
+                url: u + 'users/wxAutoLogin',
+                data: {
+                  "openid":res.data.openid
+                },
+                header: {
+                  "Content-Type": "application/json"
+                },
+                method: "POST",
+                success(res) {
+                  console.log(res,'游客数据');
+                  if(res.data.token !== undefined){
+                    // 游客用户数据
+                    userObj.userId = openid,
+                    userObj.roleId = res.data.role[0].id,
+                    userObj.headImgUrl = i.detail.userInfo.avatarUrl,
+                    userObj.nickname =  i.detail.userInfo.nickName,
+                    userObj.errMsg =  i.detail.errMsg;
+                    app.globalData.userData = userObj;
+                    wx.showToast({
+                      title: "登录成功",
+                      icon: 'success',
+                      duration: 800
+                    });
+                    // 接口获取成功的时候跳转到index页面
+                    setTimeout(function () {
+                      wx.switchTab({
+                        url: '../index/index'
+                      })
+                    },800); 
                   }
-                });
+                },
+                fail(res){
+                  console.log(res,'失败');
+                }
+              });
             }
-        });
-        // console.log(that.data.dataN);  
+        }); 
       }
     })
   },
@@ -166,12 +166,26 @@ Page({
       },
       method: "POST",
       success(res) {
-        console.log('999');
-        if(res.token !== "" || res.token !== null || res.token !== undefined){
+        console.log(res,'返回数据');
+        if(res.data.code == 200){
           that.setData({isDisabledGetUser:true});
-          const datas = res.data.data,userId = datas.user.id,agreeLicence = datas.user.agreeLicence;
-          console.log(datas,'返回数据');
+          const datas = res.data.data,
+          userId = datas.user.id,
+          agreeLicence = datas.user.agreeLicence,
+          userData={};
+          console.log(res,'返回数据');
           if(agreeLicence == null){
+            // var num = 0;
+            // var t = setInterval(function(){
+            //   num++;
+            //   if(num == 10){
+            //     clearInterval(t);
+            //   }
+            //   that.setData({
+            //     nums:num
+            //   });
+            // },1000);
+            // console.log(that.data.nums);
             // 如果agreeLicence == null则该用户为第一次登录
             wx.showModal({
               title: '法律申明',
@@ -189,21 +203,20 @@ Page({
                     },
                     method: "PUT",
                     success(res) {
-                      console.log(res,'返回数据');
-                      // 会员数据存储到缓存中
-                      wx.setStorage({
-                        key:"userData",
-                        data:datas
-                      });
-
-                      // 将用户角色（会员）保存在缓存中方便其他页面调用
-                      wx.setStorage({
-                        key:'userRole',
-                        data:datas.role[0].id
-                      });
+                      // console.log(res.token,'返回数据');
+                      console.log(datas,'登录成功返回数据');
+                      // 会员数据存储到全局变量中
+                      // 企业用户数据
+                      userData.token = datas.token,
+                      userData.userId = datas.user.id,
+                      userData.roleId = datas.role[0].id,
+                      userData.headImgUrl = datas.user.headImgUrl,
+                      userData.nickname =  datas.user.nickname,
+                      userData.errMsg =  res.errMsg;
+                      app.globalData.userData = userData;
                       // 登录提示
                       wx.showToast({
-                        title: "登录成功",
+                        title: res.data.message,
                         icon: 'success',
                         duration: 800
                       });
@@ -219,34 +232,37 @@ Page({
             });
           }else{
             // 否则该用户之前已经同意该处的法律申明，进行了登录操作
-            // 会员数据存储到缓存中
-            wx.setStorage({
-              key:"userData",
-              data:datas
-            });
-
-            // 将用户角色（会员）保存在缓存中方便其他页面调用
-            wx.setStorage({
-              key:'userRole',
-              data:datas.role[0].id
-            });
             // 登录提示
             wx.showToast({
-              title: "登录成功",
+              title: res.data.message,
               icon: 'success',
               duration: 800
             });
+            console.log(res,'返回数据');
+            // 企业用户数据
+            userData.token = datas.token,
+            userData.userId = datas.user.id,
+            userData.roleId = datas.role[0].id,
+            userData.headImgUrl = datas.user.headImgUrl,
+            userData.nickname =  datas.user.nickname,
+            userData.errMsg =  res.errMsg;
+            app.globalData.userData = userData;
             setTimeout(function () {
               wx.switchTab({
                 url: '../index/index'
               })
             },800); 
           }
-          
+        }else{
+          wx.showToast({
+            title: res.data.message,
+            icon: 'none',
+            duration: 2000
+          }); 
         }
       },
       fail(res){
-        console.log(res,'没有成功');
+        console.log(res,'调取接口失败')
       }
     });
 
@@ -319,11 +335,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    wx.showToast({
-      title: "页面初次渲染完成",
-      icon: 'none',
-      duration: 2000
-    });
+    
   },
 
   /**
@@ -337,22 +349,14 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    wx.showToast({
-      title: "页面隐藏",
-      icon: 'none',
-      duration: 2000
-    });
+    
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    wx.showToast({
-      title: "页面是否被卸载",
-      icon: 'none',
-      duration: 2000
-    });
+    
   },
 
   /**
