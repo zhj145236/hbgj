@@ -95,7 +95,7 @@ Page({
   },
 
   formSubmit:function(e){
-    const that = this,pattern = /^[\u4e00-\u9fa5]{2,4}$/,myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/,zjyz = /^(0[0-9]{2,3}\-)([2-9][0-9]{6,7})+(\-[0-9]{1,4})?$/,validationHz = /^[\u4e00-\u9fa5]{0,}$/;
+    const that = this,pattern = /^[\u4e00-\u9fa5]{2,4}$/,validationHz = /^[\u4e00-\u9fa5]{0,}$/,reg = /[\u3002|\uff1f|\uff01|\uff0c|\u3001|\uff1b|\uff1a|\u201c|\u201d|\u2018|\u2019|\uff08|\uff09|\u300a|\u300b|\u3008|\u3009|\u3010|\u3011|\u300e|\u300f|\u300c|\u300d|\ufe43|\ufe44|\u3014|\u3015|\u2026|\u2014|\uff5e|\ufe4f|\uffe5]/,phoneNum = /^((0\d{2,4}-\d{7,8})|(1[34578]\d{9}))$/;
     const name = e.detail.value.contact,
     call = e.detail.value.call,
     describe = e.detail.value.describe,
@@ -128,7 +128,7 @@ Page({
           duration: 1500
         }); 
         return;
-      }else if(!myreg.test(call)){
+      }else if(!phoneNum.test(call)){
         wx.showToast({
           title: "请输入正确的电话号码",
           icon: 'none',
@@ -151,18 +151,20 @@ Page({
           icon: 'none',
           duration: 1500
         });
+        return;
       }else{
         for (let i = 0; i <= 10; i++) {
-          if(!validationHz.test(describe[i])){
+          if(!validationHz.test(describe[i]) && !reg.test(describe[i])){
             wx.showToast({
               title: "前10个字符必须为汉字",
               icon: 'none',
               duration: 1500
             });
+            return;
           }
         }
       }
-      
+      return;
       /**
        * 当用户角色id为4则为游客授权登录，需要传入openid
        */

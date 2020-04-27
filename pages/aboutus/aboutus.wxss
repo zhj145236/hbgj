@@ -51,6 +51,7 @@ button::after{
   width: 120rpx;
   height: 120rpx;
   margin: 0 auto;
+
   /* margin-top:10rpx; */
 }
 .userinfo-nickname{
@@ -68,6 +69,8 @@ button::after{
   flex-direction: row; */
 }
 .userinfo-img,.login-img{
+  display: inline-block;
+  vertical-align: middle;
   width: 140rpx;
   height: 140rpx;
   background: #fff;

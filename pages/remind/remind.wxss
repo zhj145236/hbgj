@@ -47,6 +47,10 @@ page{
   font-size: 26rpx;
   color: #666;
 }
+.no-read-policy{
+  margin-right: 20rpx;
+  color: #FF8000;
+}
 
 
 

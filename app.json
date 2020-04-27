@@ -2,11 +2,12 @@
   "debug": false,
   "pages": [
     "pages/login/login",
+    "pages/releasecenter/releasecenter",
     "pages/bannerDetails/bannerDetails",
     "pages/index/index",
     "pages/introduction/introduction",
     "pages/aboutus/aboutus",
-    "pages/releasecenter/releasecenter",
+    "pages/pdfdownload/pdfdownload",
     "pages/contractcenter/contractcenter",
     "pages/datacenter/datacenter",
     "pages/datalist/datalist",

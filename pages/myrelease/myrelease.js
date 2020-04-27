@@ -12,9 +12,10 @@ Page({
   },
 
   myreleaseClick:function(e){
+    const sendData = e.currentTarget.dataset.items,senddatapage = encodeURIComponent(JSON.stringify(sendData));
     console.log(e,'用户携带数据');
     wx.navigateTo({
-      url: '../releasecon/releasecon?dataId=' + e.currentTarget.dataset.id + '&roleid=' + e.currentTarget.dataset.roleid + '&siveid=' + e.currentTarget.dataset.siveid,
+      url: '../releasecon/releasecon?isloadreadly=' + e.currentTarget.dataset.isloadreadly + '&senddatapage=' + senddatapage,
     })
   },
 
@@ -76,11 +77,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
- 
-    const that = this,siveId = options.siveId,roleId = options.roleId;
+    console.log(options);
+    const that = this,siveId = options.siveId,roleId = options.roleId,isloadreadly = options.isloadreadly;
     that.setData({
       siveId:siveId,
-      roleId:roleId
+      roleId:roleId,
+      isloadreadly:isloadreadly
     });
     // console.log(siveId,roleId,'123');
 

@@ -76,15 +76,13 @@ Page({
   },
 
   policyList:function(e){
-    const that = this,policyDatas = that.data.policyDatas;
-    console.log(e.currentTarget.dataset.newsid,'新闻数据');
-
+    const that = this,sendData = e.currentTarget.dataset.items,senddatapage = encodeURIComponent(JSON.stringify(sendData));
+    
     that.setData({
       num:e.currentTarget.dataset.index
     });
-
     wx.navigateTo({
-      url: '../policycenter/policycenter?id=' + e.currentTarget.dataset.newsid,
+      url: '../policycenter/policycenter?senddatapage=' + senddatapage,
     })
   },
 
@@ -117,7 +115,8 @@ Page({
           policyObj.title = policyDatas[i].title,
           policyObj.createTime = policyDatas[i].createTime.split(" ")[0],
           policyObj.newsid = policyDatas[i].id,
-          policyObj.author = policyDatas[i].author;
+          policyObj.author = policyDatas[i].author,
+          policyObj.content = policyDatas[i].content,
           policyObj.bannerImg = u + policyDatas[i].bannerImg;
           policyArr.push(policyObj);
         }

@@ -22,9 +22,53 @@ Page({
   onLoad: function (options) {
     const that = this;
     console.log(options.url,'url数据');
-    that.setData({
-      url:options.url
-    });
+    // 获取手机设备
+    wx.getSystemInfo({
+      success: function (res) {
+        console.log(res,'手机设备');
+        if(res.platform == "ios"){
+          that.setData({url:options.url});
+          return;
+          wx.showModal({
+            title:'测试提示',
+            content:'这个是ios系统',
+            success(res){
+              if(res.confirm){
+                console.log('这是ios系统');
+              }
+            }
+          })
+        }
+        if(res.platform == "android"){
+          wx.downloadFile({
+            url: options.url,
+            success: function (res) {
+              console.log(res);
+              var Path = res.tempFilePath //返回的文件临时地址，用于后面打开本地预览所用
+              wx.openDocument({
+                filePath: Path,
+                success: function (res) {
+                  console.log(res,'打开成功');
+                }
+              });
+            },
+            fail: function (res) {
+              console.log(res,'打开失败');
+            }
+          })
+          return;
+          wx.showModal({
+            title:'测试提示',
+            content:'这个是android系统',
+            success(res){
+              if(res.confirm){
+                console.log('这是android系统');
+              }
+            }
+          })
+        }
+      }
+    })
   },
 
   /**

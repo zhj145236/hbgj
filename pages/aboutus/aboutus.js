@@ -42,8 +42,7 @@ Page({
         logObj.secret = '5bf6ca316b48eb9a8887115c03be3409',
         logObj.grant_type = 'authorization_code';
         logObj.js_code = res.code;
-
-        // that.setData({dataN:res.data.openid});  
+        console.log(i,'888');
         wx.request({
             url: 'https://api.weixin.qq.com/sns/jscode2session',
             data: logObj,
@@ -52,25 +51,34 @@ Page({
             },
             method: "GET",
             success:(res)=> {
-              // that.setData({dataN:res.data.openid});
               wx.request({
                 url: u + 'users/wxAutoLogin',
                 data: {
-                  "openid":res.data.openid
+                  "avatarUrl":i.detail.userInfo.avatarUrl,
+                  "nickName":i.detail.userInfo.nickName,
+                  "openid":res.data.openid,
+                  "city":i.detail.userInfo.city,
+                  "country":i.detail.userInfo.country,
+                  "gender":i.detail.userInfo.gender,
+                  "language":i.detail.userInfo.language,
+                  "province":i.detail.userInfo.province,
                 },
                 header: {
                   "Content-Type": "application/json"
                 },
                 method: "POST",
                 success(res) {
-                  console.log(res.data,'游客数据');
                   if(res.data.token !== undefined || res.data.token !== null || res.data.token !== ''){
-                    console.log(i,'微信数据');
+                    const token = res.data.token;
+                    console.log(res,'游客数据');
                     // 游客用户数据
+
+
                     userObj.userId = res.data.user.openid,
                     userObj.roleId = res.data.role[0].id,
                     userObj.headImgUrl = i.detail.userInfo.avatarUrl,
                     userObj.nickname =  i.detail.userInfo.nickName,
+                    userObj.token =  token,
                     userObj.errMsg =  i.detail.errMsg;
                     app.globalData.userData = userObj;
                     f.setData({
@@ -104,7 +112,6 @@ Page({
       that.setData({
         userInfoSet:1,
       });
-
       if(that.data.userInfoSet){
         const touristsInfo = e;
         that.touristsFun(touristsInfo,that);
@@ -121,12 +128,29 @@ Page({
     };
   },
 
+  /**
+   * 退出登录接口
+   */
+  exitInterfaceFun:function(){},
+
   // 退出登录
   exitClick:function(e){
-    app.globalData.userData =  null;
-    app.globalData.userData = null;
-    wx.clearStorage({
+
+    // app.globalData.userData =  null;
+    // app.globalData.userData = null;
+    const d = app.globalData.userData,token = d.token;
+    console.log(token,'数据');
+    wx.request({
+      url: u + 'sys/logout',
+      data: {},
+      header: {
+        "login-token":token,
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      method: "GET",
       success:(res)=>{
+        console.log(res,'退出成功');
+        app.globalData.userData = null;
         wx.showToast({
           title: "已退出登录",
           icon: 'success',
@@ -138,8 +162,9 @@ Page({
             url: '../login/login'
           })
         },1500);
-      },
+      }
     });
+    return;
   },
 
   // 列表点击事件
@@ -147,6 +172,7 @@ Page({
     const that = this;
     switch(e.currentTarget.dataset.index){
       case 0:
+        console.log(e.currentTarget.dataset.isloadreadly,'携带数据');
         if(that.data.errMsg !== undefined){
           wx.navigateTo({
             url: '../myrelease/myrelease?siveId=' + that.data.siveId + '&roleId=' + that.data.roleId,
@@ -252,7 +278,7 @@ Page({
                   if(replyNum > 0){
                     f.setData({
                       remindNum:replyNum,
-                      isShow:true,
+                      isShow:MediaStreamTrackAudioSourceNode
                     });
                   }else{
                     f.setData({
@@ -314,7 +340,7 @@ Page({
                   if(replyNum > 0){
                     f.setData({
                       remindNum:replyNum,
-                      isShow:true,
+                      isShow:true
                     });
                   }else{
                     f.setData({

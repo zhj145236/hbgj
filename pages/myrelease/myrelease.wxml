@@ -1,7 +1,7 @@
 <!-- 环保政策 -->
 <view class="policy-datas-cont">
   <block wx:for="{{myreleaseDatas}}" wx:key="">    
-    <view data-id="{{item.id}}" data-siveid="{{siveId}}" data-roleid="{{roleId}}" bindtap="myreleaseClick" class="policy-list-out">
+    <view data-id="{{item.id}}" data-items="{{item}}" data-isloadreadly="{{item.userReadTime}}" bindtap="myreleaseClick" class="policy-list-out">
       <view class="policy-list">
         <view class="policy-datas-cont-title">
           <text>{{item.publishContent}}</text>

@@ -11,9 +11,9 @@ Page({
   },
 
   remindList:function(e){
-    console.log(e);
+    const sendData = e.currentTarget.dataset.items,senddatapage = encodeURIComponent(JSON.stringify(sendData));
     wx.navigateTo({
-      url: '../remindcenter/remindcenter?roleid=' + e.currentTarget.dataset.roleid + '&siveid=' + e.currentTarget.dataset.siveid + '&id=' + e.currentTarget.dataset.dataid,
+      url: '../remindcenter/remindcenter?roleid=' + e.currentTarget.dataset.roleid + '&siveid=' + e.currentTarget.dataset.siveid + '&senddatapage=' + senddatapage + '&isloadreadtx=' + e.currentTarget.dataset.isloadreadtx,
     })
   },
 
@@ -53,7 +53,7 @@ Page({
         if(remindD.length !== 0){
           f.setData({
             isShow:true,
-            remindDatas:res.data.data,
+            remindDatas:remindD,
             roleid:roleid,
             siveid:siveid
           });
@@ -66,10 +66,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    const that = this,roleid = options.roleid,siveid = options.siveid;
-    console.log(options.roleid,'角色id');
-    console.log(options.siveid,'用户id值');
-    that.mattersFun(roleid,siveid,that);
+    const that = this,roleid = options.roleid,siveid = options.siveid,isloadreadtx = options.isloadreadtx;
+    that.setData({
+      isloadreadtx:isloadreadtx,
+      roleid:roleid,
+      siveid:siveid
+    });
   },
 
   /**
@@ -83,15 +85,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    let that = this;
-    wx.getSystemInfo({
-      success: function (res) {
-        that.setData({
-          winHeight: res.windowHeight,
-          winWidth: res.windowWidth,
-        });
-      },
-    });
+    let that = this,roleid = that.data.roleid,siveid = that.data.siveid;
+    console.log(roleid,'角色id');
+    console.log(siveid,'用户id值');
+    that.mattersFun(roleid,siveid,that);
   },
 
   /**
@@ -117,11 +114,7 @@ Page({
     setTimeout(function () {
       // 不加这个方法真机下拉会一直处于刷新状态，无法复位
       wx.stopPullDownRefresh()
-    }, 2000);
-    // that.setData({
-    //   currentTab: 0 //当前页的一些初始数据，视业务需求而定
-    // })
-    // this.onLoad(); //重新加载onLoad()
+    }, 800);
   },
 
   /**

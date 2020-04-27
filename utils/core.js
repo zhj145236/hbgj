@@ -159,6 +159,7 @@ module.exports = {
     },
     urlCon:function(){
         // 线上ip
+        // return 'http://www.hlguanjia.com';
         // return 'http://47.115.57.64:8080/';
         
         // 测试ip

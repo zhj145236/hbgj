@@ -2,7 +2,7 @@
 
 <view class="policy-datas-cont">
   <block wx:for="{{policyDatas}}" wx:key="">
-    <view data-index="{{index}}" class='policy-list-out' bindtap="policyList" data-newsid="{{item.id}}">
+    <view data-index="{{index}}" class='policy-list-out' bindtap="policyList" data-items="{{item}}">
       <view class="policy-datas-cont-img">
         <image mode="heightFix" src="{{u + item.bannerImg}}" />
       </view>

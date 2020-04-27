@@ -2,5 +2,5 @@
 <view class="contract">
   <!-- <image mode = "widthFix" class="contract-img" src="{{imgSrc}}" bindtap="clickImg"  /> -->
   <web-view src="{{url}}"></web-view>
-  <button class="contract-url">下载</button>
+  <!-- <button class="contract-url">下载</button> -->
 </view>

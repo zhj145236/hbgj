@@ -42,7 +42,7 @@
 
     <view class="policy-datas-cont">
       <block wx:for="{{policyArr}}" wx:key="">
-        <view data-index="{{index}}" class='policy-list-out {{index == num ? "active" : ""}}' bindtap="policyList" data-newsid="{{item.newsid}}">
+        <view data-index="{{index}}" class='policy-list-out {{index == num ? "active" : ""}}' bindtap="policyList" data-items="{{item}}">
           <view class="policy-datas-cont-img">
             <image mode="heightFix" src="{{item.bannerImg}}" />
           </view>

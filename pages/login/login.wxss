@@ -2,17 +2,21 @@
 page{
   overflow: hidden;
   font-family:'Microsoft YaHei','微软雅黑';
+  height: 100%;
 }
 .bj-img{
   width: 100%;
+  height: 100%;
   display:flex;
   align-items: center;
+  position: relative;
 }
 .back-img{
+  position: absolute;
+  left: 0;
   display: block;
   width: 100%;
   height: 100%;
-  position: relative;
 }
 /* 中间内容部分 */
 .log-cont{
@@ -21,9 +25,10 @@ page{
   left: 50%;
   background-color: rgba(255, 255, 255, 0.7);
   width:80%;
-  margin-left: -40%;
-  margin-top: -58%;
+  /* margin-left: -40%;
+  margin-top: -58%; */
   border-radius: 5px;
+  transform: translate(-50%, -50%);
 }
 title{
   display: block;
@@ -66,8 +71,8 @@ title{
 .log-btn > button{
   display: block;
   width: 100%;
-  height: 40px;
-  line-height: 40px;
+  height: 60rpx;
+  line-height: 60rpx;
   padding: 0;
   outline: none;
   border-radius: 10rpx;
@@ -99,4 +104,88 @@ button:after {
   width: 100%;
   height: 100%;
 }
-
+/* 遮罩层效果 */
+.modal{
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #000;
+}
+.hide-modal{
+  visibility:hidden;
+  background-color: rgba(0, 0, 0, 0);
+  transition: 0.5s;
+}
+.show-modal{
+  visibility:visible;
+  background-color: rgba(0, 0, 0, 0.4);
+  transition: 0.5s;
+}
+.cont-area{
+  background-color: #fff;
+  top: 50%;
+  left: 50%;
+  width: 90%;
+  position: fixed;
+  border-radius: 10rpx;
+  z-index: 2;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  padding: 20rpx 0;
+}
+.show-cont{
+  visibility:visible;
+  background-color: rgba(255, 255, 255, 1);
+  transition: 0.2s;
+}
+.hide-cont{
+  visibility:hidden;
+  background-color: rgba(255, 255, 255, 0);
+  /* transition: 0.2s; */
+}
+.cont-title{
+  display: block;
+  text-align: center;
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  margin-bottom: 20rpx;
+  font-size: 32rpx;
+}
+.cont-body{
+  display: block;
+  width: 80%;
+  margin: auto;
+  word-break:break-all;
+  min-height:100rpx;
+  max-height: 600rpx;
+}
+.cont-choose{
+  display: flex;
+  flex-direction:row;
+  justify-content:space-between;
+  align-items:center;
+  margin: 40rpx auto 0 auto;
+  width: 90%;
+}
+.cont-choose > text{
+  display: block;
+  width: 46%;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  border-radius: 10rpx;
+  font-size: 26rpx;
+}
+.cont-choose-yes{
+  background-color: #dadada;
+  color: #272636;
+}
+.cont-choose-no{
+  background-color: #1aad19;
+  color: #fff;
+}

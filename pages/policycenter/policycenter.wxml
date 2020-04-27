@@ -1,15 +1,13 @@
 <!--pages/nextCon//pages/noticeCenter/noticeCenter.wxml-->
 <view class="notice-center">
-  <block wx:for="{{newsArr}}" wx:key="">
-    <view class="notice-center-title">
-      <view class="notice-center-title-view">
-        <text class="notice-center-title-name">{{item.title}}</text>
-        <text class="notice-center-title-time">{{item.updateTime}}</text>
-      </view>
-    </view>        
-    <view class="notice-center-title-con">
-      <rich-text nodes="{{nodes}}" />
+  <view class="notice-center-title">
+    <view class="notice-center-title-view">
+      <text class="notice-center-title-name">{{title}}</text>
+      <text class="notice-center-title-time">{{createTime}}</text>
     </view>
-    <text class="author-style">作者：{{item.author}}</text>
-  </block>
+  </view>        
+  <view class="notice-center-title-con">
+    <rich-text nodes="{{nodes}}" />
+  </view>
+  <text class="author-style">作者：{{author}}</text>
 </view>

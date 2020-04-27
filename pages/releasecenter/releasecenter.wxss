@@ -24,6 +24,17 @@ page{
   flex-direction:row;
   justify-content:space-between;
 }
+.notice-matters{
+  width: 90%;
+  margin: auto;
+  padding: 30rpx 0;
+}
+.notice-matters > text{
+  display: block;
+  width: 100%;
+  color: #FF8000;
+  font-size: 24rpx;
+}
 .sex-radio{
   margin-right: 20rpx;
 }

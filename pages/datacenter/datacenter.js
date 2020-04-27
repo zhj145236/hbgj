@@ -77,38 +77,6 @@ Page({
       dataUrl:e.currentTarget.dataset.url,
     });
     console.log(e,'返回数据');
-    // 获取手机设备
-    wx.getSystemInfo({
-      success: function (res) {
-        console.log(res,'手机设备');
-        if(res.platform == "ios"){
-          wx.showModal({
-            title:'测试提示',
-            content:'这个是ios系统',
-            success(res){
-              if(res.confirm){
-                console.log('这是ios系统');
-              }
-            }
-          })
-        }
-        
-        if(res.platform == "android"){
-          wx.showModal({
-            title:'测试提示',
-            content:'这个是android系统',
-            success(res){
-              if(res.confirm){
-                console.log('这是android系统');
-              }
-            }
-          })
-        }
-        // that.setData({
-        //   systemInfo: res
-        // });
-      }
-    })
     wx.navigateTo({
       url: '../contractcenter/contractcenter?url=' + e.currentTarget.dataset.url,
     })
@@ -150,25 +118,25 @@ Page({
    */
   dataFun:(f,d)=>{
     if(d == undefined){
-      wx.hideLoading({
-        success(res){
-          wx.stopPullDownRefresh();
-          f.setData({isAuthorization:true,showPage:false,showTitle:false,isShowPage:true});
-          console.log('C');
-          wx.showModal({
-            title: '提示',
-            content: '尚未授权登录，请前往个人中心页面进行授权',
-            success (res) {
-              if (res.confirm) {
-                wx.switchTab({
-                  url: '../aboutus/aboutus'
-                })
-              } else if (res.cancel) {}
+        wx.stopPullDownRefresh();
+        wx.hideLoading();
+        f.setData({isAuthorization:true,showPage:false,showTitle:false,isShowPage:true});
+        console.log('用户没有授权');
+        console.log('C');
+        wx.showModal({
+          title: '提示',
+          content: '尚未授权登录，请前往个人中心页面进行授权',
+          success (res) {
+            if (res.confirm) {
+              wx.switchTab({
+                url: '../aboutus/aboutus'
+              })
+            } else if (res.cancel) {
             }
-          })
-        }
-      });
+          }
+        })
     }else{
+      console.log('用户有授权');
       const roleId = parseInt(d.roleId);
       if(4 === roleId){
         wx.hideLoading({
@@ -252,6 +220,9 @@ Page({
       mask:true,
       success(res){
         that.dataFun(that,userData);
+      },
+      fail(res){
+        console.log('错误');
       }
     });    
   },

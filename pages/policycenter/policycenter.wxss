@@ -23,7 +23,7 @@ page{
   padding: 30rpx 0;
   text-align: center;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 32rpx;
 }
 .notice-center-title-time{
   display: block;
@@ -43,7 +43,7 @@ page{
   font-size: 24rpx;
   color: #666;
   display: block;
-  height: 60rpx;
-  line-height: 60rpx;
+  height: 100rpx;
+  line-height: 100rpx;
   text-align: right;
 }

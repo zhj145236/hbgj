@@ -1,27 +1,18 @@
-
-const app = getApp(),o = app.requirejs('core'),u = o.urlCon();
-const datas = require('../../utils/data.js');
+// pages/pdfdownload/pdfdownload.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    contentCenters: datas.contentCenter,
-    isShow:true
+
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let that = this,senddatapage = JSON.parse(decodeURIComponent(options.senddatapage));
-    that.setData({
-      nodes:senddatapage.content,
-      title:senddatapage.title,
-      createTime:senddatapage.createTime,
-      author:senddatapage.author
-    });
+
   },
 
   /**
@@ -35,9 +26,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.setData({
-      pageHeight: wx.getSystemInfoSync().windowHeight,
-    });
+
   },
 
   /**

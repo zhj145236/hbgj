@@ -1,6 +1,6 @@
 <!--pages/login/login.wxml-->
 <view class="bj-img" style="height:{{mobileHeight}}">
-  <image class="back-img" mode="heightFix" style="height:{{mobileHeight}}" src="../../image/login.png" />
+  <image class="back-img" mode="aspectFill" style="height:{{mobileHeight}}" src="../../image/login.png" />
   <form bindsubmit="formSubmit">
     <view class="log-cont">
       <view class="logo-img">
@@ -16,9 +16,24 @@
         <input class="user-info-inp" name="pswd" value="zhj123456" placeholder="请输入密码：" />
       </view>
       <view class="log-btn">
-        <button form-type='submit' disabled="{{isDisabledMembers}}" class="log-btn-members">账号登录</button>
+        <button form-type='submit' disabled="{{isDisabledMembers}}" class="log-btn-members">账号登录<text wx:if="{{startBtn}}">{{nums}}秒后启动</text></button>
         <button bindtap="tourists" disabled="{{isDisabledGetUser}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="log-btn-tourists">微信登录</button>
       </view>
     </view>
   </form>
+</view>
+
+<!-- 遮罩层 过渡动画 -->
+<view class="modal {{isShowModal?'show-modal':'hide-modal'}}">
+  <view class="cont-area {{isShowModal?'show-cont':'hide-cont'}}">
+    <text class="cont-title">法律申明</text>
+    <scroll-view scroll-y>
+      <text class="cont-body">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</text>
+    </scroll-view>
+    <view class="cont-choose">
+      <text class="cont-choose-yes" bindtap="cancelClick">取消</text>
+      <text wx:if="{{isDetermine}}" class="cont-choose-no">请阅读{{times}}秒</text>
+      <text wx:if="{{!isDetermine}}" class="cont-choose-no" bindtap="determineClick">确定</text>
+    </view>
+  </view>
 </view>

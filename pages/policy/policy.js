@@ -11,9 +11,10 @@ Page({
   },
 
   policyList:function(e){
+    const sendData = e.currentTarget.dataset.items,senddatapage = encodeURIComponent(JSON.stringify(sendData));
     console.log(e,'111');
     wx.navigateTo({
-      url: '../policycenter/policycenter?id=' + e.currentTarget.dataset.newsid,
+      url: '../policycenter/policycenter?senddatapage=' + senddatapage,
     })
   },
 
@@ -32,7 +33,6 @@ Page({
       },
       method: "GET",
       success(res) {
-        console.log(res,'123');
         that.setData({
           u:u,
           policyDatas:res.data.data,
