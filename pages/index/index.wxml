@@ -3,9 +3,14 @@
 <view wx:if="{{isShowPage}}">
   <swiper indicator-dots="{{indicatorDots}}"
     autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" style='width:100%;height:298rpx;'>
-    <block wx:for="{{bannerArr}}" wx:key="unique">
+    <block wx:for="{{bannerArr}}" wx:if="{{isShowBanner}}" wx:key="unique">
       <swiper-item>
         <image bindtap="caseInfo" data-id="{{item.id}}"  mode="heightFix" src="{{item.mainImg}}" class="slide-image" />
+      </swiper-item>
+    </block>
+    <block wx:if="{{standbyImg}}">
+      <swiper-item>
+        <image  mode="heightFix" src="../../image/banertwom.png" class="slide-image" />
       </swiper-item>
     </block>
   </swiper>

@@ -1,1 +1,64 @@
 /* pages/pdfdownload/pdfdownload.wxss */
+page{
+  font-size: 30rpx;
+  background: #ffffff;
+  font-family:'Microsoft YaHei','微软雅黑';
+}
+.file-instructions{
+  width: 100%;
+  padding: 40rpx 0;
+}
+.file-instructions-header{
+  width: 90%;
+  margin: auto;
+}
+.file-instructions-info{
+  height: 80rpx;
+  line-height: 80rpx;
+  font-weight: 600;
+  font-size: 28rpx;
+  display: block;
+  width: 100%;
+  border-bottom: 1px solid #ddd;
+}
+.public-style{
+  display: flex;
+  flex-direction:row;
+  justify-content:flex-start;
+  align-items:center;
+  height: 100rpx;
+  line-height: 100rpx;
+}
+.public-style > text{
+  display: block;
+  width: 180rpx;
+  font-size: 26rpx;
+}
+.public-style > input{
+  height: 60rpx;
+  line-height: 60rpx;
+  padding-left: 10rpx;
+  width:64%;
+  font-size: 24rpx;
+  border: 1px solid #ddd;
+  border-radius: 10rpx;
+  color: #636363;
+}
+.file-instructions-att{
+  padding: 20rpx 0;
+}
+.file-instructions-att > text{
+  display: block;
+  color: #FF8000;
+  font-size: 24rpx;
+}
+.file-instructions-att > button{
+  display: block;
+  margin-top: 40rpx;
+  font-size: 26rpx;
+  color: #ffffff;
+  background-color: #1aad19;
+  border: 1px solid #1aad19;
+  height: 80rpx;
+  line-height: 80rpx;
+}

@@ -26,7 +26,6 @@ Page({
     // policyDatas:datas.policyData,
     kf:'../../image/kf.png',
     hasOnShow:false,
-    isShowBanner:false,
     isShowNews:false,
     isShowPage:false,
   },
@@ -34,7 +33,7 @@ Page({
   // 点击客服按钮快速联系平台
   kfClick:function(){
     wx.makePhoneCall({
-      phoneNumber: '18566130190'
+      phoneNumber: '13412565066'
     });
   },
   
@@ -170,17 +169,25 @@ Page({
       method: "GET",
       success(res) {
         const bannerArr = [],backArr = res.data.data;
-        for(let i in backArr){
-          const bannerObj = {};
-          bannerObj.id = backArr[i].id;
-          bannerObj.mainImg = u + backArr[i].mainImg;
-          bannerArr.push(bannerObj);
+        if(backArr.length == 0){
+          f.setData({
+            isShowBanner:false,
+            standbyImg:true
+          });
+        }else{
+          for(let i in backArr){
+            const bannerObj = {};
+            bannerObj.id = backArr[i].id;
+            bannerObj.mainImg = u + backArr[i].mainImg;
+            bannerArr.push(bannerObj);
+          }
+          console.log(res,'返回数据');
+          f.setData({
+            bannerArr:bannerArr,
+            isShowBanner:true,
+            standbyImg:false
+          });
         }
-        console.log(res,'返回数据');
-        f.setData({
-          bannerArr:bannerArr,
-          isShowBanner:true
-        });
       }
     });
   },

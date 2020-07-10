@@ -16,6 +16,7 @@ Page({
     longitude:"113.71856", // 经度
     name:"东莞市环联管家生态环境科技有限公司",
     address:"广东省-东莞市-沙河路-66号",
+    showVendor:true
   },
 
   // 企业简介
@@ -37,20 +38,17 @@ Page({
     wx.login({
       success:(res)=>{
         // const getCode = res.code;
-        const logObj = {},userObj = {};
-        logObj.appid = 'wx44c4721e4704c732',
-        logObj.secret = '5bf6ca316b48eb9a8887115c03be3409',
-        logObj.grant_type = 'authorization_code';
-        logObj.js_code = res.code;
+        const userObj = {};
         console.log(i,'888');
         wx.request({
-            url: 'https://api.weixin.qq.com/sns/jscode2session',
-            data: logObj,
+            url: u + 'weixin/userOpenid',
+            data: {"js_code": res.code},
             header: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/x-www-form-urlencoded"
             },
-            method: "GET",
+            method: "POST",
             success:(res)=> {
+              console.log(res,'成功');
               wx.request({
                 url: u + 'users/wxAutoLogin',
                 data: {
@@ -68,12 +66,11 @@ Page({
                 },
                 method: "POST",
                 success(res) {
+                  console.log(res,'数据');
                   if(res.data.token !== undefined || res.data.token !== null || res.data.token !== ''){
                     const token = res.data.token;
                     console.log(res,'游客数据');
                     // 游客用户数据
-
-
                     userObj.userId = res.data.user.openid,
                     userObj.roleId = res.data.role[0].id,
                     userObj.headImgUrl = i.detail.userInfo.avatarUrl,
@@ -92,10 +89,23 @@ Page({
                   }
                 }
               });
+            },
+            fail:function(res){
+              console.log(res,'失败');
             }
         });
         // console.log(that.data.dataN);  
       }
+    })
+  },
+
+  /**
+   * 2020/5/2新增 --- 张
+   * 当点击厂商登录的时候要跳转到首页
+   */
+  vendorClick:function(){
+    wx.reLaunch({
+      url: '../login/login'
     })
   },
 
@@ -111,6 +121,7 @@ Page({
     if (userInfoSucces == 'getUserInfo:ok'){
       that.setData({
         userInfoSet:1,
+        showVendor:true // 2020/5/2新增 --- 张 showVendor是否显示厂商登录按钮
       });
       if(that.data.userInfoSet){
         const touristsInfo = e;
@@ -128,14 +139,8 @@ Page({
     };
   },
 
-  /**
-   * 退出登录接口
-   */
-  exitInterfaceFun:function(){},
-
   // 退出登录
   exitClick:function(e){
-
     // app.globalData.userData =  null;
     // app.globalData.userData = null;
     const d = app.globalData.userData,token = d.token;
@@ -200,11 +205,16 @@ Page({
               scale: 10
             })
           },
+          fail:function(res){
+            wx.navigateTo({
+              url: '../map/map?lat=' + Number(that.data.latitude) + '&lon=' + Number(that.data.longitude) + '&name=' + that.data.name + '&address=' + that.data.address,
+            });
+          }
         });
         break;
       case 2:
         wx.makePhoneCall({
-          phoneNumber: '18566130190'
+          phoneNumber: '13412565066'
         });
         break;
     }
@@ -231,7 +241,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    // 2020/5/2新增 --- 张
+    const that = this,userData = app.globalData.userData;
+    if(userData !== undefined){
+      const roleId = parseInt(userData.roleId);
+      if(roleId === 2 || roleId === 3){
+        that.setData({showVendor:false});
+      }      
+    }
   },
 
   /**
@@ -259,6 +276,7 @@ Page({
       mask:true,
       success(res){
         if(d !== undefined){
+          // console.log(d,'用户信息');
           const siveObj = {},roleId = parseInt(d.roleId);
           if(4 === roleId){
             siveObj.openid = d.userId;
@@ -278,7 +296,7 @@ Page({
                   if(replyNum > 0){
                     f.setData({
                       remindNum:replyNum,
-                      isShow:MediaStreamTrackAudioSourceNode
+                      isShow:true
                     });
                   }else{
                     f.setData({
@@ -424,10 +442,13 @@ Page({
   onShow: function () {
     const that = this,userData = app.globalData.userData;
     console.log(userData,"onShow");
-    // 回复留言条数
-    that.mesgFun('publishs/getReplyButUnreadCount','msg',that,userData);
-    // 提醒事项条数
-    that.mesgFun('notices/wx_count_unread','info',that,userData);
+    if(userData !== undefined){
+      // 回复留言条数
+      that.mesgFun('publishs/getReplyButUnreadCount','msg',that,userData);
+      // 提醒事项条数
+      that.mesgFun('notices/wx_count_unread','info',that,userData);
+    }
+    
   },
 
   /**

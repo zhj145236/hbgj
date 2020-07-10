@@ -5,9 +5,17 @@ Page({
 
   /**
    * 页面的初始数据
+   * page当前请求的是第几页
+   * pageSize 请求的数据长度
+   * hasMoreData 用于上拉的时候是不是要继续请求数据
+   * contentlist 如果page为1直接赋值给contentlist否则将数据追加到contentlist后面
    */
   data: {
     // 环保政策数据
+    page:0,
+    pageSize:3,
+    hasMoreData:true,
+    contentlist:[]
   },
 
   policyList:function(e){
@@ -19,26 +27,77 @@ Page({
   },
 
   /**
+   * 
+   * @param {*} options 
+   * 分页加载数据
+   */
+  getInfo:function(){
+    var that = this;
+    if(that.data.hasMoreData){
+      wx.request({
+        url: u + 'newss',
+        data: {
+          start:that.data.page,
+          length:that.data.pageSize
+        },
+        header: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        method: "GET",
+        success(res) {
+          console.log(res,'数据');
+          var contentlistTem = that.data.contentlist;
+          if(res.statusCode == 200){
+            wx.stopPullDownRefresh();
+            wx.hideLoading();
+            if(that.data.page == 0){
+              contentlistTem = [];
+            }
+            var contentlist = res.data.data;
+            if(that.data.page >= res.data.recordsFiltered){
+              that.setData({
+                u:u,
+                contentlist:contentlistTem.concat(contentlist),
+                hasMoreData: false
+              });
+            }else{
+              that.setData({
+                u:u,
+                contentlist:contentlistTem.concat(contentlist),
+                hasMoreData:true,
+                page:that.data.page + that.data.pageSize
+              });
+            }
+          }else{
+            console.log('123');
+            wx.stopPullDownRefresh();
+            wx.hideLoading();
+            wx.showToast({
+              title: '出现异常',
+              icon:'none',
+              mask:true,
+              duration: 2000
+            })
+          }
+        }
+      });
+    }else{
+      wx.stopPullDownRefresh();
+      wx.hideLoading();
+    }
+  },
+
+  /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     const that = this;
-    wx.request({
-      url: u + 'newss',
-      data: {
-        start:0
-      },
-      header: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      method: "GET",
-      success(res) {
-        that.setData({
-          u:u,
-          policyDatas:res.data.data,
-        });
+    wx.showLoading({
+      title: '加载中',
+      success:function(res){
+        that.getInfo();
       }
-    });
+    })
   },
 
   /**
@@ -81,23 +140,34 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    // const that = this;
-    // 3秒模拟数据加载
-    setTimeout(function () {
-      // 不加这个方法真机下拉会一直处于刷新状态，无法复位
-      wx.stopPullDownRefresh()
-    }, 2000);
-    // that.setData({
-    //   currentTab: 0 //当前页的一些初始数据，视业务需求而定
-    // })
-    // this.onLoad(); //重新加载onLoad()
+    const that = this;
+    that.setData({page:0});
+    wx.showLoading({
+      title: '加载中',
+      success:function(res){
+        that.getInfo();
+      }
+    })
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    const that = this;
+    wx.showLoading({
+      title: '加载中',
+      success:function(res){
+        if(that.data.hasMoreData){
+          that.getInfo();
+        }else{
+          wx.hideLoading();
+          wx.showToast({
+            title: '没有更多数据',
+          })
+        };
+      }
+    })
   },
 
   /**

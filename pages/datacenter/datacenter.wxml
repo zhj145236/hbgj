@@ -23,7 +23,7 @@
         <block wx:if="{{showData}}">
           <scroll-view scroll-y="{{isScrolly}}" class="scroll-view-style" style="max-height:{{winHeight}}rpx;">
             <block wx:for="{{conLists}}" wx:for-item="itemName" wx:key="">
-              <view class="con-list" data-nane="{{itemName.con}}" data-url="{{itemName.conurl}}" bindtap="nextData">
+              <view class="con-list" data-name="{{itemName.con}}" data-time="{{itemName.time}}" data-downurl="{{itemName.downurl}}" data-url="{{itemName.conurl}}" bindtap="nextData">
                 <view class="con-list-pdf-out">
                   <view class="con-list-pdf">
                     <image mode="widthFix" src="../../image/pdf.png" />

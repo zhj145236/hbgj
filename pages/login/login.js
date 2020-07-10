@@ -14,6 +14,49 @@ Page({
     startBtn:false,
     isDetermine:true
   },
+  /**
+   * 
+   * @param {*} e
+   * 输入框失去焦点的时候触发 
+   */
+  bindblurFun:function(d,f,s){
+    console.log(d,'数据中心');
+    f.setData({
+      [s]:d.detail.value.replace(/\s+/g, '')
+    });
+  },
+
+  /**
+   * 
+   * @param {*} e 
+   * 用户输入用户名做空格清除处理
+   */
+  bindblurName:function(e) {
+    const that = this,dataE = e;
+    console.log(dataE,'数据');
+    that.bindblurFun(dataE,that,"userName");
+  },
+
+  /**
+   * 
+   * @param {*} e 
+   * 用户输入密码做空格清除处理
+   */
+  bindblurPswd:function(e) {
+    const that = this,dataE = e;
+    console.log(dataE,'数据');
+    that.bindblurFun(dataE,that,"pasdWorld");
+  },
+
+  /**
+   * 游客登录入口
+   * 2020/5/1新增----张
+   */
+  tourists:function(){
+    wx.switchTab({
+      url: '../index/index'
+    });
+  },
 
   /**
    * 
@@ -25,21 +68,16 @@ Page({
     wx.login({
       success:(res)=>{
         // const getCode = res.code;
-        const logObj = {},userObj = {};
-        logObj.appid = 'wx44c4721e4704c732',
-        logObj.secret = '5bf6ca316b48eb9a8887115c03be3409',
-        logObj.grant_type = 'authorization_code';
-        logObj.js_code = res.code;
-        console.log(i,'888');
-        // that.setData({dataN:res.data.openid});  
+        const userObj = {};
         wx.request({
-            url: 'https://api.weixin.qq.com/sns/jscode2session',
-            data: logObj,
+            url: u + 'weixin/userOpenid',
+            data: {"js_code": res.code},
             header: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/x-www-form-urlencoded"
             },
-            method: "GET",
+            method: "POST",
             success:(res)=> {
+              console.log(res,'888');
               const openid = res.data.openid
               console.log(openid,'777');
               // that.setData({dataN:res.data.openid});
@@ -87,8 +125,14 @@ Page({
                   console.log(res,'失败');
                 }
               });
+            },
+            fail:function(res){
+              console.log(res,'失败');
             }
         }); 
+      },
+      fail:function(res){
+        console.log(res,'用户授权失败');
       }
     })
   },
@@ -96,6 +140,7 @@ Page({
 
   getUserInfo: function (e) {
     let that = this, userInfoSucces = e.detail.errMsg,userObj = {};
+    console.log(e,'数据');
     that.setData({isDisabledMembers:true});
     if (userInfoSucces == 'getUserInfo:ok'){
       that.setData({
@@ -119,7 +164,7 @@ Page({
    * 点击确定按钮
    */
   determineClick:function(){
-    const that = this,datas = that.data.datas,userId = datas.user.id,userData={};
+    const that = this,datas = that.data.datas,userId = datas.user.id;
     that.setData({isShowModal:false});
     wx.request({
       url: u + 'users/agreeLicence',
@@ -132,7 +177,8 @@ Page({
       },
       method: "PUT",
       success(res) {
-        // console.log(res.token,'返回数据');
+        const userData={};
+        console.log(res,'返回数据');
         console.log(datas,'登录成功返回数据');
         // 会员数据存储到全局变量中
         // 企业用户数据
@@ -145,7 +191,7 @@ Page({
         app.globalData.userData = userData;
         // 登录提示
         wx.showToast({
-          title: res.data.message,
+          title: '登录成功',
           icon: 'success',
           duration: 800
         });
@@ -192,22 +238,33 @@ Page({
       url: u + 'sys/login/restful',
       data: {
         "username":e.detail.value.user,
-        "password":e.detail.value.pswd
+        "password":e.detail.value.pswd,
+        "openid":app.globalData.openId
       },
       header: {
         "Content-Type": "application/x-www-form-urlencoded"
       },
       method: "POST",
       success(res) {
-        console.log(res,'返回数据');
+        const userDataInfo = {};
+        userDataInfo.user = e.detail.value.user,
+        userDataInfo.pswd = e.detail.value.pswd,
+        app.globalData.userDataInfo = userDataInfo;
+        that.setData({
+          userName:app.globalData.userDataInfo.user,
+          pasdWorld:app.globalData.userDataInfo.pswd
+        });
+
         if(res.data.code == 200){
           that.setData({isDisabledGetUser:true,isDisabledMembers:true,isShowModal:true});
+          console.log(res,'返回用户数据');
           const datas = res.data.data,
           agreeLicence = datas.user.agreeLicence,roleId = datas.role[0].id;
           console.log(roleId,'返回数据');
           // 如果agreeLicence == null则该用户为第一次登录
           if(agreeLicence == null && roleId !== 2){
-            console.log('走了这里A');
+            console.log(that.data.isDetermine,'走了这里A');
+            that.setData({isDetermine:true,times:10});
             if(that.data.isDetermine){
               var num = 10;
               var t = setInterval(function(){
@@ -235,7 +292,9 @@ Page({
             that.setData({datas:datas});
           }else{
             const userData = {};
-            that.setData({isShowModal:false});
+            that.setData({
+              isShowModal:false,
+            });
             console.log('走了这里B');
             // 否则该用户之前已经同意该处的法律申明，进行了登录操作
             // 登录提示
@@ -271,53 +330,6 @@ Page({
         console.log(res,'调取接口失败')
       }
     });
-
-    // wx.request({
-    //   url: u + 'sys/login/restful',
-    //   data: {
-    //     "username":e.detail.value.user,
-    //     "password":e.detail.value.pswd
-    //   },
-    //   header: {
-    //     "Content-Type": "application/x-www-form-urlencoded"
-    //   },
-    //   method: "POST",
-    //   success(res) {
-    //     if(res.token !== "" || res.token !== null || res.token !== undefined){
-    //       that.setData({isDisabledGetUser:true});
-    //       const datas = res.data.data;
-    //       console.log(datas,'123');
-    //       // 会员数据存储到缓存中
-    //       wx.setStorage({
-    //         key:"userData",
-    //         data:datas
-    //       });
-
-    //       // 将用户角色（会员）保存在缓存中方便其他页面调用
-    //       wx.setStorage({
-    //         key:'userRole',
-    //         data:datas.role[0].id
-    //       });
-    //       // 登录提示
-    //       wx.showToast({
-    //         title: "登录成功",
-    //         icon: 'success',
-    //         duration: 800
-    //       });
-    //       setTimeout(function () {
-    //         wx.switchTab({
-    //           url: '../index/index'
-    //         })
-    //       },800);          
-    //     }else{
-    //       wx.showToast({
-    //         title: res.data.message,
-    //         icon: 'none',
-    //         duration: 2000
-    //       });          
-    //     }
-    //   }
-    // });
   },
 
 

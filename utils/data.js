@@ -10,7 +10,7 @@ let iconData= [
   },
   {
     imgUrl: '../../image/fbzx.png',
-    text: '我要发布',
+    text: '我要留言',
   },
   {
     imgUrl: '../../image/hbzc.png',
@@ -48,7 +48,7 @@ const dataList = [
 ];
 
 const meCenter = [
-  {icon:'../../image/mesheng.png',title:'我的发布',point:'../../image/arrowright.png',id:'1'},
+  {icon:'../../image/mesheng.png',title:'我的留言',point:'../../image/arrowright.png',id:'1'},
   {icon:'../../image/address.png',title:'我的地址',point:'../../image/arrowright.png',id:'2'},
   {icon:'../../image/contact.png',title:'联系客服',point:'../../image/arrowright.png',id:'3'},
 ];
@@ -67,6 +67,12 @@ const introductionData = [
     zz:'公司服务宗旨：秉承着“效率、专业、诚信”的服务理念，做事从一而终',
     title3:'营业执照',
     yz:'../../image/yz.jpg',
+    title4:'环保管家培训证书',
+    cer:[
+      {cerImg:'../../image/cer1.jpg'},
+      {cerImg:'../../image/cer2.jpg'},
+      {cerImg:'../../image/cer3.jpg'}
+    ],
     title6:'谢谢观看',
     imgGk:'../../image/xxgk.jpg',
   }

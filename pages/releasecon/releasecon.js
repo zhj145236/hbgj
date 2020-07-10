@@ -25,6 +25,7 @@ readFun:(d)=>{
   const readObj = {};
   d = parseInt(d);
   readObj.publishId = d;
+  console.log(d,'id');
   wx.request({
     url: u + 'publishs/makePublishRead',
     data: readObj,
@@ -42,9 +43,14 @@ readFun:(d)=>{
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    const that = this,isloadreadly = options.isloadreadly,senddatapage = JSON.parse(decodeURIComponent(options.senddatapage)),dataId = senddatapage.id;
+    const that = this,senddatapage = JSON.parse(decodeURIComponent(options.senddatapage)),dataId = senddatapage.id,isloadreadly = options.isloadreadly;
+    console.log(senddatapage);
     if(senddatapage.reply == null && senddatapage.replyTime == null){
-      that.setData({isReply:false});
+      that.setData({
+        isReply:false,
+        publishContent:senddatapage.publishContent,
+        createTime:senddatapage.createTime
+      });
     }else{
       that.setData({
         isReply:true,
@@ -54,7 +60,9 @@ readFun:(d)=>{
         replyTime:senddatapage.replyTime
       });
     }
-    if(isloadreadly === "null"){
+    console.log(isloadreadly,'123');
+    if(senddatapage.reply !== null && senddatapage.replyTime !== null && isloadreadly === 'null'){
+      console.log(dataId,'id数据');
       that.readFun(dataId);
     }
   },

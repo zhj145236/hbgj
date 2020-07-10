@@ -157,12 +157,30 @@ button:after {
   font-size: 32rpx;
 }
 .cont-body{
-  display: block;
+  /* display: block; */
   width: 80%;
   margin: auto;
-  word-break:break-all;
+  /* word-break:break-all; */
   min-height:100rpx;
-  max-height: 600rpx;
+  max-height: 740rpx;
+  font-size: 26rpx;
+  font-family:'Microsoft YaHei','微软雅黑';
+}
+.line-set{
+  line-height: 40rpx;
+  display: inline-block;
+  text-align: justify;
+  margin-bottom: 20rpx;
+}
+.add-coarse-deal{
+  font-weight: 600;
+}
+.public-style{
+  width: 100%;
+  text-align: center;
+  font-weight: 600;
+  height: 80rpx;
+  line-height: 80rpx;
 }
 .cont-choose{
   display: flex;

@@ -1,2 +1,33 @@
 <!--pages/pdfdownload/pdfdownload.wxml-->
-<text>pages/pdfdownload/pdfdownload.wxml</text>
+<view class="file-instructions">
+  <view class="file-instructions-header">
+    <!-- 抬头 -->
+    <text class="file-instructions-info">文件详情：</text>
+    <!-- 文件名 -->
+    <view class="public-style file-instructions-name">
+      <text>文件名称：</text>
+      <input disabled="true" value="{{con}}" />
+    </view>
+    <!-- 文件后缀 -->
+    <view class="public-style file-instructions-add">
+      <text>文件地址：</text>
+      <input disabled="true" value="{{url}}" />
+    </view>
+    <!-- 文件格式 -->
+    <view class="public-style file-instructions-format">
+      <text>文件格式：</text>
+      <input disabled="true" value="pdf" />
+      <!-- <input disabled="true" value="{{format}}" /> -->
+    </view>
+    <!-- 上传时间 -->
+    <view class="public-style file-instructions-time">
+      <text disabled="true">上传时间：</text>
+      <input disabled="true" value="{{time}}" />
+    </view>
+    <view class="file-instructions-att">
+      <text>注意：如您需要下载该文件，请将地址复制到浏览器中进行下载</text>
+      <button style="background-color:#0175ae;border:1px solid #0175ae;" bindtap="previewClick">一键预览</button>
+      <button bindtap="copyClick">复制下载地址</button>
+    </view>
+  </view>
+</view>

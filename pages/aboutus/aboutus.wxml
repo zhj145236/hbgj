@@ -63,10 +63,13 @@
     </block>
   </view>
 </view>
-<!-- <button bindtap="exitClick" disabled="{{hasUserInfo}}" class="exit">{{exitInfo}}</button> -->
-<button disabled wx:if="{{!hasUserInfo && canIUse}}" class="exit">尚未授权登录</button>
+<!-- 2020/5/2新增---张 -->
+<!-- 新增逻辑：首次进入的index页面，在初始状态下有厂商登录按钮，判断是否游客登录？如果为游客登录则依然显示厂商登录按钮，如果为厂商登录则显示退出按钮 -->
+<button wx:if="{{showVendor}}" bindtap="vendorClick" class="exit">厂商登录</button>
+<!-- <button disabled wx:if="{{!hasUserInfo && canIUse}}" class="exit">尚未授权登录</button> -->
 <block wx:else>
-  <block wx:if="{{userInfoSet}}">
+  <button bindtap="exitClick" class="exit">退出登录</button>
+  <!-- <block wx:if="{{userInfoSet}}">
     <button bindtap="exitClick" class="exit">退出登录</button>
-  </block>
+  </block> -->
 </block>

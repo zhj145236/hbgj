@@ -1,0 +1,10 @@
+<!--pages/map/map.wxml-->
+<view class="map-view">
+  <map style="width:100vh;height:100vh;" latitude="22.842377" longitude="113.71856" scale="16" show-location markers="{{markers}}"></map>
+</view>
+<view class="map-add">
+  <text class="map-add-name">东莞市环联管家生态环境科技有限公司</text>
+  <text class="map-add-info">广东省东莞市沙河路66号(万鹏大厦)</text>
+</view>
+
+

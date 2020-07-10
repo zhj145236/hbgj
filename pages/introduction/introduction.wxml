@@ -15,6 +15,13 @@
     <view class="sample-shou">
       <image mode="widthFix" src="{{item.yz}}" />
     </view>
+    <!-- 环保管家培训证书 -->
+    <text class="unified-set">{{item.title4}}</text>
+    <block wx:for="{{item.cer}}" wx:for-item="itemName">
+      <view class="sample-shou cer-img">
+        <image mode="widthFix" src="{{itemName.cerImg}}" />
+      </view>
+    </block>
 
     <!-- 谢谢观看 -->
     <text class="unified-set sample-look">{{item.title6}}</text>

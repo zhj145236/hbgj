@@ -157,16 +157,37 @@ module.exports = {
             }
         }), o;
     },
+    /**
+     * 倒计时封装
+     * n 倒计时的时间
+     * f 修改this指向
+     * i 是否停止倒计时
+     */
+    timesFun:function(n,f,i){
+        var num = n;
+        f.setData({times:num});
+        var t = setInterval(function(){
+        if(num === 0){
+            clearInterval(t);
+        }else{
+            num--;
+            f.setData({
+                times:num,
+                [i]:true,
+            });
+        }
+        },1000);
+    },
     urlCon:function(){
         // 线上ip
-        // return 'http://www.hlguanjia.com';
-        // return 'http://47.115.57.64:8080/';
+        // return 'https://www.hlguanjia.com/';
+        // return 'http://47.115.57.64/';
         
         // 测试ip
-        return "http://192.168.31.76:8080/";
+        // return "http://192.168.31.76:8080/";
 
         //开发人员IP
-        // return "http://192.168.31.174:8080/"
+        return "http://192.168.31.174:8080/"
     },
 
     // 下载接口配置

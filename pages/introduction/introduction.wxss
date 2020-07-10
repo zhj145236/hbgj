@@ -45,3 +45,6 @@ text{
   color: #FF8000;
   font-size: 34rpx;
 }
+.cer-img{
+  margin-bottom: 30rpx;
+}

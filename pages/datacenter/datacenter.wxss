@@ -245,4 +245,5 @@ page{
 .con-list-con{
   font-size: 28rpx;
   font-weight: 600;
+  width: 400rpx;
 }

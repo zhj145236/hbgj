@@ -15,7 +15,7 @@ Page({
     const sendData = e.currentTarget.dataset.items,senddatapage = encodeURIComponent(JSON.stringify(sendData));
     console.log(e,'用户携带数据');
     wx.navigateTo({
-      url: '../releasecon/releasecon?isloadreadly=' + e.currentTarget.dataset.isloadreadly + '&senddatapage=' + senddatapage,
+      url: '../releasecon/releasecon?senddatapage=' + senddatapage + '&isloadreadly=' + e.currentTarget.dataset.isloadreadly,
     })
   },
 
@@ -53,6 +53,7 @@ Page({
       },
       method: "GET",
       success(res) {
+        console.log(res);
         that.setData({
           myreleaseDatas:res.data.data
         });
@@ -78,11 +79,10 @@ Page({
    */
   onLoad: function (options) {
     console.log(options);
-    const that = this,siveId = options.siveId,roleId = options.roleId,isloadreadly = options.isloadreadly;
+    const that = this,siveId = options.siveId,roleId = options.roleId;
     that.setData({
       siveId:siveId,
-      roleId:roleId,
-      isloadreadly:isloadreadly
+      roleId:roleId
     });
     // console.log(siveId,roleId,'123');
 

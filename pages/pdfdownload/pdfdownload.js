@@ -9,10 +9,48 @@ Page({
   },
 
   /**
+   * 一键复制地址
+   */
+  copyClick:function(){
+    const that = this,url = that.data.downurl;
+    console.log(url);
+    wx.setClipboardData({
+      data: url,
+      success: function (res) {
+        wx.showToast({
+          title: '复制成功',
+          icon: 'success',
+          duration: 2000
+        })        
+      }
+     });
+  },
+
+  /**
+   * 
+   * @param {*} options
+   * 一键预览 
+   */
+  previewClick:function(e){
+    const that = this;
+    wx.navigateTo({
+      url: '../contractcenter/contractcenter?url=' + that.data.url,
+    })
+  },
+
+  /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    console.log(options);
+    const that = this,format = options.url.split('.');
+    console.log(format);
+    that.setData({
+      con:options.con,
+      url:options.url,
+      time:options.time,
+      downurl:options.downurl
+    });
   },
 
   /**

@@ -34,6 +34,7 @@ Page({
         conListObj.time = enterpriseDatas[i].uploadTime.split(' ')[0];
         conListObj.con = enterpriseDatas[i].fileOriginName.split('.')[0];
         conListObj.conurl = o.comImg(u,enterpriseDatas[i].url);
+        conListObj.downurl = o.down(u,enterpriseDatas[i].url);
         conList.push(conListObj);
       }
       if(nameArrObj[i] == '企业台账' &&　goodname.indexOf('台账') && e.currentTarget.dataset.index == 1){
@@ -42,6 +43,7 @@ Page({
         conListObj.time = enterpriseDatas[i].uploadTime.split(' ')[0];
         conListObj.con = enterpriseDatas[i].fileOriginName.split('.')[0];
         conListObj.conurl = o.comImg(u,enterpriseDatas[i].url);
+        conListObj.downurl = o.down(u,enterpriseDatas[i].url);
         conList.push(conListObj);
       }
       if(nameArrObj[i] == '合同管理' &&　goodname.indexOf('合同') && e.currentTarget.dataset.index == 2){
@@ -50,6 +52,7 @@ Page({
         conListObj.time = enterpriseDatas[i].uploadTime.split(' ')[0];
         conListObj.con = enterpriseDatas[i].fileOriginName.split('.')[0];
         conListObj.conurl = o.comImg(u,enterpriseDatas[i].url);
+        conListObj.downurl = o.down(u,enterpriseDatas[i].url);
         conList.push(conListObj);
       }
       if(nameArrObj[i] == '环保文件' &&　goodname.indexOf('文件') && e.currentTarget.dataset.index == 3){
@@ -58,9 +61,11 @@ Page({
         conListObj.time = enterpriseDatas[i].uploadTime.split(' ')[0];
         conListObj.con = enterpriseDatas[i].fileOriginName.split('.')[0];
         conListObj.conurl = o.comImg(u,enterpriseDatas[i].url);
+        conListObj.downurl = o.down(u,enterpriseDatas[i].url);
         conList.push(conListObj);
       }
     }
+    console.log(conList,'123');
     conList.length == 0 ? that.setData({showData:false,showIcon:'../../image/kunian.png'}) : that.setData({showData:true});
     // console.log(conList.length,'拼接数据');
     that.setData({
@@ -78,7 +83,7 @@ Page({
     });
     console.log(e,'返回数据');
     wx.navigateTo({
-      url: '../contractcenter/contractcenter?url=' + e.currentTarget.dataset.url,
+      url: '../pdfdownload/pdfdownload?url=' + e.currentTarget.dataset.url + '&con=' + e.currentTarget.dataset.name + '&time=' + e.currentTarget.dataset.time + '&downurl=' + e.currentTarget.dataset.downurl,
     })
   },
 
@@ -89,19 +94,6 @@ Page({
       num:null,
     });
     console.log(that.data.num);
-  },
-
-  // 查看数据详情
-  lodingMore:function(e){
-    console.log(e,'企业数据携带参数');
-    wx.showToast({
-      title: "该功能模块正在开发中",
-      icon: 'none',
-      duration: 2000
-    });
-    // wx.navigateTo({
-    //   url: '../datalist/datalist',
-    // })
   },
 
   /**
@@ -163,7 +155,7 @@ Page({
           },
           method: "GET",
           success(res) {
-            console.log(res,'企业返回数据');
+            console.log(res.data.data,'企业返回数据');
             const enterpriseData = res.data.data,nameArr = [];
             for(let i in enterpriseData){
               nameArr.push(enterpriseData[i].tag);
