@@ -32,7 +32,7 @@ Page({
     roleid = parseInt(roleid);
     if(roleid != undefined || siveid != undefined){
       if(4 === roleid){
-        listObj.openid = siveid
+        listObj.userId = siveid
         console.log('走了游客');
       }else{
         listObj.userId = siveid;

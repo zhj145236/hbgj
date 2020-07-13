@@ -178,7 +178,7 @@ Page({
         const dataObj = {};
         dataObj.headPic = d.headImgUrl,
         dataObj.nickName = d.nickname,
-        dataObj.openid = d.userId,
+        dataObj.userId = d.userId,
         dataObj.realName = e.detail.value.contact,
         dataObj.publishContent = e.detail.value.describe,
         dataObj.sex = e.detail.value.sex,
@@ -228,7 +228,7 @@ Page({
    */
   onShow: function () {
     const that = this,d = app.globalData.userData;
-    console.log(d);
+    console.log(d,'数据');
     /**
      * 这种情景模式为：游客在login页的时候没有授权登录
      * 游客来到发布页面的时候判断用户是否登录
@@ -283,7 +283,7 @@ Page({
     const siveObj = {};
     r = parseInt(r);
     if(4 === r){
-      siveObj.openid = s;
+      siveObj.userId = s;
     }else{
       siveObj.userId = s;
     }

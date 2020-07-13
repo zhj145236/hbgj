@@ -25,7 +25,7 @@ Page({
     d = parseInt(d);
     console.log(userData,'数据');
     if(4 === r){
-      readObj.openid = s;
+      readObj.userId = s;
       readObj.noticeId = d;
       wx.request({
         url: u + 'notices/wxHasRead',

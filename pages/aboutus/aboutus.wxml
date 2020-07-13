@@ -11,7 +11,7 @@
               <image src="../../image/me.png" />
           </button>
         </view>
-        <button open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="userinfo-nickname"><text>点击登录</text></button>
+        <button open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="userinfo-nickname"><text>微信授权登录</text></button>
       </view>
 
       <block wx:else>

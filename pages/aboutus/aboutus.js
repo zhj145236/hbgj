@@ -50,7 +50,7 @@ Page({
             success:(res)=> {
               console.log(res,'成功');
               wx.request({
-                url: u + 'users/wxAutoLogin',
+                url: u + 'visitorLogin',
                 data: {
                   "avatarUrl":i.detail.userInfo.avatarUrl,
                   "nickName":i.detail.userInfo.nickName,
@@ -66,12 +66,12 @@ Page({
                 },
                 method: "POST",
                 success(res) {
-                  console.log(res,'数据');
+                  console.log(res,'数据AAA');
                   if(res.data.token !== undefined || res.data.token !== null || res.data.token !== ''){
                     const token = res.data.token;
                     console.log(res,'游客数据');
-                    // 游客用户数据
-                    userObj.userId = res.data.user.openid,
+                    // 游客用户数据id
+                    userObj.userId = res.data.user.id,
                     userObj.roleId = res.data.role[0].id,
                     userObj.headImgUrl = i.detail.userInfo.avatarUrl,
                     userObj.nickname =  i.detail.userInfo.nickName,
@@ -79,8 +79,8 @@ Page({
                     userObj.errMsg =  i.detail.errMsg;
                     app.globalData.userData = userObj;
                     f.setData({
-                      siveId:res.data.user.openid, // 需要传的用户id openid （必然是游客）
-                      roleId:res.data.role[0].id //用户的角色id
+                      siveId:res.data.user.id, // 需要传的用户id （必然是游客）
+                      roleId:res.data.role[0].id, //用户的角色id
                     });
                     // 回复留言条数
                     f.mesgFun('publishs/getReplyButUnreadCount','msg',f,userObj);
@@ -118,11 +118,13 @@ Page({
   // 获取用户信息
   getUserInfo: function (e) {
     let that = this, userInfoSucces = e.detail.errMsg;
+    console.log(userInfoSucces,'授权情况');
     if (userInfoSucces == 'getUserInfo:ok'){
       that.setData({
         userInfoSet:1,
-        showVendor:true // 2020/5/2新增 --- 张 showVendor是否显示厂商登录按钮
+        showVendor:false // 2020/5/2新增 --- 张 showVendor是否显示厂商登录按钮
       });
+      console.log(that.data.userInfoSet,'kk');
       if(that.data.userInfoSet){
         const touristsInfo = e;
         that.touristsFun(touristsInfo,that);
@@ -142,7 +144,6 @@ Page({
   // 退出登录
   exitClick:function(e){
     // app.globalData.userData =  null;
-    // app.globalData.userData = null;
     const d = app.globalData.userData,token = d.token;
     console.log(token,'数据');
     wx.request({
@@ -154,8 +155,6 @@ Page({
       },
       method: "GET",
       success:(res)=>{
-        console.log(res,'退出成功');
-        app.globalData.userData = null;
         wx.showToast({
           title: "已退出登录",
           icon: 'success',
@@ -167,6 +166,7 @@ Page({
             url: '../login/login'
           })
         },1500);
+        app.globalData.userData = undefined;
       }
     });
     return;
@@ -224,6 +224,7 @@ Page({
   mattersClick:function(e){
     const that = this,isShow = that.data.isShow;
     /**if  isShow 为真的时候 点击提醒事项按钮 进入到提醒事项列表页，否则不进行任何跳转*/
+    console.log(that.data.errMsg);
     if(that.data.errMsg !== undefined){
       wx.navigateTo({
         url: '../remind/remind?siveid=' + e.currentTarget.dataset.siveid + '&roleid=' + e.currentTarget.dataset.roleid,
@@ -244,10 +245,11 @@ Page({
     // 2020/5/2新增 --- 张
     const that = this,userData = app.globalData.userData;
     if(userData !== undefined){
-      const roleId = parseInt(userData.roleId);
-      if(roleId === 2 || roleId === 3){
+      if(userData.headImgUrl === null && userData.nickname === null){
+        that.setData({hasUserInfo:false,showVendor:true});
+      }else{
         that.setData({showVendor:false});
-      }      
+      }
     }
   },
 
@@ -276,10 +278,10 @@ Page({
       mask:true,
       success(res){
         if(d !== undefined){
-          // console.log(d,'用户信息');
+          console.log(d,'用户信息');
           const siveObj = {},roleId = parseInt(d.roleId);
           if(4 === roleId){
-            siveObj.openid = d.userId;
+            siveObj.userId = d.userId;
             wx.request({
               url: u + setU,
               data: siveObj,
@@ -326,7 +328,7 @@ Page({
             f.setData({
               userInfoSet:1,
             });
-            if (f.data.userInfoSet){
+            if(f.data.userInfoSet){
               const userInfos = {};
               userInfos.avatarUrl = d.headImgUrl,
               userInfos.nickName = d.nickname;

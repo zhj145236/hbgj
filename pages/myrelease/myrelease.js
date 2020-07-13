@@ -40,7 +40,7 @@ Page({
     const parmObj={};
     // console.log(siveId,roleId,'测试数据');
     if(4===roleId ){
-      parmObj.openid=siveId;
+      parmObj.userId=siveId;
     }else{
       parmObj.userId=siveId;
     } 

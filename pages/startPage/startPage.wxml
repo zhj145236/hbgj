@@ -1,8 +1,7 @@
 <!--pages/startPage/startPage.wxml-->
 <view class="bj-img" style="height:{{mobileHeight}}">
-  <image class="back-img" mode="aspectFill" style="height:{{mobileHeight}}" src="../../image/qd.png" />
+  <image class="back-img" mode="scaleToFill" src="../../image/qd.png" />
   <!-- 倒计时 -->
-  <view class="count-down">{{times}}s</view>
-  <view class="tourists" bindtap="tourists">测试</view>
+  <!-- <view class="count-down">{{times}}s</view> -->
 </view>
 

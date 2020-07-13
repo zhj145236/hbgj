@@ -98,13 +98,14 @@ Page({
                 },
                 method: "POST",
                 success(res) {
+                  console.log(res,'游客数据');
                   const token = res.data.token;
                   if(res.data.token !== undefined){
                     // 游客用户数据
-                    userObj.userId = openid,
+                    userObj.userId = res.data.user.id,
                     userObj.roleId = res.data.role[0].id,
-                    userObj.headImgUrl = i.detail.userInfo.avatarUrl,
-                    userObj.nickname =  i.detail.userInfo.nickName,
+                    userObj.headImgUrl = res.data.user.headImgUrl,
+                    userObj.nickname =  res.data.user.nickname,
                     userObj.token =  token,
                     userObj.errMsg =  i.detail.errMsg;
                     app.globalData.userData = userObj;
@@ -233,6 +234,7 @@ Page({
       });
       return;
     };
+    // console.log(app.globalData.openId,'openid');
 
     wx.request({
       url: u + 'sys/login/restful',

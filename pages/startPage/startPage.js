@@ -3,7 +3,6 @@ const app = getApp(), o = app.requirejs('core'),u = o.urlCon();
 const datas = require('../../utils/data.js');
 
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -31,6 +30,7 @@ Page({
     const that = this,
     isDetermine = that.data.isDetermine,
     userData = app.globalData.userData;
+    console.log(app.globalData.userData,'onLoad');
     wx.getSystemInfo({
       success (res) {
         that.setData({
@@ -39,12 +39,10 @@ Page({
         });
       }
     });
-    o.timesFun(5,that,isDetermine);
-    console.log(userData);
+    // o.timesFun(5,that,isDetermine);
     if(userData === undefined){
       wx.login({
         success:function(res){
-          const userObj = {};
           wx.request({
             url: u + 'weixin/userOpenid',
             data: {"js_code": res.code},
@@ -54,11 +52,10 @@ Page({
             method: "POST",
             success:(res)=> {
               console.log(res,'888');
-              const openid = res.data.openid
-              console.log(openid,'777');
+              const openid = res.data.openid;
               app.globalData.openId = openid;
               wx.request({
-                url: u + 'users/wxAutoLogin',
+                url: u + 'users/tryLogin',
                 data: {
                   "openid":res.data.openid,
                 },
@@ -67,29 +64,60 @@ Page({
                 },
                 method: "POST",
                 success(res) {
-                  const token = res.data.token;
-                  console.log(res,'数据');
-                  if(res.data.token !== undefined){
-                    return;
-                    // 游客用户数据
-                    // userObj.userId = openid,
-                    // userObj.roleId = res.data.role[0].id,
-                    // userObj.headImgUrl = i.detail.userInfo.avatarUrl,
-                    // userObj.nickname =  i.detail.userInfo.nickName,
-                    // userObj.token =  token,
-                    // userObj.errMsg =  i.detail.errMsg;
-                    // app.globalData.userData = userObj;
+                  console.log(res,'登录数据');
+                  const datas = res.data,userData = {},userObj = {};
+                  // 企业用户数据
+                  if(res.data.code === '401'){
                     wx.showToast({
-                      title: "登录成功",
-                      icon: 'success',
-                      duration: 800
+                      title: "登录失效，请重新登录",
+                      icon: 'none',
+                      duration: 1500
                     });
-                    // 接口获取成功的时候跳转到index页面
                     setTimeout(function () {
-                      wx.switchTab({
-                        url: '../index/index'
+                      wx.reLaunch({
+                        url: '../login/login'
                       })
-                    },800); 
+                    },1500);
+                  }else{
+                    if(res.data.role[0].id === 4){
+                      userObj.userId = datas.user.id,
+                      userObj.roleId = res.data.role[0].id,
+                      datas.user.headImgUrl === null?userObj.headImgUrl = '':userObj.headImgUrl = datas.user.headImgUrl,
+                      datas.user.nickname === null?userObj.nickname =  '':userObj.nickname =  datas.user.nickname,
+                      userObj.token =  datas.token,
+                      userObj.errMsg =  res.errMsg;
+                      app.globalData.userData = userObj;
+                      // 接口获取成功的时候跳转到index页面
+                      console.log(app.globalData.userData,'数据AAA');
+                      wx.showToast({
+                        title: "欢迎使用环联管家",
+                        icon: 'success',
+                        duration:1500
+                      });
+                      setTimeout(function () {
+                        wx.switchTab({
+                          url: '../index/index'
+                        })
+                      },1500); 
+                    }else{
+                      userData.token = datas.token,
+                      userData.userId = datas.user.id,
+                      userData.roleId = datas.role[0].id,
+                      userData.headImgUrl = datas.user.headImgUrl,
+                      userData.nickname =  datas.user.nickname,
+                      userData.errMsg =  res.errMsg;
+                      app.globalData.userData = userData;
+                      wx.showToast({
+                        title: "欢迎使用",
+                        icon: 'success',
+                        duration:1500
+                      });
+                      setTimeout(function () {
+                        wx.switchTab({
+                          url: '../index/index'
+                        })
+                      },2000); 
+                    }
                   }
                 },
                 fail(res){
@@ -104,7 +132,16 @@ Page({
         }
       })
     }else{
-      console.log('还有数据进入程序中心');
+      wx.showToast({
+        title: "欢迎使用",
+        icon: 'success',
+        duration:1500
+      });
+      setTimeout(function () {
+        wx.switchTab({
+          url: '../index/index'
+        })
+      },1500); 
     }
   },
 
@@ -119,6 +156,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    console.log(app.globalData.userData,'onShow');
 
   },
 
